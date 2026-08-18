@@ -216,7 +216,20 @@ function VehicleDetailPage() {
                 <Phone className="size-4" aria-hidden />
                 {contact.phone}
               </a>
+
+              <FavoriteButton
+                slug={vehicle.slug}
+                withLabel
+                className="mt-2 w-full justify-center"
+              />
+              <Link
+                to="/comparatie"
+                className="mt-2 block text-center text-xs text-muted-foreground underline underline-offset-4"
+              >
+                Vezi lista salvată și compară
+              </Link>
             </div>
+
 
             {mode ? (
               <LeadForm
