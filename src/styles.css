@@ -7,37 +7,34 @@
 /*
  * Sistem de design Autoklass — culori, fonturi și umbre extrase din
  * autoklass.ro (august 2026). Fonturile MBCorpo sunt cele oficiale
- * folosite pe site-ul live, servite din CDN-ul proiectului.
+ * folosite pe site-ul live, incluse local în bundle ca build-ul static
+ * (GitHub Pages) să nu depindă de un CDN extern.
  */
 
 @font-face {
   font-family: "MBCorpoTitle";
-  src: url("/__l5e/assets-v1/feb57711-8347-49e9-80f9-d13384d02154/MBCorpoATitleCond-Regular.otf")
-    format("opentype");
+  src: url("./assets/fonts/MBCorpoATitleCond-Regular.otf") format("opentype");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MBCorpoText";
-  src: url("/__l5e/assets-v1/8b4322a2-92cd-4408-80f1-09f2ed8f1028/MBCorpoSText-Light.otf")
-    format("opentype");
+  src: url("./assets/fonts/MBCorpoSText-Light.otf") format("opentype");
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MBCorpoText";
-  src: url("/__l5e/assets-v1/029c9eed-602f-4fdd-8081-534dba02a423/MBCorpoSText-Regular.otf")
-    format("opentype");
+  src: url("./assets/fonts/MBCorpoSText-Regular.otf") format("opentype");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: "MBCorpoText";
-  src: url("/__l5e/assets-v1/e62d49f7-1cab-4a03-ad23-eb3e47fe0227/MBCorpoSText-Bold.otf")
-    format("opentype");
+  src: url("./assets/fonts/MBCorpoSText-Bold.otf") format("opentype");
   font-weight: 700;
   font-display: swap;
 }

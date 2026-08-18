@@ -10,8 +10,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { PhotoUpload } from "@/components/damage/PhotoUpload";
+import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+
 import {
   Accordion,
   AccordionContent,
@@ -179,6 +182,7 @@ function DamageFilePage() {
                 Asigurator: <strong>{insurer ?? "de stabilit"}</strong> · Sucursală:{" "}
                 <strong>{branch ?? "de stabilit"}</strong>
               </p>
+              <DemoNotice className="mt-4 bg-card" />
               <Button asChild variant="outline" className="mt-5 rounded-sm">
                 <a href={contact.phoneHref}>
                   <Phone className="mr-1 size-4" aria-hidden />
@@ -186,6 +190,7 @@ function DamageFilePage() {
                 </a>
               </Button>
             </div>
+
           ) : (
             <form
               className="rounded-sm border border-border bg-card p-5 shadow-card"
@@ -239,7 +244,14 @@ function DamageFilePage() {
                     className="mt-1 rounded-sm"
                   />
                 </div>
+                <div>
+                  <Label className="block text-sm font-bold">Poze cu avaria</Label>
+                  <PhotoUpload />
+                </div>
               </div>
+
+              <DemoNotice className="mt-4" />
+
 
               <Label className="mt-5 block text-sm font-bold">Asigurator</Label>
               <div className="mt-2 flex flex-wrap gap-2">

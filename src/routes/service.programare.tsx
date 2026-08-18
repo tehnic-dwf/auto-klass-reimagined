@@ -11,8 +11,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -129,6 +131,10 @@ function ServiceBookingPage() {
               Nu începem nicio lucrare peste estimarea confirmată de tine. Primești un SMS
               cu stadiul mașinii la preluare, la aprobarea devizului și la finalizare.
             </p>
+
+            <DemoNotice className="mt-4 bg-card" />
+
+
 
             <Button asChild variant="outline" className="mt-6 rounded-sm">
               <a href={contact.phoneHref}>

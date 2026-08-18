@@ -14,8 +14,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { FavoriteButton } from "@/components/vehicle/FavoriteButton";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -157,7 +160,14 @@ function VehicleDetailPage() {
                   </li>
                 ))}
               </ul>
+              <Link
+                to="/verificare-masini-rulate"
+                className="mt-3 inline-block text-sm font-bold text-accent underline underline-offset-4"
+              >
+                Vezi toată lista de verificări
+              </Link>
             </div>
+
           </div>
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
@@ -206,7 +216,20 @@ function VehicleDetailPage() {
                 <Phone className="size-4" aria-hidden />
                 {contact.phone}
               </a>
+
+              <FavoriteButton
+                slug={vehicle.slug}
+                withLabel
+                className="mt-2 w-full justify-center"
+              />
+              <Link
+                to="/comparatie"
+                className="mt-2 block text-center text-xs text-muted-foreground underline underline-offset-4"
+              >
+                Vezi lista salvată și compară
+              </Link>
             </div>
+
 
             {mode ? (
               <LeadForm
@@ -346,10 +369,12 @@ function LeadForm({
           </a>
           .
         </p>
+        <DemoNotice className="mt-4 bg-card" />
         <Button variant="outline" className="mt-4 rounded-sm" onClick={onClose}>
           Închide
         </Button>
       </div>
+
     );
   }
 

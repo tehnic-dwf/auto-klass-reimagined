@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ComparatieRouteImport } from './routes/comparatie'
+import { Route as VerificareMasiniRulateRouteImport } from './routes/verificare-masini-rulate'
 import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index'
 import { Route as AutoturismeSlugRouteImport } from './routes/autoturisme.$slug'
 import { Route as ServiceDosarDauneRouteImport } from './routes/service.dosar-daune'
@@ -18,6 +20,16 @@ import { Route as ServiceProgramareRouteImport } from './routes/service.programa
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComparatieRoute = ComparatieRouteImport.update({
+  id: '/comparatie',
+  path: '/comparatie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificareMasiniRulateRoute = VerificareMasiniRulateRouteImport.update({
+  id: '/verificare-masini-rulate',
+  path: '/verificare-masini-rulate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutoturismeIndexRoute = AutoturismeIndexRouteImport.update({
@@ -43,6 +55,8 @@ const ServiceProgramareRoute = ServiceProgramareRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/comparatie': typeof ComparatieRoute
+  '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
@@ -50,6 +64,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/comparatie': typeof ComparatieRoute
+  '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
@@ -58,6 +74,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/comparatie': typeof ComparatieRoute
+  '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
@@ -67,6 +85,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/comparatie'
+    | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
@@ -74,6 +94,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/comparatie'
+    | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
@@ -81,6 +103,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/comparatie'
+    | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
@@ -89,6 +113,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ComparatieRoute: typeof ComparatieRoute
+  VerificareMasiniRulateRoute: typeof VerificareMasiniRulateRoute
   AutoturismeSlugRoute: typeof AutoturismeSlugRoute
   ServiceDosarDauneRoute: typeof ServiceDosarDauneRoute
   ServiceProgramareRoute: typeof ServiceProgramareRoute
@@ -102,6 +128,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparatie': {
+      id: '/comparatie'
+      path: '/comparatie'
+      fullPath: '/comparatie'
+      preLoaderRoute: typeof ComparatieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verificare-masini-rulate': {
+      id: '/verificare-masini-rulate'
+      path: '/verificare-masini-rulate'
+      fullPath: '/verificare-masini-rulate'
+      preLoaderRoute: typeof VerificareMasiniRulateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/autoturisme/': {
@@ -137,6 +177,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ComparatieRoute: ComparatieRoute,
+  VerificareMasiniRulateRoute: VerificareMasiniRulateRoute,
   AutoturismeSlugRoute: AutoturismeSlugRoute,
   ServiceDosarDauneRoute: ServiceDosarDauneRoute,
   ServiceProgramareRoute: ServiceProgramareRoute,

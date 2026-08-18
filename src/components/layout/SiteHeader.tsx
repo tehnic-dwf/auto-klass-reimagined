@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, Phone, Search, X } from "lucide-react";
 import { useState } from "react";
 
+import logoUrl from "@/assets/autoklass-logo.png";
 import { Button } from "@/components/ui/button";
 import { contact } from "@/data/company";
 import { cn } from "@/lib/utils";
@@ -29,9 +30,16 @@ const primaryNav = [
 ] as const;
 
 const secondaryNav = [
+  {
+    label: "Cum verificăm rulatele",
+    to: "/verificare-masini-rulate",
+    hint: "100+ puncte de control",
+  },
+  { label: "Lista mea salvată", to: "/comparatie", hint: "compară fără grabă" },
   { label: "Test drive", to: "/autoturisme", hint: "din pagina mașinii" },
   { label: "Sucursale", to: "/", hint: "9 locații în România" },
 ] as const;
+
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -40,7 +48,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4">
         <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
-          <img src="/__l5e/assets-v1/314fefc9-6eaf-48cc-a6dd-e6119412e33f/autoklass-logo.png" alt="Autoklass" className="h-6 w-auto" />
+          <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
