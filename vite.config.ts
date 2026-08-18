@@ -31,11 +31,15 @@ export default defineConfig({
   vite: { base },
   ...(isGithubPages
     ? {
-        // Lovable forcează cloudflare-module pentru orice preset standard; folosim presetul
-        // intern `lovable-fetch-bundle` ca build-ul de server să ruleze în Node/Preview și să
-        // poată fi folosit de prerender, apoi clientul e static ca pentru GitHub Pages.
+        // Lovable sandboxul forțează cloudflare-module pentru orice preset din config;
+        // folosim variabila de mediu LOVABLE_NITRO_PRESET=lovable-fetch-bundle ca build-ul
+        // de server să ruleze în Node/Preview pentru prerender, iar clientul rămâne static.
         nitro: {
-          preset: "lovable-fetch-bundle" as any,
+          rollupConfig: {
+            output: {
+              entryFileNames: "server.js",
+            },
+          },
         } as any,
         tanstackStart: {
           server: { entry: "server" },
