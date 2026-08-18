@@ -16,6 +16,7 @@ import { useState } from "react";
 
 import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
+import { AmbientPalette } from "@/components/ambient/AmbientPalette";
 import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -126,6 +127,15 @@ function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
         ) : null}
       </div>
       <p className="mt-2 text-sm text-muted-foreground">{shot.caption}</p>
+
+      {shot.ambient ? (
+        <div className="mt-3 rounded-sm bg-primary p-3 text-primary-foreground">
+          <p className="eyebrow text-primary-foreground/60">
+            Lumină ambientală — 64 de culori
+          </p>
+          <AmbientPalette compact className="mt-2" />
+        </div>
+      ) : null}
 
       <div className="mt-3 grid grid-cols-4 gap-2">
         {shots.map((item, index) => (

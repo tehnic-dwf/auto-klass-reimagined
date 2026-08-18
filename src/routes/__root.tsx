@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { useAmbient } from "../hooks/useAmbient";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -122,6 +123,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // Lumina ambientală aleasă rămâne aprinsă pe toate paginile.
+  useAmbient();
 
   return (
     <QueryClientProvider client={queryClient}>

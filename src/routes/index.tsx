@@ -12,6 +12,7 @@ import {
 
 import heroGrila from "@/assets/hero-grila.jpg";
 import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
+import { AmbientPalette } from "@/components/ambient/AmbientPalette";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
@@ -197,17 +198,18 @@ function HomePage() {
             <div className="ambient-edge flex flex-col justify-center p-6 md:p-10">
               <p className="eyebrow text-primary-foreground/60">Interior, după apus</p>
               <h2 className="mt-3 text-2xl leading-tight md:text-4xl">
-                Lumină care transformă
+                Alege lumina.
                 <span className="block text-primary-foreground/55">
-                  fiecare drum de seară.
+                  Restul site-ului se schimbă cu ea.
                 </span>
               </h2>
               <div className="ambient-line mt-5 w-44" aria-hidden />
               <p className="mt-5 text-sm leading-relaxed text-primary-foreground/75 md:text-base">
-                Nu „64 de culori”. Interiorul se colorează după starea ta, liniștea din
-                habitaclu cedează doar când tu apeși accelerația, iar totul rămâne la
-                îndemână fără să ceri nimic de două ori.
+                Nu scriem „64 de culori” într-o listă de dotări. Apasă una și o vezi
+                aprinsă peste tot, exact cum se aprinde habitaclul seara: un spațiu care
+                e al tău înainte să pornești motorul.
               </p>
+              <AmbientPalette className="mt-6" />
               <Link
                 to="/autoturisme"
                 className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary-foreground"
