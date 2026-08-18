@@ -63,8 +63,9 @@ Proiectul rulează pe TanStack Start cu SSR (Cloudflare Worker). GitHub Pages se
 
 ## Ce fac la primul run pe build (după aprobare)
 
-1. Activez prerender static + `404.html` + `.nojekyll` + workflow GitHub Actions.
-2. Adaug varianta aleasă de formulare (implicit: A, cu cheia serviciului ca variabilă publică).
-3. Livrez cele 4 completări din „ce lipsește” care sunt compatibile static: comparator, favorite, pagina de verificare mașini rulate, confirmare post-submit detaliată.
+1. Activez prerender static (toate rutele + un HTML pe fiecare mașină din `src/data/vehicles.ts`) + `404.html` + `.nojekyll` + base `/auto-klass-reimagined/`.
+2. Adaug workflow-ul `.github/workflows/deploy.yml` care buildează la push pe `main` și publică pe GitHub Pages (repo `tehnic-dwf/auto-klass-reimagined`).
+3. Formulare în modul demo (varianta C): validare client + ecran de confirmare simulat, fără trimitere reală.
+4. Livrez cele 4 completări din „ce lipsește” care sunt compatibile static: comparator, favorite, pagina „Cum verificăm o mașină rulată”, confirmare post-submit detaliată.
 
-Confirmă: (a) unde stă site-ul pe Pages — repo dedicat, `user.github.io`, sau domeniu propriu; (b) varianta de formulare A/B/C.
+De partea ta, o singură dată: în repo → Settings → Pages, sursa setată pe „GitHub Actions”, plus sincronizarea proiectului Lovable cu repo-ul.
