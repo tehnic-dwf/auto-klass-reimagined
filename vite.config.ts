@@ -6,7 +6,7 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-import { vehicles } from "./src/data/vehicles";
+import { vehicles } from "./src/data/vehicles.ts";
 
 /**
  * GH_PAGES=1 comută build-ul pe modul static pentru GitHub Pages
@@ -31,7 +31,16 @@ export default defineConfig({
   vite: { base },
   ...(isGithubPages
     ? {
-        nitro: { preset: "static" as const },
+        // Lovable sandboxul forțează cloudflare-module pentru orice preset din config;
+        // folosim variabila de mediu LOVABLE_NITRO_PRESET=lovable-fetch-bundle ca build-ul
+        // de server să ruleze în Node/Preview pentru prerender, iar clientul rămâne static.
+        nitro: {
+          rollupConfig: {
+            output: {
+              entryFileNames: "server.js",
+            },
+          },
+        } as any,
         tanstackStart: {
           server: { entry: "server" },
           prerender: { enabled: true, crawlLinks: true },
