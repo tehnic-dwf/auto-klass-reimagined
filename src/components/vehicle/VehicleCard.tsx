@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { Fuel, Gauge, MapPin, Settings2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { FavoriteButton } from "@/components/vehicle/FavoriteButton";
 import { formatKm, formatPrice, type Vehicle } from "@/data/vehicles";
+
 
 export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
   const saving = vehicle.listPriceEur ? vehicle.listPriceEur - vehicle.priceEur : 0;
