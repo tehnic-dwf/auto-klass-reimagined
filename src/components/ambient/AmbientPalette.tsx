@@ -49,7 +49,8 @@ export function AmbientPalette({ compact = false, className }: Props) {
       )}
 
       <div
-        className={`grid grid-cols-16 gap-1 ${compact ? "" : "mt-4"}`}
+        className={`grid gap-1 ${compact ? "" : "mt-4"}`}
+        style={{ gridTemplateColumns: "repeat(16, minmax(0, 1fr))" }}
         role="group"
         aria-label="Alege una din cele 64 de culori ambientale"
       >
