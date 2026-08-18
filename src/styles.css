@@ -115,6 +115,9 @@
   --trust: oklch(0.4623 0.1131 148.28); /* #198025, semnal de verificare */
   --trust-foreground: oklch(0.99 0 0);
 
+  --ambient-amber: oklch(0.74 0.16 62); /* lumina ambientală caldă */
+  --ambient-cyan: oklch(0.72 0.13 220); /* lumina ambientală rece */
+
   --shadow-card: 0 1px 2px oklch(0.2405 0.0139 265.53 / 8%);
   --shadow-panel: 0 8px 32px oklch(0.2405 0.0139 265.53 / 12%);
 }
