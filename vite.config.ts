@@ -38,7 +38,7 @@ export default defineConfig({
               entryFileNames: "server.js",
             },
           },
-        },
+        } as any,
         tanstackStart: {
           server: { entry: "server" },
           prerender: { enabled: true, crawlLinks: true },
