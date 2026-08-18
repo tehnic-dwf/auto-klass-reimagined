@@ -20,20 +20,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: 22
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build static site
-        env:
-          GH_PAGES: "1"
-          NITRO_PRESET: static
-        run: |
-          npm run build
-          node scripts/gh-pages-postbuild.mjs
+        run: bun run build:pages
 
       - name: Resolve publish dir
         id: outdir
