@@ -52,11 +52,7 @@ Proiectul rulează pe TanStack Start cu SSR (Cloudflare Worker). GitHub Pages se
 3. **`base` path:** repo-ul e `github.com/tehnic-dwf/auto-klass-reimagined`, deci URL-ul va fi `tehnic-dwf.github.io/auto-klass-reimagined/`. Se setează base-ul `/auto-klass-reimagined/` în config, altfel CSS/JS/imagini cad. (Dacă adaugi ulterior domeniu propriu, base revine la `/`.)
 4. **`.nojekyll`** în `public/` — altfel Jekyll ignoră folderele care încep cu `_` (Vite generează așa assets).
 5. **Workflow `.github/workflows/deploy.yml`:** build la push pe `main` → publicare artifact pe Pages. Un singur fișier, zero configurare manuală după.
-6. **Formulare fără backend:** pe Pages nu există endpoint. Trei opțiuni, alegi tu:
-   - **A. Serviciu extern de formulare** (Formspree / Basin / Web3Forms): funcționează 100% static, primești lead-urile pe email. Recomandat pentru prototip.
-   - **B. `mailto:` + WhatsApp/telefon** ca acțiune primară: zero dependințe, dar conversie mai slabă.
-   - **C. Fără trimitere reală** (doar ecran de confirmare) — bun strict pentru demo de UX.
-   - Upload de poze la dosarul de daună funcționează doar cu varianta A (și doar cu servicii care acceptă atașamente).
+6. **Formulare — varianta C (demo vizual, fără trimitere reală):** niciun serviciu extern, nicio cheie, niciun email. La submit se validează câmpurile în client și se afișează un ecran de confirmare simulat („Ce urmează”, pas cu pas, cu SLA-ul scris). Upload-ul de poze la dosarul de daună apare ca UI complet (selectare fișiere, preview, listă de documente necesare), dar fișierele rămân local în browser — nu se încarcă nicăieri. Fără mesaje care sugerează că cererea a fost trimisă real către Autoklass.
 
 ### Ce pierdem prin GitHub Pages
 - Fără funcții de server → fără stoc dinamic din API/DB, fără trimitere proprie de email, fără log de lead-uri.
