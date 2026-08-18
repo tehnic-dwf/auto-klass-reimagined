@@ -10,8 +10,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { PhotoUpload } from "@/components/damage/PhotoUpload";
+import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+
 import {
   Accordion,
   AccordionContent,
