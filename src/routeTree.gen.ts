@@ -10,33 +10,89 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index'
+import { Route as AutoturismeSlugRouteImport } from './routes/autoturisme.$slug'
+import { Route as ServiceDosarDauneRouteImport } from './routes/service.dosar-daune'
+import { Route as ServiceProgramareRouteImport } from './routes/service.programare'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutoturismeIndexRoute = AutoturismeIndexRouteImport.update({
+  id: '/autoturisme/',
+  path: '/autoturisme/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutoturismeSlugRoute = AutoturismeSlugRouteImport.update({
+  id: '/autoturisme/$slug',
+  path: '/autoturisme/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceDosarDauneRoute = ServiceDosarDauneRouteImport.update({
+  id: '/service/dosar-daune',
+  path: '/service/dosar-daune',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceProgramareRoute = ServiceProgramareRouteImport.update({
+  id: '/service/programare',
+  path: '/service/programare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/autoturisme/$slug': typeof AutoturismeSlugRoute
+  '/service/dosar-daune': typeof ServiceDosarDauneRoute
+  '/service/programare': typeof ServiceProgramareRoute
+  '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/autoturisme/$slug': typeof AutoturismeSlugRoute
+  '/service/dosar-daune': typeof ServiceDosarDauneRoute
+  '/service/programare': typeof ServiceProgramareRoute
+  '/autoturisme': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/autoturisme/$slug': typeof AutoturismeSlugRoute
+  '/service/dosar-daune': typeof ServiceDosarDauneRoute
+  '/service/programare': typeof ServiceProgramareRoute
+  '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/autoturisme/$slug'
+    | '/service/dosar-daune'
+    | '/service/programare'
+    | '/autoturisme/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/autoturisme/$slug'
+    | '/service/dosar-daune'
+    | '/service/programare'
+    | '/autoturisme'
+  id:
+    | '__root__'
+    | '/'
+    | '/autoturisme/$slug'
+    | '/service/dosar-daune'
+    | '/service/programare'
+    | '/autoturisme/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutoturismeSlugRoute: typeof AutoturismeSlugRoute
+  ServiceDosarDauneRoute: typeof ServiceDosarDauneRoute
+  ServiceProgramareRoute: typeof ServiceProgramareRoute
+  AutoturismeIndexRoute: typeof AutoturismeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +104,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/autoturisme/': {
+      id: '/autoturisme/'
+      path: '/autoturisme'
+      fullPath: '/autoturisme/'
+      preLoaderRoute: typeof AutoturismeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/autoturisme/$slug': {
+      id: '/autoturisme/$slug'
+      path: '/autoturisme/$slug'
+      fullPath: '/autoturisme/$slug'
+      preLoaderRoute: typeof AutoturismeSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service/dosar-daune': {
+      id: '/service/dosar-daune'
+      path: '/service/dosar-daune'
+      fullPath: '/service/dosar-daune'
+      preLoaderRoute: typeof ServiceDosarDauneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service/programare': {
+      id: '/service/programare'
+      path: '/service/programare'
+      fullPath: '/service/programare'
+      preLoaderRoute: typeof ServiceProgramareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutoturismeSlugRoute: AutoturismeSlugRoute,
+  ServiceDosarDauneRoute: ServiceDosarDauneRoute,
+  ServiceProgramareRoute: ServiceProgramareRoute,
+  AutoturismeIndexRoute: AutoturismeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
