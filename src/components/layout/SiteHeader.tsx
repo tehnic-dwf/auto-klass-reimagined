@@ -37,7 +37,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4">
         <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
           <img src="/__l5e/assets-v1/314fefc9-6eaf-48cc-a6dd-e6119412e33f/autoklass-logo.png" alt="Autoklass" className="h-6 w-auto" />
@@ -48,8 +48,8 @@ export function SiteHeader() {
             <Link
               key={item.to}
               to={item.to}
-              className="text-sm text-foreground/80 transition-colors hover:text-foreground"
-              activeProps={{ className: "text-foreground font-bold" }}
+              className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+              activeProps={{ className: "text-primary-foreground font-bold" }}
             >
               {item.label}
             </Link>
@@ -59,7 +59,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-1">
           <a
             href={contact.phoneHref}
-            className="hidden items-center gap-2 rounded-sm px-3 py-2 text-sm font-bold text-foreground sm:flex"
+            className="hidden items-center gap-2 rounded-sm px-3 py-2 text-sm font-bold text-primary-foreground sm:flex"
           >
             <Phone className="size-4 text-accent" aria-hidden />
             {contact.phone}
@@ -67,7 +67,7 @@ export function SiteHeader() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground md:hidden"
             aria-label={open ? "Închide meniul" : "Deschide meniul"}
             aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
@@ -80,7 +80,7 @@ export function SiteHeader() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-border bg-background md:hidden",
+          "overflow-hidden border-t border-primary-foreground/15 bg-primary md:hidden",
           open ? "block" : "hidden",
         )}
       >
@@ -88,7 +88,7 @@ export function SiteHeader() {
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
-            className="mb-4 flex items-center gap-3 rounded-sm border border-border bg-secondary px-3 py-3 text-sm text-muted-foreground"
+            className="mb-4 flex items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-3 text-sm text-primary-foreground/70"
           >
             <Search className="size-4" aria-hidden />
             Caută în stocul de 1.172 mașini Mercedes-Benz
@@ -100,10 +100,10 @@ export function SiteHeader() {
                 <Link
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="block rounded-sm px-3 py-3 hover:bg-secondary"
+                  className="block rounded-sm px-3 py-3 hover:bg-primary-foreground/10"
                 >
                   <span className="block text-base font-bold">{item.label}</span>
-                  <span className="block text-sm text-muted-foreground">
+                  <span className="block text-sm text-primary-foreground/65">
                     {item.description}
                   </span>
                 </Link>
@@ -111,18 +111,18 @@ export function SiteHeader() {
             ))}
           </ul>
 
-          <div className="mt-4 border-t border-border pt-4">
-            <p className="eyebrow mb-2">Altele</p>
+          <div className="mt-4 border-t border-primary-foreground/15 pt-4">
+            <p className="eyebrow mb-2 text-primary-foreground/60">Altele</p>
             <ul className="space-y-1">
               {secondaryNav.map((item) => (
                 <li key={item.label}>
                   <Link
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className="flex items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-secondary"
+                    className="flex items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-primary-foreground/10"
                   >
                     <span>{item.label}</span>
-                    <span className="text-xs text-muted-foreground">{item.hint}</span>
+                    <span className="text-xs text-primary-foreground/60">{item.hint}</span>
                   </Link>
                 </li>
               ))}
@@ -131,7 +131,7 @@ export function SiteHeader() {
 
           <a
             href={contact.phoneHref}
-            className="mt-4 flex items-center justify-center gap-2 rounded-sm bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
+            className="mt-4 flex items-center justify-center gap-2 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
           >
             <Phone className="size-4" aria-hidden />
             Sună {contact.phone}
