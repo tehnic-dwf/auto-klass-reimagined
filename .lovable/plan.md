@@ -49,14 +49,10 @@ Proiectul rulează pe TanStack Start cu SSR (Cloudflare Worker). GitHub Pages se
 
 1. **Prerender toate rutele la build.** Se activează prerendering-ul TanStack Start cu urmărire de link-uri, plus lista explicită de slug-uri generată din `src/data/vehicles.ts`, ca fiecare mașină să aibă un HTML propriu. Rezultat: `dist/` cu HTML static per rută — indexabil, fără server.
 2. **Fallback pentru deep-link-uri:** copiere `index.html` → `404.html` în output. GitHub Pages servește `404.html` pentru orice cale necunoscută, iar routerul preia navigarea în client. Fără asta, refresh pe `/autoturisme/clasa-c-200` dă 404.
-3. **`base` path:** dacă site-ul stă la `user.github.io/autoklass`, se setează base-ul `/autoklass/` în config (altfel CSS/JS/imagini cad). Cu domeniu propriu sau repo `user.github.io`, base rămâne `/`.
+3. **`base` path:** repo-ul e `github.com/tehnic-dwf/auto-klass-reimagined`, deci URL-ul va fi `tehnic-dwf.github.io/auto-klass-reimagined/`. Se setează base-ul `/auto-klass-reimagined/` în config, altfel CSS/JS/imagini cad. (Dacă adaugi ulterior domeniu propriu, base revine la `/`.)
 4. **`.nojekyll`** în `public/` — altfel Jekyll ignoră folderele care încep cu `_` (Vite generează așa assets).
 5. **Workflow `.github/workflows/deploy.yml`:** build la push pe `main` → publicare artifact pe Pages. Un singur fișier, zero configurare manuală după.
-6. **Formulare fără backend:** pe Pages nu există endpoint. Trei opțiuni, alegi tu:
-   - **A. Serviciu extern de formulare** (Formspree / Basin / Web3Forms): funcționează 100% static, primești lead-urile pe email. Recomandat pentru prototip.
-   - **B. `mailto:` + WhatsApp/telefon** ca acțiune primară: zero dependințe, dar conversie mai slabă.
-   - **C. Fără trimitere reală** (doar ecran de confirmare) — bun strict pentru demo de UX.
-   - Upload de poze la dosarul de daună funcționează doar cu varianta A (și doar cu servicii care acceptă atașamente).
+6. **Formulare — varianta C (demo vizual, fără trimitere reală):** niciun serviciu extern, nicio cheie, niciun email. La submit se validează câmpurile în client și se afișează un ecran de confirmare simulat („Ce urmează”, pas cu pas, cu SLA-ul scris). Upload-ul de poze la dosarul de daună apare ca UI complet (selectare fișiere, preview, listă de documente necesare), dar fișierele rămân local în browser — nu se încarcă nicăieri. Fără mesaje care sugerează că cererea a fost trimisă real către Autoklass.
 
 ### Ce pierdem prin GitHub Pages
 - Fără funcții de server → fără stoc dinamic din API/DB, fără trimitere proprie de email, fără log de lead-uri.
@@ -67,8 +63,9 @@ Proiectul rulează pe TanStack Start cu SSR (Cloudflare Worker). GitHub Pages se
 
 ## Ce fac la primul run pe build (după aprobare)
 
-1. Activez prerender static + `404.html` + `.nojekyll` + workflow GitHub Actions.
-2. Adaug varianta aleasă de formulare (implicit: A, cu cheia serviciului ca variabilă publică).
-3. Livrez cele 4 completări din „ce lipsește” care sunt compatibile static: comparator, favorite, pagina de verificare mașini rulate, confirmare post-submit detaliată.
+1. Activez prerender static (toate rutele + un HTML pe fiecare mașină din `src/data/vehicles.ts`) + `404.html` + `.nojekyll` + base `/auto-klass-reimagined/`.
+2. Adaug workflow-ul `.github/workflows/deploy.yml` care buildează la push pe `main` și publică pe GitHub Pages (repo `tehnic-dwf/auto-klass-reimagined`).
+3. Formulare în modul demo (varianta C): validare client + ecran de confirmare simulat, fără trimitere reală.
+4. Livrez cele 4 completări din „ce lipsește” care sunt compatibile static: comparator, favorite, pagina „Cum verificăm o mașină rulată”, confirmare post-submit detaliată.
 
-Confirmă: (a) unde stă site-ul pe Pages — repo dedicat, `user.github.io`, sau domeniu propriu; (b) varianta de formulare A/B/C.
+De partea ta, o singură dată: în repo → Settings → Pages, sursa setată pe „GitHub Actions”, plus sincronizarea proiectului Lovable cu repo-ul.
