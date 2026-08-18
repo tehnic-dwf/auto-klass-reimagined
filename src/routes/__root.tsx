@@ -122,6 +122,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // Lumina ambientală aleasă rămâne aprinsă pe toate paginile.
+  useAmbient();
 
   return (
     <QueryClientProvider client={queryClient}>
