@@ -10,6 +10,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import heroGrila from "@/assets/hero-grila.jpg";
+import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
@@ -88,7 +90,6 @@ const promises = [
 
 function HomePage() {
   const featured = vehicles.filter((vehicle) => !vehicle.reserved).slice(0, 6);
-  const heroVehicle = vehicles.find((vehicle) => vehicle.bodyType === "Sedan");
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
   const heroStats = [
