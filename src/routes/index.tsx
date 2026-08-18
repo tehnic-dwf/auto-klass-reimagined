@@ -91,29 +91,39 @@ function HomePage() {
   const heroVehicle = vehicles.find((vehicle) => vehicle.bodyType === "Sedan");
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
+  const heroStats = [
+    { value: formatPrice(stockFacts.newMercedes), label: "Mercedes-Benz noi" },
+    { value: formatPrice(stockFacts.usedMercedes), label: "Rulate verificate" },
+    { value: "9", label: "Sucursale" },
+    { value: "2h", label: "Timp de răspuns" },
+  ];
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       <SiteHeader />
 
       <main>
-        <section className="relative overflow-hidden bg-primary text-primary-foreground">
+        <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
           <img
             src={heroVehicle?.image}
             alt="Mercedes-Benz Clasa E în stocul Autoklass"
-            className="absolute inset-0 size-full object-cover opacity-35"
+            className="absolute inset-0 size-full scale-105 object-cover"
           />
-          <div className="relative mx-auto w-full max-w-6xl px-4 py-14 md:py-24">
-            <p className="eyebrow text-primary-foreground/70">
+          <div className="hero-veil absolute inset-0" aria-hidden />
+
+          <div className="relative mx-auto flex w-full max-w-6xl flex-col px-4 pb-8 pt-24 md:min-h-[36rem] md:justify-end md:pb-12 md:pt-40">
+            <p className="eyebrow text-primary-foreground/75">
               Dealer autorizat Mercedes-Benz din 2001
             </p>
-            <h1 className="mt-3 max-w-2xl text-3xl leading-tight md:text-5xl">
-              {formatPrice(stockFacts.totalMercedes)} de mașini Mercedes-Benz, cu prețul
-              și termenul scrise negru pe alb.
+            <h1 className="mt-4 max-w-3xl text-[2.1rem] leading-[1.05] tracking-tight md:text-6xl">
+              {formatPrice(stockFacts.totalMercedes)} de Mercedes-Benz,
+              <span className="block text-primary-foreground/55">
+                cu prețul și termenul scrise negru pe alb.
+              </span>
             </h1>
-            <p className="mt-4 max-w-xl text-primary-foreground/85">
+            <p className="mt-5 max-w-lg text-sm leading-relaxed text-primary-foreground/80 md:text-base">
               {stockFacts.newMercedes} mașini noi și {stockFacts.usedMercedes} rulate
-              verificate, de la {formatPrice(cheapest)} €. Alege online, te contactăm în
+              verificate, de la {formatPrice(cheapest)} €. Alegi online, te contactăm în
               maximum 2 ore lucrătoare.
             </p>
 
@@ -134,49 +144,83 @@ function HomePage() {
               </Button>
             </div>
           </div>
-        </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 py-10">
-          <h2 className="text-xl md:text-2xl">De ce ai venit azi?</h2>
-          <div className="mt-5 grid gap-3 md:grid-cols-3">
-            {intents.map((intent) => (
-              <Link
-                key={intent.title}
-                to={intent.to}
-                className="flex flex-col rounded-sm border border-border bg-card p-5 shadow-card transition-colors hover:border-accent"
-              >
-                <intent.icon className="size-6 text-accent" aria-hidden />
-                <h3 className="mt-3 text-lg">{intent.title}</h3>
-                <p className="mt-1 flex-1 text-sm text-muted-foreground">{intent.body}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-accent">
-                  {intent.cta}
-                  <ArrowRight className="size-4" aria-hidden />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="bg-secondary py-10">
-          <div className="mx-auto w-full max-w-6xl px-4">
-            <h2 className="text-xl md:text-2xl">Ce îți garantăm în scris</h2>
-            <div className="mt-5 grid gap-4 md:grid-cols-3">
-              {promises.map((promise) => (
-                <div key={promise.title} className="rounded-sm bg-card p-5 shadow-card">
-                  <promise.icon className="size-5 text-trust" aria-hidden />
-                  <h3 className="mt-3 text-base">{promise.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{promise.body}</p>
+          <div className="relative border-t border-primary-foreground/15">
+            <div className="mx-auto grid w-full max-w-6xl grid-cols-2 px-4 md:grid-cols-4">
+              {heroStats.map((stat, index) => (
+                <div
+                  key={stat.label}
+                  className={`py-4 md:py-5 ${
+                    index % 2 === 1 ? "border-l border-primary-foreground/15 pl-4" : ""
+                  } md:border-l md:border-primary-foreground/15 md:pl-6 ${
+                    index === 0 ? "md:border-l-0 md:pl-0" : ""
+                  }`}
+                >
+                  <p className="font-display text-2xl leading-none md:text-3xl">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-[0.7rem] uppercase tracking-[0.14em] text-primary-foreground/60">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 py-10">
+        <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
+          <h2 className="rule-accent text-2xl md:text-3xl">De ce ai venit azi?</h2>
+          <div className="mt-6 grid gap-3 md:grid-cols-3">
+            {intents.map((intent, index) => (
+              <Link
+                key={intent.title}
+                to={intent.to}
+                className="group relative flex flex-col overflow-hidden rounded-sm border border-border bg-card p-6 shadow-card transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lift"
+              >
+                <span className="absolute right-5 top-5 font-display text-4xl leading-none text-border transition-colors group-hover:text-accent/25">
+                  0{index + 1}
+                </span>
+                <span className="flex size-11 items-center justify-center rounded-sm bg-primary text-primary-foreground transition-colors group-hover:bg-accent">
+                  <intent.icon className="size-5" aria-hidden />
+                </span>
+                <h3 className="mt-4 text-lg">{intent.title}</h3>
+                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {intent.body}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-accent">
+                  {intent.cta}
+                  <ArrowRight
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-primary py-12 text-primary-foreground md:py-16">
+          <div className="mx-auto w-full max-w-6xl px-4">
+            <h2 className="rule-accent text-2xl md:text-3xl">Ce îți garantăm în scris</h2>
+            <div className="mt-6 grid gap-px overflow-hidden rounded-sm bg-primary-foreground/15 md:grid-cols-3">
+              {promises.map((promise) => (
+                <div key={promise.title} className="bg-primary p-6">
+                  <promise.icon className="size-6 text-trust" aria-hidden />
+                  <h3 className="mt-4 text-base leading-snug">{promise.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-primary-foreground/70">
+                    {promise.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h2 className="text-xl md:text-2xl">Selecție din stoc</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <h2 className="rule-accent text-2xl md:text-3xl">Selecție din stoc</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Noi și rulate în aceeași listă, exact cum le compari în realitate.
               </p>
             </div>
@@ -189,7 +233,7 @@ function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((vehicle) => (
               <VehicleCard key={vehicle.slug} vehicle={vehicle} />
             ))}
@@ -200,22 +244,22 @@ function HomePage() {
           </Button>
         </section>
 
-        <section className="border-y border-border bg-card py-10">
+        <section className="border-t border-border bg-secondary py-12 md:py-16">
           <div className="mx-auto w-full max-w-6xl px-4">
-            <h2 className="text-xl md:text-2xl">Mărci reprezentate oficial</h2>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <h2 className="rule-accent text-2xl md:text-3xl">Mărci reprezentate oficial</h2>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {brandAuthorizations.map((brand) => (
                 <div
                   key={brand.brand}
-                  className="rounded-sm border border-border p-4 text-sm"
+                  className="rounded-sm border-l-2 border-accent bg-card p-5 text-sm shadow-card"
                 >
-                  <p className="font-display text-lg">{brand.brand}</p>
-                  <p className="text-muted-foreground">
+                  <p className="font-display text-xl">{brand.brand}</p>
+                  <p className="mt-0.5 text-muted-foreground">
                     {brand.since
                       ? `Autorizat din ${brand.since}`
                       : "Reprezentanță autorizată"}
                   </p>
-                  <p className="mt-1 text-muted-foreground">{brand.note}</p>
+                  <p className="mt-1.5 text-muted-foreground">{brand.note}</p>
                 </div>
               ))}
             </div>
