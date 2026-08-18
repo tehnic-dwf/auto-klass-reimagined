@@ -115,6 +115,9 @@
   --trust: oklch(0.4623 0.1131 148.28); /* #198025, semnal de verificare */
   --trust-foreground: oklch(0.99 0 0);
 
+  --ambient-amber: oklch(0.74 0.16 62); /* lumina ambientală caldă */
+  --ambient-cyan: oklch(0.72 0.13 220); /* lumina ambientală rece */
+
   --shadow-card: 0 1px 2px oklch(0.2405 0.0139 265.53 / 8%);
   --shadow-panel: 0 8px 32px oklch(0.2405 0.0139 265.53 / 12%);
 }
@@ -175,17 +178,71 @@
 
 @utility hero-veil {
   background-image: linear-gradient(
-      to top,
-      var(--color-primary) 6%,
-      color-mix(in oklab, var(--color-primary) 82%, transparent) 42%,
-      color-mix(in oklab, var(--color-primary) 45%, transparent) 100%
+      to bottom,
+      color-mix(in oklab, var(--color-primary) 72%, transparent) 0%,
+      color-mix(in oklab, var(--color-primary) 58%, transparent) 34%,
+      color-mix(in oklab, var(--color-primary) 12%, transparent) 62%,
+      color-mix(in oklab, var(--color-primary) 55%, transparent) 100%
     ),
-    linear-gradient(
-      100deg,
-      color-mix(in oklab, var(--color-primary) 90%, transparent) 0%,
-      transparent 65%
+    radial-gradient(
+      110% 70% at 50% 20%,
+      color-mix(in oklab, var(--color-primary) 55%, transparent) 0%,
+      transparent 70%
     );
 }
+
+/* Lumina ambientală: amber cald + cyan rece, exact tiparul din interiorul MB */
+@utility ambient-bloom {
+  background-image: radial-gradient(
+      60% 42% at 18% 82%,
+      color-mix(in oklab, var(--ambient-amber) 42%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      55% 40% at 84% 22%,
+      color-mix(in oklab, var(--ambient-cyan) 38%, transparent) 0%,
+      transparent 72%
+    );
+  animation: ambient-breathe 9s ease-in-out infinite alternate;
+}
+
+@utility ambient-line {
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--ambient-amber) 22%,
+    color-mix(in oklab, var(--ambient-amber) 50%, var(--ambient-cyan)) 52%,
+    var(--ambient-cyan) 78%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px color-mix(in oklab, var(--ambient-amber) 45%, transparent);
+  animation: ambient-breathe 7s ease-in-out infinite alternate;
+}
+
+@utility ambient-edge {
+  box-shadow:
+    inset 1px 0 0 color-mix(in oklab, var(--ambient-amber) 55%, transparent),
+    inset -1px 0 0 color-mix(in oklab, var(--ambient-cyan) 55%, transparent),
+    0 0 40px -12px color-mix(in oklab, var(--ambient-amber) 40%, transparent);
+}
+
+@keyframes ambient-breathe {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bloom,
+  .ambient-line {
+    animation: none;
+  }
+}
+
 
 @utility rule-accent {
   &::before {

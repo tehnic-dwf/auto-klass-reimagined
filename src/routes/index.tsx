@@ -10,6 +10,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import heroGrila from "@/assets/hero-grila.jpg";
+import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
@@ -88,7 +90,6 @@ const promises = [
 
 function HomePage() {
   const featured = vehicles.filter((vehicle) => !vehicle.reserved).slice(0, 6);
-  const heroVehicle = vehicles.find((vehicle) => vehicle.bodyType === "Sedan");
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
   const heroStats = [
@@ -103,31 +104,39 @@ function HomePage() {
       <SiteHeader />
 
       <main>
+        {/* Hero: fața mașinii, frontal, cu grila în centru — semnalul citit instinctiv */}
         <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
           <img
-            src={heroVehicle?.image}
-            alt="Mercedes-Benz Clasa E în stocul Autoklass"
-            className="absolute inset-0 size-full scale-105 object-cover"
+            src={heroGrila}
+            alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
+            width={1920}
+            height={1280}
+            className="absolute inset-0 size-full object-cover object-[center_78%]"
           />
           <div className="hero-veil absolute inset-0" aria-hidden />
+          <div
+            className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen"
+            aria-hidden
+          />
 
-          <div className="relative mx-auto flex w-full max-w-6xl flex-col px-4 pb-8 pt-24 md:min-h-[36rem] md:justify-end md:pb-12 md:pt-40">
-            <p className="eyebrow text-primary-foreground/75">
+          <div className="relative mx-auto flex min-h-[34rem] w-full max-w-6xl flex-col items-center px-4 pb-40 pt-24 text-center md:min-h-[42rem] md:justify-start md:pb-56 md:pt-40">
+            <p className="eyebrow text-primary-foreground/70">
               Dealer autorizat Mercedes-Benz din 2001
             </p>
-            <h1 className="mt-4 max-w-3xl text-[2.1rem] leading-[1.05] tracking-tight md:text-6xl">
-              {formatPrice(stockFacts.totalMercedes)} de Mercedes-Benz,
+            <h1 className="mt-4 max-w-3xl text-[2.2rem] leading-[1.03] tracking-tight md:text-6xl">
+              O mașină care se potrivește
               <span className="block text-primary-foreground/55">
-                cu prețul și termenul scrise negru pe alb.
+                cui ai devenit.
               </span>
             </h1>
-            <p className="mt-5 max-w-lg text-sm leading-relaxed text-primary-foreground/80 md:text-base">
-              {stockFacts.newMercedes} mașini noi și {stockFacts.usedMercedes} rulate
-              verificate, de la {formatPrice(cheapest)} €. Alegi online, te contactăm în
-              maximum 2 ore lucrătoare.
+            <div className="ambient-line mt-7 w-56 max-w-full md:w-80" aria-hidden />
+            <p className="mt-6 max-w-lg text-sm leading-relaxed text-primary-foreground/80 md:text-base">
+              {formatPrice(stockFacts.totalMercedes)} de Mercedes-Benz în stoc,{" "}
+              {stockFacts.newMercedes} noi și {stockFacts.usedMercedes} rulate verificate,
+              de la {formatPrice(cheapest)} €. Prețul e scris, termenul e asumat.
             </p>
 
-            <div className="mt-7 flex flex-col gap-2 sm:flex-row">
+            <div className="mt-7 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
                 <Link to="/autoturisme">
                   Vezi stocul disponibil
@@ -167,6 +176,49 @@ function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Lumina ambientală — senzație, nu specificație */}
+        <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
+          <div className="mx-auto grid w-full max-w-6xl items-stretch gap-0 md:grid-cols-2">
+            <div className="relative min-h-[16rem] overflow-hidden md:min-h-[26rem]">
+              <img
+                src={interiorAmbiental}
+                alt="Interior Mercedes-Benz noaptea, cu lumina ambientală aprinsă"
+                loading="lazy"
+                width={1600}
+                height={1200}
+                className="size-full object-cover"
+              />
+              <div
+                className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen"
+                aria-hidden
+              />
+            </div>
+            <div className="ambient-edge flex flex-col justify-center p-6 md:p-10">
+              <p className="eyebrow text-primary-foreground/60">Interior, după apus</p>
+              <h2 className="mt-3 text-2xl leading-tight md:text-4xl">
+                Lumină care transformă
+                <span className="block text-primary-foreground/55">
+                  fiecare drum de seară.
+                </span>
+              </h2>
+              <div className="ambient-line mt-5 w-44" aria-hidden />
+              <p className="mt-5 text-sm leading-relaxed text-primary-foreground/75 md:text-base">
+                Nu „64 de culori”. Interiorul se colorează după starea ta, liniștea din
+                habitaclu cedează doar când tu apeși accelerația, iar totul rămâne la
+                îndemână fără să ceri nimic de două ori.
+              </p>
+              <Link
+                to="/autoturisme"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary-foreground"
+              >
+                Vezi mașinile cu interiorul care te așteaptă
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            </div>
+          </div>
+        </section>
+
 
         <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
           <h2 className="rule-accent text-2xl md:text-3xl">De ce ai venit azi?</h2>

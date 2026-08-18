@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import detaliuGrila from "@/assets/detaliu-grila.jpg";
+import heroGrila from "@/assets/hero-grila.jpg";
+import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -72,6 +75,85 @@ export const Route = createFileRoute("/autoturisme/$slug")({
 
 type ActionMode = "test-drive" | "consultant";
 
+/**
+ * Galerie ordonată după impactul emoțional documentat: fața mașinii (grila) prima,
+ * lumina ambientală imediat după — nu la finalul specificațiilor.
+ */
+function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
+  const shots = [
+    {
+      src: heroGrila,
+      alt: `${vehicle.title} văzut frontal, cu grila și farurile aprinse`,
+      label: "Față",
+      caption: "Grila și privirea farurilor — prima impresie, cea care rămâne.",
+      ambient: false,
+    },
+    {
+      src: interiorAmbiental,
+      alt: `Interior ${vehicle.title} noaptea, cu lumina ambientală aprinsă`,
+      label: "Lumină ambientală",
+      caption: "Lumină care transformă fiecare drum de seară într-o experiență.",
+      ambient: true,
+    },
+    {
+      src: gallerySize(vehicle.image),
+      alt: vehicle.title,
+      label: "Exterior",
+      caption: `${vehicle.title}, exact mașina din stocul de la ${vehicle.branch}.`,
+      ambient: false,
+    },
+    {
+      src: detaliuGrila,
+      alt: "Detaliu grilă și stea Mercedes-Benz",
+      label: "Detaliu",
+      caption: "Cromul grilei și steaua, în lumină rece.",
+      ambient: false,
+    },
+  ];
+
+  const [active, setActive] = useState(0);
+  const shot = shots[active]!;
+
+  return (
+    <div>
+      <div className="relative isolate overflow-hidden rounded-sm border border-border bg-primary">
+        <img src={shot.src} alt={shot.alt} className="aspect-[4/3] w-full object-cover" />
+        {shot.ambient ? (
+          <div
+            className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen"
+            aria-hidden
+          />
+        ) : null}
+      </div>
+      <p className="mt-2 text-sm text-muted-foreground">{shot.caption}</p>
+
+      <div className="mt-3 grid grid-cols-4 gap-2">
+        {shots.map((item, index) => (
+          <button
+            key={item.label}
+            type="button"
+            onClick={() => setActive(index)}
+            aria-current={index === active}
+            className={`relative overflow-hidden rounded-sm border bg-primary text-left ${
+              index === active ? "border-accent" : "border-border"
+            }`}
+          >
+            <img
+              src={item.src}
+              alt=""
+              loading="lazy"
+              className="aspect-[4/3] w-full object-cover"
+            />
+            <span className="absolute inset-x-0 bottom-0 bg-primary/70 px-1.5 py-1 text-[0.6rem] uppercase tracking-[0.1em] text-primary-foreground">
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function VehicleDetailPage() {
   const { vehicle } = Route.useLoaderData();
   const [mode, setMode] = useState<ActionMode | null>(null);
@@ -96,13 +178,8 @@ function VehicleDetailPage() {
 
         <div className="mt-4 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <div className="overflow-hidden rounded-sm border border-border bg-secondary">
-              <img
-                src={gallerySize(vehicle.image)}
-                alt={vehicle.title}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </div>
+            <VehicleGallery vehicle={vehicle} />
+
 
             <div className="mt-5">
               <div className="flex flex-wrap items-center gap-2">
