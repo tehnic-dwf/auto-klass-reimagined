@@ -157,7 +157,14 @@ function VehicleDetailPage() {
                   </li>
                 ))}
               </ul>
+              <Link
+                to="/verificare-masini-rulate"
+                className="mt-3 inline-block text-sm font-bold text-accent underline underline-offset-4"
+              >
+                Vezi toată lista de verificări
+              </Link>
             </div>
+
           </div>
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
