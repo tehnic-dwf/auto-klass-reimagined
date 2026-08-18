@@ -35,7 +35,9 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             </Badge>
           ) : null}
         </div>
+        <FavoriteButton slug={vehicle.slug} className="absolute right-2 top-2" />
       </div>
+
 
       <div className="flex flex-1 flex-col p-4">
         <h3 className="text-base leading-snug">{vehicle.title}</h3>
