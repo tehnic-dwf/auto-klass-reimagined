@@ -172,3 +172,34 @@
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
+
+@utility hero-veil {
+  background-image: linear-gradient(
+      to top,
+      var(--color-primary) 6%,
+      color-mix(in oklab, var(--color-primary) 82%, transparent) 42%,
+      color-mix(in oklab, var(--color-primary) 45%, transparent) 100%
+    ),
+    linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--color-primary) 90%, transparent) 0%,
+      transparent 65%
+    );
+}
+
+@utility rule-accent {
+  &::before {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 3px;
+    margin-bottom: 0.75rem;
+    background-color: var(--color-accent);
+  }
+}
+
+@utility shadow-lift {
+  box-shadow:
+    0 1px 1px oklch(0.2405 0.0139 265.53 / 6%),
+    0 18px 40px -24px oklch(0.2405 0.0139 265.53 / 34%);
+}
