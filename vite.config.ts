@@ -35,11 +35,15 @@ export default defineConfig({
         // folosim variabila de mediu LOVABLE_NITRO_PRESET=lovable-fetch-bundle ca build-ul
         // de server să ruleze în Node/Preview pentru prerender, iar clientul rămâne static.
         nitro: {
-          // În afara sandboxului (GitHub Actions) nu există presetul intern Lovable,
-          // deci forțăm build de server Node în dist/server/server.js, ca prerender-ul
-          // TanStack să găsească entry-ul.
+          // În afara sandboxului (GitHub Actions) presetul intern Lovable nu se aplică,
+          // deci replicăm aceeași configurație: bundle care exportă `fetch`, scris în
+          // dist/server/server.js, ca prerender-ul TanStack să-l poată importa.
           preset: undefined,
           defaultPreset: undefined,
+          entry: fetchEntry,
+          serveStatic: false,
+          noExternals: true,
+          inlineDynamicImports: true,
           output: {
             dir: "dist",
             serverDir: "dist/server",
