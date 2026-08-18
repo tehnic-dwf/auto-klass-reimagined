@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { IgnitionIntro } from "../components/ambient/IgnitionIntro";
 import { useAmbient } from "../hooks/useAmbient";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
