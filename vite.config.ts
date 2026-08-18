@@ -22,6 +22,8 @@ const staticPages = [
   "/service/programare",
   "/service/dosar-daune",
   "/verificare-masini-rulate",
+  "/comparatie",
+
   ...vehicles.map((vehicle) => `/autoturisme/${vehicle.slug}`),
 ].map((path) => ({ path }));
 
