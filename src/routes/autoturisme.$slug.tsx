@@ -369,10 +369,12 @@ function LeadForm({
           </a>
           .
         </p>
+        <DemoNotice className="mt-4 bg-card" />
         <Button variant="outline" className="mt-4 rounded-sm" onClick={onClose}>
           Închide
         </Button>
       </div>
+
     );
   }
 
