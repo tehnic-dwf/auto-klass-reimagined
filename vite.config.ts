@@ -4,9 +4,18 @@
 //     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
+import { fileURLToPath } from "node:url";
+
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 import { vehicles } from "./src/data/vehicles.ts";
+
+const fetchEntry = fileURLToPath(
+  new URL(
+    "./node_modules/@lovable.dev/vite-tanstack-config/runtime/fetch-entry.mjs",
+    import.meta.url,
+  ),
+);
 
 /**
  * GH_PAGES=1 comută build-ul pe modul static pentru GitHub Pages
