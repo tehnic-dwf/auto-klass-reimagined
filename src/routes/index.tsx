@@ -111,7 +111,7 @@ function HomePage() {
             alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
             width={1920}
             height={1280}
-            className="absolute inset-0 size-full object-cover object-[center_68%]"
+            className="absolute inset-0 size-full object-cover object-[center_28%] md:object-[center_34%]"
           />
           <div className="hero-veil absolute inset-0" aria-hidden />
           <div
