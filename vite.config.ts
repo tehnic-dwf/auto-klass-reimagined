@@ -34,7 +34,10 @@ const staticPages = [
   "/comparatie",
 
   ...vehicles.map((vehicle) => `/autoturisme/${vehicle.slug}`),
-].map((path) => ({ path }));
+].map((path) => ({
+  // prerender-ul cere rutele prin base, deci le prefixăm explicit
+  path: `${base.replace(/\/$/, "")}${path}`.replace(/^$/, "/"),
+}));
 
 export default defineConfig({
   vite: { base },
