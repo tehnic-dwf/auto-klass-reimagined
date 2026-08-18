@@ -1,92 +1,103 @@
-# Autoklass.ro — Prototip redesign (lead generation first)
+# Autoklass.ro — prototip parțial mobile-first (6 ecrane)
 
-Prototip mobile-first construit pe concluziile din raportul de analiză UX/CRO (5 capitole) și anexa de audit UI/UX mobil. Stoc de mașini pe date demo hardcodate. Zero elemente de urgency sau social proof inventat.
+Prototip de lead generation, în limba română cu diacritice, construit strict pe recomandările din Capitolele 3–5 ale raportului UX/CRO și pe anexa de audit mobil. Fără urgency fals, fără GDPR, fără nume reale de consultanți.
 
-## Principii care guvernează tot prototipul
+## Pasul 0 — Extragere assets reale de pe autoklass.ro (înainte de orice cod)
 
-1. Mobile-first obligatoriu, cu prioritate absolută pe fluxul Service (gap 3,65% mobil vs 11,60% desktop).
-2. Fiecare bloc de copy răspunde la una din cele 5 frici documentate: preț necunoscut, judecată socială, timp fără update, garanție neonorată, transparență pe rulate.
-3. Interzis: „Vizualizat de X persoane”, „Ultimele 3 unități”, „test drive GRATUIT”, orice urgency care nu vine din stoc real.
-4. Consultant nominal peste proces anonim: nume + foto + specializare, vizibil înainte de formular.
-5. Fiecare CTA și modul primește `data-module`; fiecare formular emite `form_start` / `form_submit` (hook de tracking pregătit, fără GA4 conectat în prototip).
-6. Ierarhie strictă de z-index: meniu mobil și modaluri deasupra widget-urilor terțe; widget-urile flotante se ascund când meniul e deschis.
+Extrag, prin scraping, de pe site-ul live:
 
-## Structura de pagini (primul run)
+- Logo din header (`https://www.autoklass.ro/`)
+- Paletă de culori și font-family din CSS-ul paginii principale (header, butoane, footer)
+- Minim 5–6 imagini reale de mașini din `/search/filtre/stare-rulat` și `/search/filtre/marca-mercedes-benz`
+- Structură și copy din `/articole/programare-service.html` și `/articole/gestionarea-daunelor.html`
+- Structura unei pagini `/vanzari-auto/...` pentru layout-ul de detaliu
+- Iconițe de contact din header/footer
+
+Logo-ul și imaginile intră ca pointeri Lovable Assets; culorile și fontul devin tokenuri semantice în `src/styles.css` (oklch). Dacă extragerea eșuează pe un element, mă opresc și cer assetul, fără înlocuitor inventat.
+
+## Sistem vizual
+
+- Paleta și fontul exact din Pasul 0 (dark gray/black, silver, accent discret), fără variantă „inspirată de Mercedes”.
+- Design pornit literal de la 375px, apoi extins spre desktop.
+- Tokenuri semantice în `src/styles.css`, zero culori hardcodate în componente. Shadcn UI + Lucide.
+- Ierarhie de z-index: meniu burger și modaluri deasupra widget-urilor flotante; widget-urile se ascund când meniul e deschis.
+
+## Ecran 1 — Homepage (`/`)
+
+- Hero cu un singur banner, CTA principal „Vezi mașinile disponibile →” și CTA secundar discret „Cum funcționează procesul, pas cu pas”.
+- Search bar restrâns pe mobil („Ce mașină cauți?”), preț de pornire sub el când există filtru activ, quick filters: SUV, Sub 20.000 €, Electrice, Hybrid — duc în categoria cu filtre pre-aplicate.
+- Grid branduri: logo + „X mașini în stoc” (număr marcat clar ca placeholder în cod) + „Autorizat [brand] din [an]”.
+- „Cum cumpăr online” în 3 pași, cu linia de încredere dedesubt: „Prețul final, comunicat înainte să începem orice lucrare.”
+- Două carduri de servicii cu contrast ridicat: „Programează o revizie sau reparație” → Service, „Ai avut un accident?” → Dosar Daune.
+- Sticky navigation dinamic pe mobil: CTA „Test Drive” pe ecranele de achiziție, „Programare Service” pe cele de after-sales.
+
+## Ecran 2 — Meniu burger
 
 ```text
-/                        Homepage
-/stoc                    Listing unificat (nou + rulat = filtru, nu meniu)
-/stoc/:slug              Pagina de detaliu vehicul (PDP)
-/service                 Programare service + estimator cost
-/service/urgenta         Intrare urgentă / nonprogramată
-/test-drive              Formular test drive
-/consultanti             Consultanți per sucursală și brand
-/vinde-masina            Buy-back cu proces în 3 pași
-/dosar-daune             Fine-tuning pe pagina existentă (bine construită)
-/contact                 Sucursale + WhatsApp per sucursală
+Autoturisme            → categoria unificată
+Service auto
+  → Programare Service
+  → Dosar Daune
+Despre noi             (vizibil, fără pagină)
+Blog                   (vizibil, fără pagină)
 ```
 
-## Homepage
+Jos, fix: telefon vizibil, email, iconiță chat — fără suprapunere de widget-uri peste numărul de telefon.
 
-- Hero cu rotație de campanii + CTA principal de acțiune și un al doilea CTA discret pentru segmentul premium: „Cum funcționează procesul, pas cu pas”.
-- Search bar restrâns pe mobil, dar cu preț de pornire („de la X €”) vizibil pe bara restrânsă.
-- Logo-uri de brand cu context acționabil: „X mașini în stoc” + „Autorizat [brand] din [an]”.
-- Bloc „Cum cumperi online” în 3 pași, mutat sus (nu după deals).
-- Trei intrări rapide de flux: Test Drive / Programare Service / Îți cumpărăm mașina.
-- Sticky bottom bar pe mobil, cu CTA dinamic în funcție de context (Test Drive pe pagini de achiziție, Programare Service pe after-sales) + apel direct.
+## Ecran 3 — Pagină de categorie (`/autoturisme`)
 
-## Listing /stoc
+- O singură listă filtrabilă; „Nou / Rulat” este filtru, nu navigare separată. Filtre sus: Marcă, Stare, Preț (interval), Combustibil.
+- Card: imagine reală, marcă + model, an, kilometraj (dacă rulat), preț, maxim 1–2 badge-uri justificate de date („Nou 2026”, „Hibrid”).
+- Pe cardurile de rulate, sub preț: „Vezi raportul de verificare tehnică”.
+- Click pe card → pagina de produs.
 
-- O singură listă, cu `Nou / Rulat` ca filtru, nu ca secțiune separată de meniu; filtrare pe brand, model, preț, an, km, combustibil, sucursală.
-- Card mașină: preț, rată estimativă „de la X €/lună”, sucursală fizică, badge „Verificare tehnică inclusă” cu link spre raport, buton WhatsApp per sucursală.
-- Floating Compare Bar: „Adaugă la comparare (max. 3)” → drawer cu tabel de diferențe (km, an, motorizare, garanție, opțiuni cheie).
-- Badge „Rezervat” doar pe date de stoc reale; în prototip apare marcat ca demo.
-- Visual Search Overlay în header sticky: la tastare afișează 3 thumbnail-uri din stoc cu preț și sucursală.
+## Ecran 4 — Pagină de produs (`/autoturisme/:slug`)
 
-## PDP /stoc/:slug
+- Galerie foto cu imagini reale, specificații (an, km, combustibil, transmisie, putere).
+- Preț cu notă mică: „Preț final, fără costuri ascunse.”
+- Pentru rulate: secțiune „Istoric verificat” cu link către raport (document placeholder).
+- Două acțiuni vizibile fără scroll excesiv:
+  1. „Programează test drive” → formular scurt (Nume, Telefon, Email, Sucursală, Data preferată), cu „Fără nicio obligație de cumpărare.” bold deasupra formularului.
+  2. „Vorbește cu un consultant” → bloc cu 2–3 consultanți (foto placeholder, `[Nume Consultant]`, specializare tip „Consultant Mercedes-Benz”), text „Suntem aici și dacă vrei doar să afli mai multe — nu e nevoie să fii decis să cumperi azi.” + câmp de contact minim (telefon sau email) și mesaj opțional.
 
-- Galerie, specificații, istoric și raport de verificare pentru rulate.
-- Calculator interactiv de finanțare: slider avans 10–50%, perioadă 12–60 luni, rată lunară estimată + CTA „Discută finanțarea”.
-- Lângă orice preț „de la”: „Prețul final, comunicat înainte să începem orice lucrare.”
-- Consultantul care răspunde de mașină, cu nume, foto și specializare.
-- Acțiuni: Test Drive pe acest vehicul, Verifică disponibilitatea (formular scurt, 3 câmpuri), WhatsApp cu consultant.
+## Ecran 5 — Programare Service (`/service/programare`) — prioritate maximă
 
-## Service (prioritate maximă)
+- Pas 1 pe mobil: maxim 4 câmpuri simultan — Nume, Telefon, „Ce te interesează?”, Sucursala. Pas 2 expandabil: marcă/model auto, mesaj.
+- „Ce te interesează?” cu opțiuni predefinite: Revizie periodică / Diagnoză / Reparație / Estimare preț.
+- Sub selector: „Prețul final se comunică înainte de a începe orice lucrare suplimentară față de pachetul standard.”
+- Checkbox „Pick-up service”.
+- SLA bold lângă butonul de trimitere, fără scroll suplimentar: „Te contactăm în maxim 2 ore, în programul nostru de lucru.”
+- Selector de sucursală tip dropdown/radio, nu stivă de fotografii; footer minimalist pe această pagină.
 
-- Estimator cost în 3 clicuri înainte de formular: Model → An → Intervenție → interval de preț și durată estimativă.
-- Formular mobil optimizat, pași scurți, selector de sucursală tip dropdown/radio (nu zid de 8 fotografii), carusel compact de sucursale.
-- SLA afișat lângă butonul de trimitere: „Te contactăm în maxim 2 ore, în program.”
-- Servicii sezoniere pe tab-uri orizontale (Diagnoză, Anvelope, Revizie) + caruseluri swipeable, nu 15 carduri stivuite.
-- `/service/urgenta`: secțiune separată, ton calm, răspunde explicit la „pot veni fără programare?” și „mi se explică înainte să aprob costul?”.
+## Ecran 6 — Dosar Daune (`/service/dosar-daune`)
 
-## Test Drive, buy-back, consultanți
+- Telefon proeminent sus (placeholder).
+- Proces în 3 pași înaintea formularului: ne contactezi sau vii la noi → constatare și dosar → ridici mașina reparată.
+- FAQ scurt (4–5 întrebări): cât durează, ce documente sunt necesare, primesc mașină la schimb, „pot vedea/fotografia piesele înlocuite?”.
+- Formular final scurt: Nume, Telefon, Tip daună (RCA/CASCO), mesaj opțional. Footer minimalist.
 
-- Test Drive: „Fără nicio obligație de cumpărare”, pas opțional de confirmare buget/disponibilitate înainte de alegerea datei, alegere de consultant specializat pe brand.
-- Buy-back: bloc „Cum funcționează evaluarea” în 3 pași înainte de formular, aceeași structură ca la Daune.
-- Pagina de consultanți: 2–3 consultanți per sucursală/brand, cu foto, nume, specializare și WhatsApp direct.
+## Copy și micro-copy
 
-## Formulare — reguli comune
+- Toate textele în română cu diacritice, inclusiv erori și placeholder-uri.
+- Ton diferențiat: premium = informativ și fără presiune; preț-sensibil = preț rapid și transparent; after-sales = timp, cost, proces.
+- Validare la blur/submit, cu mesaj explicativ sub câmp („Introduceți codul din 17 caractere”), nu doar pictogramă roșie.
+- CTA cu beneficiu, niciodată „Trimite”.
+- Interzis: countdown, „X persoane vizualizează”, „ultimele 3 unități”, „test drive GRATUIT”, badge de stoc fără date reale.
 
-- Validare la blur/submit, nu la tastare; mesaj explicativ sub câmp („Introduceți codul din 17 caractere”), nu doar pictogramă roșie.
-- Validare cu zod, limite de lungime, encodare corectă pe link-urile WhatsApp.
-- CTA cu beneficiu, nu „Trimite”: „Programează service în 1 minut”.
-- Footer minimalist pe paginile de conversie (doar copyright și link-uri legale).
+## Tracking simulat
+
+- Helper unic `trackEvent` cu `form_start` / `form_submit` și `form_name` distinct: `test_drive`, `contact_consultant`, `programare_service`, `dosar_daune` — un singur nume de eveniment per acțiune.
+- `module_click` cu `data-module` pe search bar, carduri de mașină, butoanele de test drive și consultant.
+- Fără GA4 real; evenimentele se logează în consolă în prototip.
 
 ## Detalii tehnice
 
-- TanStack Start, rute pe fișiere în `src/routes`, fără backend în primul run.
-- Stocul demo într-un modul TS tipat (`src/data/vehicles.ts`), plus consultanți, sucursale și tarife de service; ușor de înlocuit ulterior cu feed real sau Lovable Cloud.
-- Design tokens semantice în `src/styles.css` (oklch), fără culori hardcodate; direcția vizuală și paleta se fixează după ce primesc logo-ul și pozele.
-- Assets (logo, poze mașini) urcate prin Lovable Assets, referențiate prin pointeri `.asset.json`.
-- `head()` per rută, cu titlu și descriere proprii; H1 unic pe pagină; alt text pe imagini; lazy loading pe galerii.
+- TanStack Start, rute pe fișiere: `src/routes/index.tsx`, `autoturisme.tsx`, `autoturisme.$slug.tsx`, `service.programare.tsx`, `service.dosar-daune.tsx`.
+- Date demo tipate în `src/data/` (vehicule, sucursale, consultanți, servicii), ușor de înlocuit cu feed real.
+- Formulare cu react-hook-form + zod, limite de lungime, encodare corectă pe link-urile de contact.
+- `head()` propriu per rută (titlu, descriere, og), H1 unic, alt text, lazy loading pe galerii.
+- Fără backend, fără auth, fără plăți, fără GDPR.
 
-## Ce NU intră în primul run
+## Ce NU construim
 
-- Backend, autentificare, plăți online, integrare CRM sau feed real de stoc.
-- GA4 real conectat (doar atributele și hook-urile de tracking).
-- Restructurarea SEO pe pilon marcă → model la nivel de site real (dependință de echipa SEO/dev).
-
-## Rămâne de confirmat înainte de build
-
-- Sursa pentru logo și pozele de mașini.
-- Direcția vizuală: cât din brandingul actual păstrăm și ce ton vizual țintim.
+Blog, buy-back, pagini de sucursală, pagini de model individuale, checkout. Link-urile „Despre noi” și „Blog” rămân vizibile fără pagină.
