@@ -294,38 +294,9 @@
 }
 
 .ignition-star {
-  position: relative;
-  width: 6rem;
-  height: 6rem;
+  color: var(--color-primary-foreground);
   animation: ignition-star-on 1.5s cubic-bezier(0.2, 0.9, 0.2, 1) 0.1s both;
   filter: drop-shadow(0 0 22px color-mix(in oklab, var(--ambient-amber) 65%, transparent));
-}
-
-.ignition-star__ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 2px solid color-mix(in oklab, var(--color-primary-foreground) 75%, transparent);
-}
-
-.ignition-star__spoke {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2px;
-  height: 3rem;
-  background-color: color-mix(in oklab, var(--color-primary-foreground) 85%, transparent);
-  transform-origin: top center;
-}
-
-.ignition-star__spoke--top {
-  transform: translate(-50%, 0) rotate(180deg);
-}
-.ignition-star__spoke--left {
-  transform: translate(-50%, 0) rotate(-60deg);
-}
-.ignition-star__spoke--right {
-  transform: translate(-50%, 0) rotate(60deg);
 }
 
 .ignition-line {

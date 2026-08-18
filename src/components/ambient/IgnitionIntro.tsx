@@ -62,12 +62,20 @@ export function IgnitionIntro() {
       <div className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen" aria-hidden />
       <div className="ignition-edge pointer-events-none absolute inset-0" aria-hidden />
 
-      <div className="ignition-star" aria-hidden>
-        <span className="ignition-star__ring" />
-        <span className="ignition-star__spoke ignition-star__spoke--top" />
-        <span className="ignition-star__spoke ignition-star__spoke--left" />
-        <span className="ignition-star__spoke ignition-star__spoke--right" />
-      </div>
+      <svg
+        className="ignition-star"
+        viewBox="0 0 100 100"
+        width="104"
+        height="104"
+        aria-hidden
+      >
+        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeOpacity="0.8" strokeWidth="3" />
+        <g stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+          <line x1="50" y1="50" x2="50" y2="7" />
+          <line x1="50" y1="50" x2="87" y2="71" />
+          <line x1="50" y1="50" x2="13" y2="71" />
+        </g>
+      </svg>
 
       <div className="ambient-line ignition-line mt-10 w-48 max-w-[70vw] md:w-72" aria-hidden />
 
