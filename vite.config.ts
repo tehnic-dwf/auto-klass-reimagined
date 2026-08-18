@@ -69,7 +69,7 @@ export default defineConfig({
         } as any,
         tanstackStart: {
           server: { entry: "server" },
-          prerender: { enabled: true, crawlLinks: true },
+          prerender: { enabled: true, crawlLinks: false },
           pages: staticPages,
         },
       }
