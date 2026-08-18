@@ -111,7 +111,7 @@ function HomePage() {
             alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
             width={1920}
             height={1280}
-            className="absolute inset-0 size-full object-cover object-center"
+            className="absolute inset-0 size-full object-cover object-[center_78%]"
           />
           <div className="hero-veil absolute inset-0" aria-hidden />
           <div
@@ -119,7 +119,7 @@ function HomePage() {
             aria-hidden
           />
 
-          <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-4 pb-8 pt-28 text-center md:min-h-[40rem] md:justify-end md:pb-14 md:pt-48">
+          <div className="relative mx-auto flex min-h-[34rem] w-full max-w-6xl flex-col items-center px-4 pb-40 pt-24 text-center md:min-h-[42rem] md:justify-start md:pb-56 md:pt-40">
             <p className="eyebrow text-primary-foreground/70">
               Dealer autorizat Mercedes-Benz din 2001
             </p>
