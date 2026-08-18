@@ -111,7 +111,7 @@ function HomePage() {
             alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
             width={1920}
             height={1280}
-            className="absolute inset-0 size-full object-cover object-[center_78%]"
+            className="absolute inset-0 size-full object-cover object-[center_28%] md:object-[center_34%]"
           />
           <div className="hero-veil absolute inset-0" aria-hidden />
           <div
@@ -120,7 +120,7 @@ function HomePage() {
           />
           <div className="hero-copy-scrim pointer-events-none absolute inset-0" aria-hidden />
 
-          <div className="relative mx-auto flex min-h-[34rem] w-full max-w-6xl flex-col items-center px-4 pb-40 pt-24 text-center md:min-h-[42rem] md:justify-start md:pb-56 md:pt-40">
+          <div className="relative mx-auto flex min-h-[34rem] w-full max-w-6xl flex-col items-center px-4 pb-12 pt-20 text-center md:min-h-[44rem] md:pb-16 md:pt-28">
             <p className="eyebrow text-primary-foreground/85">
               Dealer autorizat Mercedes-Benz din 2001
             </p>
@@ -136,7 +136,7 @@ function HomePage() {
             </p>
 
 
-            <div className="mt-7 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <div className="mt-auto flex w-full flex-col gap-2 pt-12 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
                 <Link to="/autoturisme">
                   Vezi stocul disponibil
