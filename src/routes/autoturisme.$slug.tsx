@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import detaliuGrila from "@/assets/detaliu-grila.jpg";
+import heroGrila from "@/assets/hero-grila.jpg";
+import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
