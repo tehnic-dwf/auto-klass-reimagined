@@ -136,7 +136,7 @@ function HomePage() {
             </p>
 
 
-            <div className="mt-7 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <div className="mt-auto flex w-full flex-col gap-2 pt-12 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
                 <Link to="/autoturisme">
                   Vezi stocul disponibil
