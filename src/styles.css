@@ -179,9 +179,9 @@
 @utility hero-veil {
   background-image: linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--color-primary) 72%, transparent) 0%,
-      color-mix(in oklab, var(--color-primary) 58%, transparent) 34%,
-      color-mix(in oklab, var(--color-primary) 12%, transparent) 62%,
+      color-mix(in oklab, var(--color-primary) 80%, transparent) 0%,
+      color-mix(in oklab, var(--color-primary) 62%, transparent) 38%,
+      color-mix(in oklab, var(--color-primary) 14%, transparent) 66%,
       color-mix(in oklab, var(--color-primary) 55%, transparent) 100%
     ),
     radial-gradient(
@@ -189,6 +189,20 @@
       color-mix(in oklab, var(--color-primary) 55%, transparent) 0%,
       transparent 70%
     );
+}
+
+/* Scrim dedicat textului din hero: întunecă doar banda de sub header */
+@utility hero-copy-scrim {
+  background-image: radial-gradient(
+    75% 45% at 50% 26%,
+    color-mix(in oklab, var(--color-primary) 78%, transparent) 0%,
+    color-mix(in oklab, var(--color-primary) 45%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+@utility hero-text-shadow {
+  text-shadow: 0 2px 18px oklch(0.15 0.01 265 / 75%);
 }
 
 /* Lumina ambientală: amber cald + cyan rece, exact tiparul din interiorul MB */

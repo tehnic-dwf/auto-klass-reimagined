@@ -118,23 +118,23 @@ function HomePage() {
             className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen"
             aria-hidden
           />
+          <div className="hero-copy-scrim pointer-events-none absolute inset-0" aria-hidden />
 
           <div className="relative mx-auto flex min-h-[34rem] w-full max-w-6xl flex-col items-center px-4 pb-40 pt-24 text-center md:min-h-[42rem] md:justify-start md:pb-56 md:pt-40">
-            <p className="eyebrow text-primary-foreground/70">
+            <p className="eyebrow text-primary-foreground/85">
               Dealer autorizat Mercedes-Benz din 2001
             </p>
-            <h1 className="mt-4 max-w-3xl text-[2.2rem] leading-[1.03] tracking-tight md:text-6xl">
+            <h1 className="hero-text-shadow mt-4 max-w-3xl text-[2.2rem] leading-[1.03] tracking-tight md:text-6xl">
               O mașină care se potrivește
-              <span className="block text-primary-foreground/55">
-                cui ai devenit.
-              </span>
+              <span className="block text-primary-foreground/75">cui ai devenit.</span>
             </h1>
             <div className="ambient-line mt-7 w-56 max-w-full md:w-80" aria-hidden />
-            <p className="mt-6 max-w-lg text-sm leading-relaxed text-primary-foreground/80 md:text-base">
+            <p className="hero-text-shadow mt-6 max-w-lg text-sm leading-relaxed text-primary-foreground/95 md:text-base">
               {formatPrice(stockFacts.totalMercedes)} de Mercedes-Benz în stoc,{" "}
               {stockFacts.newMercedes} noi și {stockFacts.usedMercedes} rulate verificate,
               de la {formatPrice(cheapest)} €. Prețul e scris, termenul e asumat.
             </p>
+
 
             <div className="mt-7 flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
