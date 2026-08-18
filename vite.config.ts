@@ -35,6 +35,16 @@ export default defineConfig({
         // folosim variabila de mediu LOVABLE_NITRO_PRESET=lovable-fetch-bundle ca build-ul
         // de server să ruleze în Node/Preview pentru prerender, iar clientul rămâne static.
         nitro: {
+          // În afara sandboxului (GitHub Actions) nu există presetul intern Lovable,
+          // deci forțăm build de server Node în dist/server/server.js, ca prerender-ul
+          // TanStack să găsească entry-ul.
+          preset: undefined,
+          defaultPreset: undefined,
+          output: {
+            dir: "dist",
+            serverDir: "dist/server",
+            publicDir: "dist/client",
+          },
           rollupConfig: {
             output: {
               entryFileNames: "server.js",
