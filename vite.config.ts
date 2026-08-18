@@ -6,7 +6,7 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-import { vehicles } from "./src/data/vehicles";
+import { vehicles } from "./src/data/vehicles.ts";
 
 /**
  * GH_PAGES=1 comută build-ul pe modul static pentru GitHub Pages
@@ -31,7 +31,14 @@ export default defineConfig({
   vite: { base },
   ...(isGithubPages
     ? {
-        nitro: { preset: "static" as const },
+        nitro: {
+          preset: "static" as const,
+          rollupConfig: {
+            output: {
+              entryFileNames: "server.js",
+            },
+          },
+        },
         tanstackStart: {
           server: { entry: "server" },
           prerender: { enabled: true, crawlLinks: true },
