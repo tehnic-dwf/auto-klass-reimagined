@@ -30,9 +30,16 @@ const primaryNav = [
 ] as const;
 
 const secondaryNav = [
+  {
+    label: "Cum verificăm rulatele",
+    to: "/verificare-masini-rulate",
+    hint: "100+ puncte de control",
+  },
+  { label: "Lista mea salvată", to: "/comparatie", hint: "compară fără grabă" },
   { label: "Test drive", to: "/autoturisme", hint: "din pagina mașinii" },
   { label: "Sucursale", to: "/", hint: "9 locații în România" },
 ] as const;
+
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
