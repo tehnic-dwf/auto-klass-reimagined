@@ -244,7 +244,14 @@ function DamageFilePage() {
                     className="mt-1 rounded-sm"
                   />
                 </div>
+                <div>
+                  <Label className="block text-sm font-bold">Poze cu avaria</Label>
+                  <PhotoUpload />
+                </div>
               </div>
+
+              <DemoNotice className="mt-4" />
+
 
               <Label className="mt-5 block text-sm font-bold">Asigurator</Label>
               <div className="mt-2 flex flex-wrap gap-2">
