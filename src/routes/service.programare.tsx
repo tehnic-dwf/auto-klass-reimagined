@@ -132,6 +132,10 @@ function ServiceBookingPage() {
               cu stadiul mașinii la preluare, la aprobarea devizului și la finalizare.
             </p>
 
+            <DemoNotice className="mt-4 bg-card" />
+
+
+
             <Button asChild variant="outline" className="mt-6 rounded-sm">
               <a href={contact.phoneHref}>
                 <Phone className="mr-1 size-4" aria-hidden />
