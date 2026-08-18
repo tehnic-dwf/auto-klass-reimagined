@@ -49,7 +49,7 @@ Proiectul rulează pe TanStack Start cu SSR (Cloudflare Worker). GitHub Pages se
 
 1. **Prerender toate rutele la build.** Se activează prerendering-ul TanStack Start cu urmărire de link-uri, plus lista explicită de slug-uri generată din `src/data/vehicles.ts`, ca fiecare mașină să aibă un HTML propriu. Rezultat: `dist/` cu HTML static per rută — indexabil, fără server.
 2. **Fallback pentru deep-link-uri:** copiere `index.html` → `404.html` în output. GitHub Pages servește `404.html` pentru orice cale necunoscută, iar routerul preia navigarea în client. Fără asta, refresh pe `/autoturisme/clasa-c-200` dă 404.
-3. **`base` path:** dacă site-ul stă la `user.github.io/autoklass`, se setează base-ul `/autoklass/` în config (altfel CSS/JS/imagini cad). Cu domeniu propriu sau repo `user.github.io`, base rămâne `/`.
+3. **`base` path:** repo-ul e `github.com/tehnic-dwf/auto-klass-reimagined`, deci URL-ul va fi `tehnic-dwf.github.io/auto-klass-reimagined/`. Se setează base-ul `/auto-klass-reimagined/` în config, altfel CSS/JS/imagini cad. (Dacă adaugi ulterior domeniu propriu, base revine la `/`.)
 4. **`.nojekyll`** în `public/` — altfel Jekyll ignoră folderele care încep cu `_` (Vite generează așa assets).
 5. **Workflow `.github/workflows/deploy.yml`:** build la push pe `main` → publicare artifact pe Pages. Un singur fișier, zero configurare manuală după.
 6. **Formulare fără backend:** pe Pages nu există endpoint. Trei opțiuni, alegi tu:
