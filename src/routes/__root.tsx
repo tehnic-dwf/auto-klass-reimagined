@@ -10,7 +10,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { IgnitionIntro } from "../components/ambient/IgnitionIntro";
 import { useAmbient } from "../hooks/useAmbient";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -129,8 +128,6 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Prima impresie: urcarea în mașină, o dată pe sesiune. */}
-      <IgnitionIntro />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
