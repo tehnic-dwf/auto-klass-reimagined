@@ -96,13 +96,8 @@ function VehicleDetailPage() {
 
         <div className="mt-4 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <div className="overflow-hidden rounded-sm border border-border bg-secondary">
-              <img
-                src={gallerySize(vehicle.image)}
-                alt={vehicle.title}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </div>
+            <VehicleGallery vehicle={vehicle} />
+
 
             <div className="mt-5">
               <div className="flex flex-wrap items-center gap-2">
