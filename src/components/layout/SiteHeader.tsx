@@ -27,6 +27,16 @@ const primaryNav = [
     to: "/service/dosar-daune",
     description: "Constatare, mașină de schimb, decontare directă",
   },
+  {
+    label: "Service urgent",
+    to: "/service/urgent",
+    description: "Reparație neprogramată: telefon direct, diagnoză rapidă",
+  },
+  {
+    label: "Îți cumpărăm mașina",
+    to: "/buy-back",
+    description: "Evaluare cu interval de preț și ofertă scrisă",
+  },
 ] as const;
 
 const secondaryNav = [

@@ -10,16 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuyBackRouteImport } from './routes/buy-back'
 import { Route as ComparatieRouteImport } from './routes/comparatie'
 import { Route as VerificareMasiniRulateRouteImport } from './routes/verificare-masini-rulate'
 import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index'
 import { Route as AutoturismeSlugRouteImport } from './routes/autoturisme.$slug'
 import { Route as ServiceDosarDauneRouteImport } from './routes/service.dosar-daune'
 import { Route as ServiceProgramareRouteImport } from './routes/service.programare'
+import { Route as ServiceUrgentRouteImport } from './routes/service.urgent'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyBackRoute = BuyBackRouteImport.update({
+  id: '/buy-back',
+  path: '/buy-back',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComparatieRoute = ComparatieRouteImport.update({
@@ -52,72 +59,91 @@ const ServiceProgramareRoute = ServiceProgramareRouteImport.update({
   path: '/service/programare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServiceUrgentRoute = ServiceUrgentRouteImport.update({
+  id: '/service/urgent',
+  path: '/service/urgent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme'
   id:
     | '__root__'
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuyBackRoute: typeof BuyBackRoute
   ComparatieRoute: typeof ComparatieRoute
   VerificareMasiniRulateRoute: typeof VerificareMasiniRulateRoute
   AutoturismeSlugRoute: typeof AutoturismeSlugRoute
   ServiceDosarDauneRoute: typeof ServiceDosarDauneRoute
   ServiceProgramareRoute: typeof ServiceProgramareRoute
+  ServiceUrgentRoute: typeof ServiceUrgentRoute
   AutoturismeIndexRoute: typeof AutoturismeIndexRoute
 }
 
@@ -128,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy-back': {
+      id: '/buy-back'
+      path: '/buy-back'
+      fullPath: '/buy-back'
+      preLoaderRoute: typeof BuyBackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comparatie': {
@@ -172,16 +205,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceProgramareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service/urgent': {
+      id: '/service/urgent'
+      path: '/service/urgent'
+      fullPath: '/service/urgent'
+      preLoaderRoute: typeof ServiceUrgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuyBackRoute: BuyBackRoute,
   ComparatieRoute: ComparatieRoute,
   VerificareMasiniRulateRoute: VerificareMasiniRulateRoute,
   AutoturismeSlugRoute: AutoturismeSlugRoute,
   ServiceDosarDauneRoute: ServiceDosarDauneRoute,
   ServiceProgramareRoute: ServiceProgramareRoute,
+  ServiceUrgentRoute: ServiceUrgentRoute,
   AutoturismeIndexRoute: AutoturismeIndexRoute,
 }
 export const routeTree = rootRouteImport
