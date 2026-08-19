@@ -81,6 +81,8 @@ export type BrandAuthorization = {
   brand: string;
   since: number | null;
   note: string;
+  /** Cifră plauzibilă de prototip, nu date reale de stoc. */
+  stockCount: number;
 };
 
 export const brandAuthorizations: BrandAuthorization[] = [
@@ -88,25 +90,40 @@ export const brandAuthorizations: BrandAuthorization[] = [
     brand: "Mercedes-Benz",
     since: 2001,
     note: "Autoturisme, AMG și vehicule comerciale",
+    stockCount: 428,
   },
-  { brand: "smart", since: 2008, note: "Vânzări și service autorizat" },
-  { brand: "Honda", since: 2011, note: "Vânzări și service autorizat" },
+  {
+    brand: "smart",
+    since: 2008,
+    note: "Vânzări și service autorizat",
+    stockCount: 34,
+  },
+  {
+    brand: "Honda",
+    since: 2011,
+    note: "Vânzări și service autorizat",
+    stockCount: 61,
+  },
   {
     brand: "Volkswagen",
     since: null,
     note: "Reprezentanță autorizată în grupul Autoklass",
+    stockCount: 87,
   },
   {
     brand: "Audi",
     since: null,
     note: "Reprezentanță autorizată în grupul Autoklass",
+    stockCount: 52,
   },
   {
     brand: "XPENG",
     since: null,
     note: "Reprezentanță autorizată în grupul Autoklass",
+    stockCount: 19,
   },
 ];
+
 
 /** Cifre din raportul de analiză Autoklass (stoc Mercedes-Benz, august 2026). */
 export const stockFacts = {
