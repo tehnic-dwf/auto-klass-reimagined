@@ -55,7 +55,7 @@ export function OutOfScope({ title, persona, notes }: OutOfScopeProps) {
           </Button>
         </section>
       </main>
-      <SiteFooter minimal />
+      <SiteFooter />
     </div>
   );
 }
