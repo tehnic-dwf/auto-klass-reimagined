@@ -94,6 +94,72 @@ const promises = [
   },
 ];
 
+const processSteps = [
+  {
+    icon: Search,
+    title: "Alegi mașina din stoc",
+    body: "Filtrezi nou și rulat în aceeași listă. Fiecare mașină are prețul final, regimul de TVA și sucursala unde se află.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Vorbești cu un consultant",
+    body: "Fără obligația de a cumpăra. Primești răspuns în maximum 2 ore lucrătoare, cu nume și număr direct.",
+  },
+  {
+    icon: Car,
+    title: "Test drive când îți convine",
+    body: "Alegi ziua și sucursala. Mașina te așteaptă pregătită, iar traseul îl stabilești tu.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Verifici documentele și oferta",
+    body: "Pe rulate primești raportul de verificare tehnică. Prețul din ofertă e cel discutat, fără costuri apărute la final.",
+  },
+  {
+    icon: KeyRound,
+    title: "Preiei mașina",
+    body: "Predare la sucursala aleasă, cu garanția, actele și pachetul de service explicate punct cu punct.",
+  },
+];
+
+const afterSales = [
+  {
+    icon: CalendarCheck,
+    title: "Programare service în 3 pași",
+    body: "Alegi tipul de lucrare, sucursala și intervalul. Confirmarea vine în maximum 2 ore lucrătoare.",
+    to: "/service/programare" as const,
+    cta: "Programează o revizie sau reparație",
+  },
+  {
+    icon: Wrench,
+    title: "Ai avut un accident?",
+    body: "Deschidem dosarul de daună, comunicăm direct cu asigurătorul și îți rezervăm mașina de schimb.",
+    to: "/service/dosar-daune" as const,
+    cta: "Deschide un dosar de daună",
+  },
+];
+
+const faq = [
+  {
+    q: "Prețul afișat este prețul final?",
+    a: "Da. Prețul include regimul de TVA menționat pe fiecare mașină. Orice cost suplimentar îți este comunicat înainte să semnezi.",
+  },
+  {
+    q: "Pot veni doar să văd mașina, fără să cumpăr?",
+    a: "Da. Test drive-ul și discuția cu un consultant nu implică nicio obligație de cumpărare.",
+  },
+  {
+    q: "Ce verificați la o mașină rulată?",
+    a: "Kilometrajul, istoricul de service în rețeaua autorizată, structura și componentele de uzură. Raportul îl primești înainte de decizie.",
+  },
+  {
+    q: "Cât durează o programare la service?",
+    a: "Îți confirmăm ora în maximum 2 ore lucrătoare, iar la confirmare primești durata estimată și costul lucrării standard.",
+  },
+];
+
+
+
 function HomePage() {
   const featured = vehicles.filter((vehicle) => !vehicle.reserved).slice(0, 6);
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
