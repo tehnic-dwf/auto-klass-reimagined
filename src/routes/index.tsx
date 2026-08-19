@@ -178,6 +178,26 @@ function HomePage() {
           </div>
         </section>
 
+        {/* Bandă deschisă, contrastantă: al doilea CTA, pentru cine nu e încă decis */}
+        <section className="border-y border-border bg-secondary">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-7 md:flex-row md:items-center md:justify-between md:py-8">
+            <div>
+              <p className="eyebrow text-muted-foreground">Nu ești încă decis</p>
+              <p className="mt-2 max-w-xl text-base leading-snug text-foreground md:text-lg">
+                Vezi exact cum funcționează procesul, pas cu pas — de la prima
+                întrebare până la predarea cheii.
+              </p>
+            </div>
+            <Button asChild size="lg" variant="outline" className="shrink-0 rounded-sm">
+              <a href="#cum-functioneaza">
+                Cum funcționează procesul, pas cu pas
+                <ArrowRight className="ml-1 size-4" aria-hidden />
+              </a>
+            </Button>
+          </div>
+        </section>
+
+
         {/* Lumina ambientală — senzație, nu specificație */}
         <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
           <div className="mx-auto grid w-full max-w-6xl items-stretch gap-0 md:grid-cols-2">
