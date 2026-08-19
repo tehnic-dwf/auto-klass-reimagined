@@ -22,7 +22,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { Button } from "@/components/ui/button";
-import { brandAuthorizations, contact, stockFacts } from "@/data/company";
+import { brandAuthorizations, branches, contact, stockFacts } from "@/data/company";
 import { formatPrice, vehicles } from "@/data/vehicles";
 
 export const Route = createFileRoute("/")({
