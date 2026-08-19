@@ -21,19 +21,23 @@ export function MobileStickyBar({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const target = document.getElementById(triggerId);
-    if (!target) return;
+    const update = () => {
+      const target = document.getElementById(triggerId);
+      if (!target) {
+        setVisible(false);
+        return;
+      }
+      // Vizibil doar după ce trigger-ul a ieșit din viewport în sus.
+      setVisible(target.getBoundingClientRect().bottom < 0);
+    };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry) return;
-        // Vizibil doar când trigger-ul a ieșit din viewport în sus.
-        setVisible(!entry.isIntersecting && entry.boundingClientRect.top < 0);
-      },
-      { threshold: 0 },
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, [triggerId]);
 
   return (
