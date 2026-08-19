@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Phone, Search, X } from "lucide-react";
+import { CalendarClock, Menu, MessageCircle, Phone, Search, X } from "lucide-react";
 import { useState } from "react";
 
 import logoUrl from "@/assets/autoklass-logo.png";
