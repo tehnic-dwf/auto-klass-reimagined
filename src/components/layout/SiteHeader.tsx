@@ -35,7 +35,19 @@ function ProtoDot({ on }: { on?: boolean | undefined }) {
   );
 }
 
+function groupSections(items: NavLink[]): Array<[string, NavLink[]]> {
+  const out: Array<[string, NavLink[]]> = [];
+  for (const item of items) {
+    const key = item.section ?? "";
+    const last = out[out.length - 1];
+    if (last && last[0] === key) last[1].push(item);
+    else out.push([key, [item]]);
+  }
+  return out;
+}
+
 function DesktopGroup({ group }: { group: NavGroup }) {
+
   const [open, setOpen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
