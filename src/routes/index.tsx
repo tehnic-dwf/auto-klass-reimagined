@@ -177,7 +177,13 @@ const faq = [
 
 
 function HomePage() {
-  const featured = vehicles.filter((vehicle) => !vehicle.reserved).slice(0, 6);
+  const newCars = vehicles
+    .filter((vehicle) => !vehicle.reserved && vehicle.condition === "nou")
+    .slice(0, 3);
+  const usedCars = vehicles
+    .filter((vehicle) => !vehicle.reserved && vehicle.condition === "rulat")
+    .slice(0, 3);
+  const featured = [...newCars, ...usedCars];
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
   const heroStats = [
