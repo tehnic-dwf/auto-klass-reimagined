@@ -17,7 +17,7 @@ import { navigation, type NavGroup, type NavLink } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 
 /** Badge discret pentru ecranele efectiv construite în prototip. */
-function ProtoDot({ on }: { on?: boolean }) {
+function ProtoDot({ on }: { on?: boolean | undefined }) {
   if (!on) return null;
   return (
     <span
@@ -35,7 +35,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
     return (
       <Link
         to={group.to!}
-        hash={group.hash}
+        {...(group.hash ? { hash: group.hash } : {})}
         className="whitespace-nowrap py-2 text-[13px] text-primary-foreground/80 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
@@ -85,7 +85,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
             <li key={`${item.label}-${item.to}`}>
               <Link
                 to={item.to}
-                hash={item.hash}
+                {...(item.hash ? { hash: item.hash } : {})}
                 onClick={() => setOpen(false)}
                 className="block rounded-sm px-3 py-2 hover:bg-muted"
               >
@@ -119,7 +119,7 @@ function MobileGroup({
       <li className="border-b border-primary-foreground/10">
         <Link
           to={group.to!}
-          hash={group.hash}
+          {...(group.hash ? { hash: group.hash } : {})}
           onClick={onNavigate}
           className="block px-1 py-4 text-base font-bold"
         >
@@ -153,7 +153,7 @@ function MobileGroup({
             <li key={`${item.label}-${item.to}`}>
               <Link
                 to={item.to}
-                hash={item.hash}
+                {...(item.hash ? { hash: item.hash } : {})}
                 onClick={onNavigate}
                 className="block rounded-sm px-3 py-2.5 hover:bg-primary-foreground/10"
               >
