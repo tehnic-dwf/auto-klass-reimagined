@@ -6,8 +6,13 @@ import {
   Car,
   ClipboardList,
   Clock,
+  KeyRound,
+  MapPin,
+  MessageSquare,
   Phone,
+  Search,
   ShieldCheck,
+  Wrench,
 } from "lucide-react";
 
 import heroGrila from "@/assets/hero-grila.jpg";
