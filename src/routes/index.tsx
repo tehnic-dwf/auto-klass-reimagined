@@ -75,6 +75,20 @@ const intents = [
     to: "/service/dosar-daune" as const,
     cta: "Deschide dosar",
   },
+  {
+    icon: Wrench,
+    title: "Am o problemă chiar acum",
+    body: "Bec aprins sau zgomot suspect: sună direct, fără formular lung.",
+    to: "/service/urgent" as const,
+    cta: "Service urgent",
+  },
+  {
+    icon: Car,
+    title: "Vreau să vând mașina",
+    body: "Evaluare cu interval de preț și ofertă scrisă, cu termen asumat.",
+    to: "/buy-back" as const,
+    cta: "Îți cumpărăm mașina",
+  },
 ];
 
 const promises = [
