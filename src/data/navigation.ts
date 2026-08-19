@@ -1,8 +1,7 @@
 /**
- * Arhitectura de navigație apropiată de structura reală autoklass.ro
- * (Autovehicule noi / Oferte actuale / Autovehicule rulate / Service auto /
- * Servicii / Piese și Accesorii / Despre noi / Cum cumpăr? / Blog),
- * dar cu fluxurile prototipate ca linkuri principale în fiecare grup.
+ * Arhitectura de navigație apropiată de structura reală autoklass.ro,
+ * dar cu „Autovehicule noi” și „Autovehicule rulate” unite într-un singur
+ * grup „Autovehicule”, pentru a reflecta lista unificată din prototip.
  *
  * `prototyped: true` = ecran construit în runda curentă.
  * Restul duc la pagina generică „out of scope”, ca să vedem arhitectura completă.
@@ -30,12 +29,24 @@ const OUT = "/in-afara-scopului";
 
 export const navigation: NavGroup[] = [
   {
-    label: "Autovehicule noi",
+    label: "Autovehicule",
     items: [
       {
-        label: "Tot stocul de mașini noi",
+        label: "Tot stocul: noi și rulate",
         to: "/autoturisme",
-        hint: "listă unificată, filtru „Nou”",
+        hint: "listă unificată, același ecran",
+        prototyped: true,
+      },
+      {
+        label: "Mașini noi",
+        to: "/autoturisme",
+        hint: "filtru \"Nou\"",
+        prototyped: true,
+      },
+      {
+        label: "Mașini rulate",
+        to: "/autoturisme",
+        hint: "filtru \"Rulat\"",
         prototyped: true,
       },
       { label: "Mercedes-Benz", to: "/autoturisme", hint: "428 în stoc", prototyped: true },
@@ -60,14 +71,8 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
-    label: "Autovehicule rulate",
+    label: "Rulate",
     items: [
-      {
-        label: "Tot stocul de rulate",
-        to: "/autoturisme",
-        hint: "filtru „Rulat”",
-        prototyped: true,
-      },
       {
         label: "Cum verificăm rulatele",
         to: "/verificare-masini-rulate",
