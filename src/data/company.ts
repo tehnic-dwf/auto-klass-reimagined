@@ -6,6 +6,9 @@
 export const contact = {
   phone: "0317 133 333",
   phoneHref: "tel:+40317133333",
+  /** Canal alternativ P1: recenziile arată 9,1% „telefon fără răspuns”. */
+  whatsapp: "0317 133 333",
+  whatsappHref: "https://wa.me/40317133333",
   email: "office@autoklass.ro",
   serviceEmail: "contact@autoklass.ro",
   legalName: "Autoklass Center S.R.L.",
