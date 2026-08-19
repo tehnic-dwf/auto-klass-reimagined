@@ -1,10 +1,13 @@
 /**
- * Arhitectura de navigație apropiată de structura reală autoklass.ro,
- * dar cu „Autovehicule noi” și „Autovehicule rulate” unite într-un singur
- * grup „Autovehicule”, pentru a reflecta lista unificată din prototip.
+ * Arhitectura de navigație: 4 grupuri, organizate pe intenție (nu pe
+ * departamentele interne ale dealerului):
+ *   1. Autovehicule  — tot ce ține de cumpărare (stoc, mărci, încredere)
+ *   2. Service & daune — tot ce ține de reparație
+ *   3. Servicii — finanțare, test drive, mobilitate
+ *   4. Piese și accesorii
  *
+ * `section` = subtitlu de coloană în dropdown-ul de desktop / grupare în burger.
  * `prototyped: true` = ecran construit în runda curentă.
- * Restul duc la pagina generică „out of scope”, ca să vedem arhitectura completă.
  */
 
 export type NavLink = {
@@ -12,13 +15,15 @@ export type NavLink = {
   to: string;
   hash?: string;
   hint?: string;
+  /** Subtitlu de coloană în dropdown. */
+  section?: string;
   /** Ecran construit în prototip (evidențiat vizual în meniu). */
   prototyped?: boolean;
 };
 
 export type NavGroup = {
   label: string;
-  /** Link direct când grupul nu are copii (ex. „Cum cumpăr?”, „Blog”). */
+  /** Link direct când grupul nu are copii. */
   to?: string;
   hash?: string;
   prototyped?: boolean;
@@ -31,61 +36,58 @@ export const navigation: NavGroup[] = [
   {
     label: "Autovehicule",
     items: [
+      // ── Stoc ────────────────────────────────────────────────
       {
+        section: "Stoc",
         label: "Tot stocul: noi și rulate",
         to: "/autoturisme",
         hint: "listă unificată, același ecran",
         prototyped: true,
       },
+      { section: "Stoc", label: "Mașini noi", to: "/autoturisme", hint: "filtru \"Nou\"", prototyped: true },
+      { section: "Stoc", label: "Mașini rulate", to: "/autoturisme", hint: "filtru \"Rulat\"", prototyped: true },
       {
-        label: "Mașini noi",
-        to: "/autoturisme",
-        hint: "filtru \"Nou\"",
-        prototyped: true,
-      },
-      {
-        label: "Mașini rulate",
-        to: "/autoturisme",
-        hint: "filtru \"Rulat\"",
-        prototyped: true,
-      },
-      { label: "Mercedes-Benz", to: "/autoturisme", hint: "428 în stoc", prototyped: true },
-      { label: "smart", to: OUT },
-      { label: "Honda", to: OUT },
-      { label: "Volkswagen · Audi", to: OUT },
-      { label: "XPENG (electrice)", to: OUT },
-      { label: "Vehicule comerciale", to: OUT },
-    ],
-  },
-  {
-    label: "Oferte actuale",
-    items: [
-      {
+        section: "Stoc",
         label: "Disponibile imediat",
         to: "/autoturisme",
         hint: "fără timp de așteptare",
         prototyped: true,
       },
-      { label: "Campanii și reduceri", to: OUT },
-      { label: "Stoc de flotă", to: OUT },
-    ],
-  },
-  {
-    label: "Rulate",
-    items: [
+      { section: "Stoc", label: "Campanii și oferte", to: OUT },
+
+      // ── Mărci ───────────────────────────────────────────────
+      { section: "Mărci", label: "Mercedes-Benz", to: "/autoturisme", hint: "428 în stoc", prototyped: true },
+      { section: "Mărci", label: "smart", to: OUT },
+      { section: "Mărci", label: "Honda", to: OUT },
+      { section: "Mărci", label: "Volkswagen · Audi", to: OUT },
+      { section: "Mărci", label: "XPENG (electrice)", to: OUT },
+      { section: "Mărci", label: "Vehicule comerciale", to: OUT },
+
+      // ── Înainte să cumperi ──────────────────────────────────
       {
+        section: "Înainte să cumperi",
         label: "Cum verificăm rulatele",
         to: "/verificare-masini-rulate",
         hint: "100+ puncte de control",
         prototyped: true,
       },
       {
-        label: "Lista mea salvată",
+        section: "Înainte să cumperi",
+        label: "Compară mașinile salvate",
         to: "/comparatie",
-        hint: "compară fără grabă",
+        hint: "fără grabă, fără presiune",
         prototyped: true,
       },
       {
+        section: "Înainte să cumperi",
+        label: "Cum funcționează procesul",
+        to: "/",
+        hash: "cum-functioneaza",
+        hint: "5 pași, fără surprize",
+        prototyped: true,
+      },
+      {
+        section: "Înainte să cumperi",
         label: "Îți cumpărăm mașina",
         to: "/buy-back",
         hint: "evaluare cu interval de preț",
@@ -93,23 +95,31 @@ export const navigation: NavGroup[] = [
     ],
   },
   {
-    label: "Service auto",
+    label: "Service & daune",
     items: [
       {
+        section: "Programează",
         label: "Programare service",
         to: "/service/programare",
         hint: "confirmare în max. 2 ore",
         prototyped: true,
       },
       {
+        section: "Programează",
+        label: "Service urgent",
+        to: "/service/urgent",
+        hint: "telefon direct, azi",
+      },
+      {
+        section: "Daune",
         label: "Dosar daună",
         to: "/service/dosar-daune",
         hint: "decontare directă",
         prototyped: true,
       },
-      { label: "Service urgent", to: "/service/urgent", hint: "telefon direct" },
-      { label: "Revizii și pachete fixe", to: OUT },
-      { label: "Tinichigerie și vopsitorie", to: OUT },
+      { section: "Daune", label: "Tinichigerie și vopsitorie", to: OUT },
+      { section: "Lucrări", label: "Revizii și pachete fixe", to: OUT },
+      { section: "Lucrări", label: "Garanție și verificări", to: OUT },
     ],
   },
   {
@@ -125,10 +135,11 @@ export const navigation: NavGroup[] = [
       { label: "Asigurări", to: OUT },
       { label: "Pick-up & delivery", to: OUT },
       { label: "Mașină de schimb", to: OUT },
+      { label: "Închirieri auto", to: OUT },
     ],
   },
   {
-    label: "Piese și Accesorii",
+    label: "Piese și accesorii",
     items: [
       { label: "Piese originale", to: OUT },
       { label: "Accesorii și personalizare", to: OUT },
