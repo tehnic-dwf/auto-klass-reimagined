@@ -135,20 +135,4 @@ export const navigation: NavGroup[] = [
       { label: "Anvelope și hotel anvelope", to: OUT },
     ],
   },
-  {
-    label: "Despre noi",
-    items: [
-      { label: "Sucursale", to: "/", hash: "sucursale", hint: "9 locații" },
-      { label: "Povestea Autoklass", to: OUT },
-      { label: "Cariere", to: OUT },
-      { label: "Contact", to: OUT },
-    ],
-  },
-  {
-    label: "Cum cumpăr?",
-    to: "/",
-    hash: "cum-functioneaza",
-    prototyped: true,
-  },
-  { label: "Blog", to: OUT },
 ];
