@@ -1,55 +1,179 @@
 import { Link } from "@tanstack/react-router";
-import { CalendarClock, Menu, MessageCircle, Phone, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  CalendarClock,
+  ChevronDown,
+  Menu,
+  MessageCircle,
+  Phone,
+  Search,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 import logoUrl from "@/assets/autoklass-logo.png";
 import { Button } from "@/components/ui/button";
 import { contact } from "@/data/company";
+import { navigation, type NavGroup, type NavLink } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 
-/**
- * Meniu simplificat: 5 intrări principale, fiecare cu o singură intenție.
- * Structura veche (7+ categorii suprapuse) a fost comasată conform auditului UX.
- */
-const primaryNav = [
-  {
-    label: "Autoturisme",
-    to: "/autoturisme",
-    description: "Stoc unificat: noi și rulate, cu filtre pe buget",
-  },
-  {
-    label: "Programare service",
-    to: "/service/programare",
-    description: "3 pași, confirmare în maximum 2 ore lucrătoare",
-  },
-  {
-    label: "Dosar daună",
-    to: "/service/dosar-daune",
-    description: "Constatare, mașină de schimb, decontare directă",
-  },
-  {
-    label: "Service urgent",
-    to: "/service/urgent",
-    description: "Reparație neprogramată: telefon direct, diagnoză rapidă",
-  },
-  {
-    label: "Îți cumpărăm mașina",
-    to: "/buy-back",
-    description: "Evaluare cu interval de preț și ofertă scrisă",
-  },
-] as const;
+/** Badge discret pentru ecranele efectiv construite în prototip. */
+function ProtoDot({ on }: { on?: boolean | undefined }) {
+  if (!on) return null;
+  return (
+    <span
+      className="ml-2 inline-block size-1.5 shrink-0 rounded-full bg-accent align-middle"
+      aria-label="ecran prototipat"
+    />
+  );
+}
 
-const secondaryNav = [
-  {
-    label: "Cum verificăm rulatele",
-    to: "/verificare-masini-rulate",
-    hint: "100+ puncte de control",
-  },
-  { label: "Lista mea salvată", to: "/comparatie", hint: "compară fără grabă" },
-  { label: "Test drive", to: "/autoturisme", hint: "din pagina mașinii" },
-  { label: "Sucursale", to: "/", hint: "9 locații în România" },
-] as const;
+function DesktopGroup({ group }: { group: NavGroup }) {
+  const [open, setOpen] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  if (!group.items) {
+    return (
+      <Link
+        to={group.to!}
+        {...(group.hash ? { hash: group.hash } : {})}
+        className="whitespace-nowrap py-2 text-[13px] text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+        activeProps={{ className: "text-primary-foreground font-bold" }}
+      >
+        {group.label}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => {
+        if (timer.current) clearTimeout(timer.current);
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        timer.current = setTimeout(() => setOpen(false), 120);
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className={cn(
+          "flex items-center gap-1 whitespace-nowrap py-2 text-[13px] transition-colors",
+          open
+            ? "text-primary-foreground"
+            : "text-primary-foreground/80 hover:text-primary-foreground",
+        )}
+      >
+        {group.label}
+        <ChevronDown
+          className={cn("size-3.5 transition-transform", open && "rotate-180")}
+          aria-hidden
+        />
+      </button>
+
+      <div
+        className={cn(
+          "absolute left-0 top-full z-50 w-72 border border-border bg-card p-2 text-foreground shadow-card",
+          open ? "block" : "hidden",
+        )}
+      >
+        <div className="ambient-line mb-2 h-px w-full" aria-hidden />
+        <ul>
+          {group.items.map((item) => (
+            <li key={`${item.label}-${item.to}`}>
+              <Link
+                to={item.to}
+                {...(item.hash ? { hash: item.hash } : {})}
+                onClick={() => setOpen(false)}
+                className="block rounded-sm px-3 py-2 hover:bg-muted"
+              >
+                <span className="block text-sm font-bold">
+                  {item.label}
+                  <ProtoDot on={item.prototyped} />
+                </span>
+                {item.hint ? (
+                  <span className="block text-xs text-muted-foreground">{item.hint}</span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function MobileGroup({
+  group,
+  onNavigate,
+}: {
+  group: NavGroup;
+  onNavigate: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  if (!group.items) {
+    return (
+      <li className="border-b border-primary-foreground/10">
+        <Link
+          to={group.to!}
+          {...(group.hash ? { hash: group.hash } : {})}
+          onClick={onNavigate}
+          className="block px-1 py-4 text-base font-bold"
+        >
+          {group.label}
+        </Link>
+      </li>
+    );
+  }
+
+  return (
+    <li className="border-b border-primary-foreground/10">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between px-1 py-4 text-left text-base font-bold"
+      >
+        {group.label}
+        <ChevronDown
+          className={cn(
+            "size-5 text-primary-foreground/70 transition-transform",
+            open && "rotate-180",
+          )}
+          aria-hidden
+        />
+      </button>
+
+      {open ? (
+        <ul className="pb-3 pl-1">
+          {group.items.map((item: NavLink) => (
+            <li key={`${item.label}-${item.to}`}>
+              <Link
+                to={item.to}
+                {...(item.hash ? { hash: item.hash } : {})}
+                onClick={onNavigate}
+                className="block rounded-sm px-3 py-2.5 hover:bg-primary-foreground/10"
+              >
+                <span className="block text-sm">
+                  {item.label}
+                  <ProtoDot on={item.prototyped} />
+                </span>
+                {item.hint ? (
+                  <span className="block text-xs text-primary-foreground/55">
+                    {item.hint}
+                  </span>
+                ) : null}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </li>
+  );
+}
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -67,59 +191,50 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4">
-        <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
-          <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
-        </Link>
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4">
+          <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
+            <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
+          </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
-          {primaryNav.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
-              activeProps={{ className: "text-primary-foreground font-bold" }}
+          <nav className="hidden items-center gap-4 lg:flex" aria-label="Navigație principală">
+            {navigation.map((group) => (
+              <DesktopGroup key={group.label} group={group} />
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-1">
+            <a
+              href={contact.phoneHref}
+              className="hidden items-center gap-2 rounded-sm px-3 py-2 text-sm font-bold text-primary-foreground sm:flex"
             >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-1">
-          <a
-            href={contact.phoneHref}
-            className="hidden items-center gap-2 rounded-sm px-3 py-2 text-sm font-bold text-primary-foreground sm:flex"
-          >
-            <Phone className="size-4 text-accent" aria-hidden />
-            {contact.phone}
-          </a>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground md:hidden"
-            aria-label={open ? "Închide meniul" : "Deschide meniul"}
-            aria-expanded={open}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-
-          </Button>
-        </div>
+              <Phone className="size-4 text-accent" aria-hidden />
+              {contact.phone}
+            </a>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground lg:hidden"
+              aria-label={open ? "Închide meniul" : "Deschide meniul"}
+              aria-expanded={open}
+              onClick={() => setOpen((value) => !value)}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </Button>
+          </div>
         </div>
       </header>
-
 
       {/* Meniu mobil pe tot ecranul: acoperă complet ce e dedesubt, inclusiv bara sticky */}
       <div
         className={cn(
-          "fixed inset-0 z-[60] flex flex-col bg-primary text-primary-foreground md:hidden",
+          "fixed inset-0 z-[60] flex-col bg-primary text-primary-foreground lg:hidden",
           open ? "flex" : "hidden",
         )}
         role="dialog"
         aria-modal="true"
         aria-label="Meniu"
       >
-        <div className="flex h-16 items-center justify-between px-4">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary-foreground/15 px-4">
           <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
           <Button
             variant="ghost"
@@ -132,52 +247,28 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <div className="flex flex-1 flex-col overflow-y-auto px-4 pb-4">
+        <div className="flex-1 overflow-y-auto px-4 pb-8">
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
-            className="mb-4 flex items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-3 text-sm text-primary-foreground/70"
+            className="my-4 flex items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-3 text-sm text-primary-foreground/70"
           >
             <Search className="size-4" aria-hidden />
-            Caută în stocul de 1.172 mașini Mercedes-Benz
+            Caută în stoc: noi și rulate, în aceeași listă
           </Link>
 
-          <ul className="space-y-1">
-            {primaryNav.map((item) => (
-              <li key={item.to}>
-                <Link
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-sm px-3 py-3 hover:bg-primary-foreground/10"
-                >
-                  <span className="block text-base font-bold">{item.label}</span>
-                  <span className="block text-sm text-primary-foreground/65">
-                    {item.description}
-                  </span>
-                </Link>
-              </li>
+          <ul>
+            {navigation.map((group) => (
+              <MobileGroup
+                key={group.label}
+                group={group}
+                onNavigate={() => setOpen(false)}
+              />
             ))}
           </ul>
 
-          <div className="mt-4 border-t border-primary-foreground/15 pt-4">
-            <p className="eyebrow mb-2 text-primary-foreground/60">Altele</p>
-            <ul className="space-y-1">
-              {secondaryNav.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-primary-foreground/10"
-                  >
-                    <span>{item.label}</span>
-                    <span className="text-xs text-primary-foreground/60">{item.hint}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-auto space-y-2 pt-6">
+          {/* Cele 3 micro-conversii rămân la finalul meniului */}
+          <div className="mt-8 space-y-2 border-t border-primary-foreground/15 pt-6">
             <a
               href={contact.phoneHref}
               onClick={() => setOpen(false)}

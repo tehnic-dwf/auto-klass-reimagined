@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BuyBackRouteImport } from './routes/buy-back'
 import { Route as ComparatieRouteImport } from './routes/comparatie'
+import { Route as InAfaraScopuluiRouteImport } from './routes/in-afara-scopului'
 import { Route as VerificareMasiniRulateRouteImport } from './routes/verificare-masini-rulate'
 import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index'
 import { Route as AutoturismeSlugRouteImport } from './routes/autoturisme.$slug'
@@ -32,6 +33,11 @@ const BuyBackRoute = BuyBackRouteImport.update({
 const ComparatieRoute = ComparatieRouteImport.update({
   id: '/comparatie',
   path: '/comparatie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InAfaraScopuluiRoute = InAfaraScopuluiRouteImport.update({
+  id: '/in-afara-scopului',
+  path: '/in-afara-scopului',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VerificareMasiniRulateRoute = VerificareMasiniRulateRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
+  '/in-afara-scopului': typeof InAfaraScopuluiRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
+  '/in-afara-scopului': typeof InAfaraScopuluiRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
+  '/in-afara-scopului': typeof InAfaraScopuluiRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/buy-back'
     | '/comparatie'
+    | '/in-afara-scopului'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/buy-back'
     | '/comparatie'
+    | '/in-afara-scopului'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/buy-back'
     | '/comparatie'
+    | '/in-afara-scopului'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuyBackRoute: typeof BuyBackRoute
   ComparatieRoute: typeof ComparatieRoute
+  InAfaraScopuluiRoute: typeof InAfaraScopuluiRoute
   VerificareMasiniRulateRoute: typeof VerificareMasiniRulateRoute
   AutoturismeSlugRoute: typeof AutoturismeSlugRoute
   ServiceDosarDauneRoute: typeof ServiceDosarDauneRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/comparatie'
       fullPath: '/comparatie'
       preLoaderRoute: typeof ComparatieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/in-afara-scopului': {
+      id: '/in-afara-scopului'
+      path: '/in-afara-scopului'
+      fullPath: '/in-afara-scopului'
+      preLoaderRoute: typeof InAfaraScopuluiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/verificare-masini-rulate': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuyBackRoute: BuyBackRoute,
   ComparatieRoute: ComparatieRoute,
+  InAfaraScopuluiRoute: InAfaraScopuluiRoute,
   VerificareMasiniRulateRoute: VerificareMasiniRulateRoute,
   AutoturismeSlugRoute: AutoturismeSlugRoute,
   ServiceDosarDauneRoute: ServiceDosarDauneRoute,
