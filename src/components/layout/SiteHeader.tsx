@@ -95,7 +95,9 @@ export function SiteHeader() {
 
           </Button>
         </div>
-      </div>
+        </div>
+      </header>
+
 
       {/* Meniu mobil pe tot ecranul: acoperă complet ce e dedesubt, inclusiv bara sticky */}
       <div
