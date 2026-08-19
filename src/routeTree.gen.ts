@@ -16,6 +16,7 @@ import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index
 import { Route as AutoturismeSlugRouteImport } from './routes/autoturisme.$slug'
 import { Route as ServiceDosarDauneRouteImport } from './routes/service.dosar-daune'
 import { Route as ServiceProgramareRouteImport } from './routes/service.programare'
+import { Route as ServiceUrgentRouteImport } from './routes/service.urgent'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const ServiceProgramareRoute = ServiceProgramareRouteImport.update({
   path: '/service/programare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServiceUrgentRoute = ServiceUrgentRouteImport.update({
+  id: '/service/urgent',
+  path: '/service/urgent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme': typeof AutoturismeIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
   '/service/dosar-daune': typeof ServiceDosarDauneRoute
   '/service/programare': typeof ServiceProgramareRoute
+  '/service/urgent': typeof ServiceUrgentRoute
   '/autoturisme/': typeof AutoturismeIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/autoturisme/$slug'
     | '/service/dosar-daune'
     | '/service/programare'
+    | '/service/urgent'
     | '/autoturisme/'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   AutoturismeSlugRoute: typeof AutoturismeSlugRoute
   ServiceDosarDauneRoute: typeof ServiceDosarDauneRoute
   ServiceProgramareRoute: typeof ServiceProgramareRoute
+  ServiceUrgentRoute: typeof ServiceUrgentRoute
   AutoturismeIndexRoute: typeof AutoturismeIndexRoute
 }
 
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceProgramareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service/urgent': {
+      id: '/service/urgent'
+      path: '/service/urgent'
+      fullPath: '/service/urgent'
+      preLoaderRoute: typeof ServiceUrgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   AutoturismeSlugRoute: AutoturismeSlugRoute,
   ServiceDosarDauneRoute: ServiceDosarDauneRoute,
   ServiceProgramareRoute: ServiceProgramareRoute,
+  ServiceUrgentRoute: ServiceUrgentRoute,
   AutoturismeIndexRoute: AutoturismeIndexRoute,
 }
 export const routeTree = rootRouteImport
