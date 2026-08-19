@@ -18,6 +18,7 @@ import {
 import heroGrila from "@/assets/hero-grila.jpg";
 import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { AmbientPalette } from "@/components/ambient/AmbientPalette";
+import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
@@ -275,7 +276,7 @@ function HomePage() {
               </p>
             </div>
             <Button asChild size="lg" variant="outline" className="shrink-0 rounded-sm">
-              <a href="#cum-functioneaza">
+              <a href="#cum-functioneaza" id="cum-functioneaza-cta">
                 Cum funcționează procesul, pas cu pas
                 <ArrowRight className="ml-1 size-4" aria-hidden />
               </a>
@@ -583,17 +584,7 @@ function HomePage() {
 
       <SiteFooter />
 
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
-        <Button asChild variant="outline" className="rounded-sm">
-          <a href={contact.phoneHref}>
-            <Phone className="mr-1 size-4" aria-hidden />
-            Sună
-          </a>
-        </Button>
-        <Button asChild className="rounded-sm">
-          <Link to="/service/programare">Programare service</Link>
-        </Button>
-      </div>
+      <MobileStickyBar />
     </div>
   );
 }

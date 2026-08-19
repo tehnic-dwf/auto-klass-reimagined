@@ -7,6 +7,7 @@ import {
   Fuel,
   Gauge,
   MapPin,
+  MessageCircle,
   Phone,
   Settings2,
   ShieldCheck,
@@ -276,18 +277,30 @@ function VehicleDetailPage() {
                   <CalendarClock className="mr-1 size-4" aria-hidden />
                   Programează test drive
                 </Button>
-                <Button
-                  variant="outline"
-                  className="w-full rounded-sm"
-                  size="lg"
-                  onClick={() => {
-                    setMode("consultant");
-                    setSent(null);
-                  }}
-                >
-                  <UserRound className="mr-1 size-4" aria-hidden />
-                  Vorbește cu un consultant
-                </Button>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto]">
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-sm"
+                    size="lg"
+                    onClick={() => {
+                      setMode("consultant");
+                      setSent(null);
+                    }}
+                  >
+                    <UserRound className="mr-1 size-4" aria-hidden />
+                    Vorbește cu un consultant
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-sm">
+                    <a
+                      href={contact.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle className="mr-1 size-4 text-trust" aria-hidden />
+                      WhatsApp
+                    </a>
+                  </Button>
+                </div>
               </div>
 
               <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
