@@ -389,6 +389,69 @@ function HomePage() {
           </Button>
         </section>
 
+        {/* Ținta CTA-ului secundar din hero */}
+        <section
+          id="cum-functioneaza"
+          className="scroll-mt-24 border-t border-border bg-secondary py-12 md:py-16"
+        >
+          <div className="mx-auto w-full max-w-6xl px-4">
+            <h2 className="rule-accent text-2xl md:text-3xl">
+              Cum funcționează procesul, pas cu pas
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground md:text-base">
+              Cinci pași, fără presiune și fără etape ascunse. Poți opri oricând, la
+              orice pas.
+            </p>
+            <ol className="mt-8 grid gap-3 md:grid-cols-5">
+              {processSteps.map((step, index) => (
+                <li
+                  key={step.title}
+                  className="relative flex flex-col rounded-sm border-t-2 border-accent bg-card p-5 shadow-card"
+                >
+                  <span className="font-display text-3xl leading-none text-border">
+                    0{index + 1}
+                  </span>
+                  <step.icon className="mt-4 size-5 text-accent" aria-hidden />
+                  <h3 className="mt-3 text-base leading-snug">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {step.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 text-sm font-bold text-foreground">
+              Prețul final, comunicat înainte să începem orice lucrare.
+            </p>
+          </div>
+        </section>
+
+        {/* După vânzare */}
+        <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
+          <h2 className="rule-accent text-2xl md:text-3xl">Ce urmează după cumpărare</h2>
+          <div className="mt-6 grid gap-3 md:grid-cols-2">
+            {afterSales.map((item) => (
+              <Link
+                key={item.title}
+                to={item.to}
+                className="group flex flex-col rounded-sm border border-border bg-primary p-6 text-primary-foreground shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift"
+              >
+                <item.icon className="size-6 text-trust" aria-hidden />
+                <h3 className="mt-4 text-lg leading-snug">{item.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-primary-foreground/70">
+                  {item.body}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold">
+                  {item.cta}
+                  <ArrowRight
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         <section className="border-t border-border bg-secondary py-12 md:py-16">
           <div className="mx-auto w-full max-w-6xl px-4">
             <h2 className="rule-accent text-2xl md:text-3xl">Mărci reprezentate oficial</h2>
@@ -399,6 +462,9 @@ function HomePage() {
                   className="rounded-sm border-l-2 border-accent bg-card p-5 text-sm shadow-card"
                 >
                   <p className="font-display text-xl">{brand.brand}</p>
+                  <p className="mt-1 font-bold text-accent">
+                    {brand.stockCount} mașini în stoc
+                  </p>
                   <p className="mt-0.5 text-muted-foreground">
                     {brand.since
                       ? `Autorizat din ${brand.since}`
@@ -410,6 +476,87 @@ function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Rețeaua de sucursale */}
+        <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
+          <h2 className="rule-accent text-2xl md:text-3xl">
+            {stockFacts.branchCount} sucursale, aceleași reguli
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground md:text-base">
+            Alegi sucursala la test drive sau la programarea de service. Prețurile și
+            termenele sunt identice în toată rețeaua.
+          </p>
+          <div className="mt-6 grid gap-px overflow-hidden rounded-sm bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {branches.map((branch) => (
+              <div key={branch.name} className="bg-card p-5">
+                <div className="flex items-start gap-2">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+                  <div>
+                    <p className="text-base leading-snug">{branch.name}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{branch.address}</p>
+                    {branch.hasService ? (
+                      <p className="mt-1.5 text-xs font-bold uppercase tracking-[0.12em] text-trust">
+                        Service autorizat
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Întrebări puse înainte de prima vizită */}
+        <section className="border-t border-border bg-secondary py-12 md:py-16">
+          <div className="mx-auto w-full max-w-4xl px-4">
+            <h2 className="rule-accent text-2xl md:text-3xl">
+              Întrebări puse înainte de prima vizită
+            </h2>
+            <dl className="mt-6 divide-y divide-border rounded-sm border border-border bg-card">
+              {faq.map((item) => (
+                <div key={item.q} className="p-5">
+                  <dt className="text-base leading-snug">{item.q}</dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.a}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* Închidere: alegerea de intenție, din nou */}
+        <section className="bg-primary py-12 text-primary-foreground md:py-16">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="text-2xl leading-tight md:text-3xl">
+                Începe de la mașină sau de la o întrebare.
+              </h2>
+              <div className="ambient-line mt-4 w-40" aria-hidden />
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/70 md:text-base">
+                Răspundem în maximum 2 ore lucrătoare, cu nume și număr direct. Fără
+                obligația de a cumpăra.
+              </p>
+            </div>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              <Button asChild size="lg" variant="secondary" className="rounded-sm">
+                <Link to="/autoturisme">Vezi stocul disponibil</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-sm border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
+                <a href={contact.phoneHref}>
+                  <Phone className="mr-1 size-4" aria-hidden />
+                  {contact.phone}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <SiteFooter />
