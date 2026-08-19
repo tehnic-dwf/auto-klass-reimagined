@@ -112,8 +112,8 @@ export function SiteHeader() {
       {/* Meniu mobil pe tot ecranul: acoperă complet ce e dedesubt, inclusiv bara sticky */}
       <div
         className={cn(
-          "fixed inset-0 z-[60] overflow-y-auto bg-primary text-primary-foreground md:hidden",
-          open ? "block" : "hidden",
+          "fixed inset-0 z-[60] flex flex-col bg-primary text-primary-foreground md:hidden",
+          open ? "flex" : "hidden",
         )}
         role="dialog"
         aria-modal="true"
