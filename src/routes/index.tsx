@@ -507,7 +507,10 @@ function HomePage() {
         </section>
 
         {/* Rețeaua de sucursale */}
-        <section className="mx-auto w-full max-w-6xl px-4 py-12 md:py-16">
+        <section
+          id="sucursale"
+          className="mx-auto w-full max-w-6xl scroll-mt-20 px-4 py-12 md:py-16"
+        >
           <h2 className="rule-accent text-2xl md:text-3xl">
             {stockFacts.branchCount} sucursale, aceleași reguli
           </h2>
