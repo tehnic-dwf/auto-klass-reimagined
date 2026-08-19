@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuyBackRouteImport } from './routes/buy-back'
 import { Route as ComparatieRouteImport } from './routes/comparatie'
 import { Route as VerificareMasiniRulateRouteImport } from './routes/verificare-masini-rulate'
 import { Route as AutoturismeIndexRouteImport } from './routes/autoturisme.index'
@@ -21,6 +22,11 @@ import { Route as ServiceUrgentRouteImport } from './routes/service.urgent'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyBackRoute = BuyBackRouteImport.update({
+  id: '/buy-back',
+  path: '/buy-back',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComparatieRoute = ComparatieRouteImport.update({
@@ -61,6 +67,7 @@ const ServiceUrgentRoute = ServiceUrgentRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buy-back': typeof BuyBackRoute
   '/comparatie': typeof ComparatieRoute
   '/verificare-masini-rulate': typeof VerificareMasiniRulateRoute
   '/autoturisme/$slug': typeof AutoturismeSlugRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/buy-back'
     | '/comparatie'
     | '/verificare-masini-rulate'
     | '/autoturisme/$slug'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuyBackRoute: typeof BuyBackRoute
   ComparatieRoute: typeof ComparatieRoute
   VerificareMasiniRulateRoute: typeof VerificareMasiniRulateRoute
   AutoturismeSlugRoute: typeof AutoturismeSlugRoute
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy-back': {
+      id: '/buy-back'
+      path: '/buy-back'
+      fullPath: '/buy-back'
+      preLoaderRoute: typeof BuyBackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comparatie': {
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuyBackRoute: BuyBackRoute,
   ComparatieRoute: ComparatieRoute,
   VerificareMasiniRulateRoute: VerificareMasiniRulateRoute,
   AutoturismeSlugRoute: AutoturismeSlugRoute,
