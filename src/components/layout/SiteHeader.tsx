@@ -54,6 +54,16 @@ const secondaryNav = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
+  // Cât timp meniul e deschis, pagina de dedesubt nu se mai mișcă.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground">
