@@ -96,13 +96,60 @@ export function SiteHeader() {
         </div>
       </div>
 
+      {/* Meniu mobil pe tot ecranul: acoperă complet ce e dedesubt, inclusiv bara sticky */}
       <div
         className={cn(
-          "overflow-hidden border-t border-primary-foreground/15 bg-primary md:hidden",
+          "fixed inset-0 z-[60] overflow-y-auto bg-primary text-primary-foreground md:hidden",
           open ? "block" : "hidden",
         )}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Meniu"
       >
-        <div className="px-4 py-4">
+        <div className="flex h-16 items-center justify-between px-4">
+          <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+            aria-label="Închide meniul"
+            onClick={() => setOpen(false)}
+          >
+            <X className="size-5" />
+          </Button>
+        </div>
+
+        <div className="px-4 pb-8">
+          {/* Cele 3 micro-conversii, una sub alta */}
+          <div className="mb-4 space-y-2">
+            <a
+              href={contact.phoneHref}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
+            >
+              <Phone className="size-4" aria-hidden />
+              Sună {contact.phone}
+            </a>
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+            >
+              <MessageCircle className="size-4 text-trust" aria-hidden />
+              Scrie pe WhatsApp
+            </a>
+            <Link
+              to="/service/programare"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+            >
+              <CalendarClock className="size-4 text-accent" aria-hidden />
+              Programare service
+            </Link>
+          </div>
+
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
@@ -146,14 +193,6 @@ export function SiteHeader() {
               ))}
             </ul>
           </div>
-
-          <a
-            href={contact.phoneHref}
-            className="mt-4 flex items-center justify-center gap-2 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
-          >
-            <Phone className="size-4" aria-hidden />
-            Sună {contact.phone}
-          </a>
         </div>
       </div>
     </header>
