@@ -7,6 +7,7 @@ import {
   Fuel,
   Gauge,
   MapPin,
+  MessageCircle,
   Phone,
   Settings2,
   ShieldCheck,
