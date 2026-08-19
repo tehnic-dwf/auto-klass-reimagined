@@ -186,29 +186,41 @@ function MobileGroup({
       </button>
 
       {open ? (
-        <ul className="pb-3 pl-1">
-          {group.items.map((item: NavLink) => (
-            <li key={`${item.label}-${item.to}`}>
-              <Link
-                to={item.to}
-                {...(item.hash ? { hash: item.hash } : {})}
-                onClick={onNavigate}
-                className="block rounded-sm px-3 py-2.5 hover:bg-primary-foreground/10"
-              >
-                <span className="block text-sm">
-                  {item.label}
-                  <ProtoDot on={item.prototyped} />
-                </span>
-                {item.hint ? (
-                  <span className="block text-xs text-primary-foreground/55">
-                    {item.hint}
-                  </span>
-                ) : null}
-              </Link>
-            </li>
+        <div className="pb-3 pl-1">
+          {groupSections(group.items).map(([section, items]) => (
+            <div key={section} className="mb-2">
+              {section ? (
+                <p className="px-3 pt-2 text-[11px] font-bold uppercase tracking-wider text-primary-foreground/45">
+                  {section}
+                </p>
+              ) : null}
+              <ul>
+                {items.map((item: NavLink) => (
+                  <li key={`${item.label}-${item.to}`}>
+                    <Link
+                      to={item.to}
+                      {...(item.hash ? { hash: item.hash } : {})}
+                      onClick={onNavigate}
+                      className="block rounded-sm px-3 py-2.5 hover:bg-primary-foreground/10"
+                    >
+                      <span className="block text-sm">
+                        {item.label}
+                        <ProtoDot on={item.prototyped} />
+                      </span>
+                      {item.hint ? (
+                        <span className="block text-xs text-primary-foreground/55">
+                          {item.hint}
+                        </span>
+                      ) : null}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : null}
+
     </li>
   );
 }
