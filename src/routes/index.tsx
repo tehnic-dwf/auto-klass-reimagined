@@ -275,7 +275,7 @@ function HomePage() {
               </p>
             </div>
             <Button asChild size="lg" variant="outline" className="shrink-0 rounded-sm">
-              <a href="#cum-functioneaza">
+              <a href="#cum-functioneaza" id="cum-functioneaza-cta">
                 Cum funcționează procesul, pas cu pas
                 <ArrowRight className="ml-1 size-4" aria-hidden />
               </a>
