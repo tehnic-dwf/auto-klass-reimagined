@@ -132,37 +132,7 @@ export function SiteHeader() {
           </Button>
         </div>
 
-        <div className="px-4 pb-8">
-          {/* Cele 3 micro-conversii, una sub alta */}
-          <div className="mb-4 space-y-2">
-            <a
-              href={contact.phoneHref}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
-            >
-              <Phone className="size-4" aria-hidden />
-              Sună {contact.phone}
-            </a>
-            <a
-              href={contact.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
-            >
-              <MessageCircle className="size-4 text-trust" aria-hidden />
-              Scrie pe WhatsApp
-            </a>
-            <Link
-              to="/service/programare"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
-            >
-              <CalendarClock className="size-4 text-accent" aria-hidden />
-              Programare service
-            </Link>
-          </div>
-
+        <div className="flex flex-1 flex-col overflow-y-auto px-4 pb-4">
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
@@ -205,6 +175,35 @@ export function SiteHeader() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="mt-auto space-y-2 pt-6">
+            <a
+              href={contact.phoneHref}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
+            >
+              <Phone className="size-4" aria-hidden />
+              Sună {contact.phone}
+            </a>
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+            >
+              <MessageCircle className="size-4 text-trust" aria-hidden />
+              Scrie pe WhatsApp
+            </a>
+            <Link
+              to="/service/programare"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+            >
+              <CalendarClock className="size-4 text-accent" aria-hidden />
+              Programare service
+            </Link>
           </div>
         </div>
       </div>
