@@ -461,11 +461,18 @@ function HomePage() {
                   key={brand.brand}
                   className="rounded-sm border-l-2 border-accent bg-card p-5 text-sm shadow-card"
                 >
-                  <p className="font-display text-xl">{brand.brand}</p>
-                  <p className="mt-1 font-bold text-accent">
-                    {brand.stockCount} mașini în stoc
-                  </p>
-                  <p className="mt-0.5 text-muted-foreground">
+                  <div className="flex items-center gap-4">
+                    <span className="flex size-14 shrink-0 items-center justify-center rounded-sm bg-secondary text-foreground">
+                      <BrandMark brand={brand.brand} className="h-8 w-auto" />
+                    </span>
+                    <div>
+                      <p className="font-display text-xl">{brand.brand}</p>
+                      <p className="mt-0.5 font-bold text-accent">
+                        {brand.stockCount} mașini în stoc
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-3 text-muted-foreground">
                     {brand.since
                       ? `Autorizat din ${brand.since}`
                       : "Reprezentanță autorizată"}
