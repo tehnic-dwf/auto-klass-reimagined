@@ -55,7 +55,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground backdrop-blur">
+    <>
+      <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4">
         <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
           <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
