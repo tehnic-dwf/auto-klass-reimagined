@@ -21,6 +21,7 @@ import { AmbientPalette } from "@/components/ambient/AmbientPalette";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
+import { BrandMark } from "@/components/brands/BrandMark";
 import { Button } from "@/components/ui/button";
 import { brandAuthorizations, branches, contact, stockFacts } from "@/data/company";
 import { formatPrice, vehicles } from "@/data/vehicles";
