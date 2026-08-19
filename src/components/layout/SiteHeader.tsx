@@ -83,32 +83,50 @@ function DesktopGroup({ group }: { group: NavGroup }) {
 
       <div
         className={cn(
-          "absolute left-0 top-full z-50 w-72 border border-border bg-card p-2 text-foreground shadow-card",
+          "absolute left-0 top-full z-50 border border-border bg-card p-4 text-foreground shadow-card",
+          groupSections(group.items).length > 1 ? "w-[720px]" : "w-72",
           open ? "block" : "hidden",
         )}
       >
-        <div className="ambient-line mb-2 h-px w-full" aria-hidden />
-        <ul>
-          {group.items.map((item) => (
-            <li key={`${item.label}-${item.to}`}>
-              <Link
-                to={item.to}
-                {...(item.hash ? { hash: item.hash } : {})}
-                onClick={() => setOpen(false)}
-                className="block rounded-sm px-3 py-2 hover:bg-muted"
-              >
-                <span className="block text-sm font-bold">
-                  {item.label}
-                  <ProtoDot on={item.prototyped} />
-                </span>
-                {item.hint ? (
-                  <span className="block text-xs text-muted-foreground">{item.hint}</span>
-                ) : null}
-              </Link>
-            </li>
+        <div className="ambient-line mb-3 h-px w-full" aria-hidden />
+        <div
+          className={cn(
+            "grid gap-x-6 gap-y-4",
+            groupSections(group.items).length > 1 ? "grid-cols-3" : "grid-cols-1",
+          )}
+        >
+          {groupSections(group.items).map(([section, items]) => (
+            <div key={section}>
+              {section ? (
+                <p className="mb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {section}
+                </p>
+              ) : null}
+              <ul>
+                {items.map((item) => (
+                  <li key={`${item.label}-${item.to}`}>
+                    <Link
+                      to={item.to}
+                      {...(item.hash ? { hash: item.hash } : {})}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-sm px-3 py-2 hover:bg-muted"
+                    >
+                      <span className="block text-sm font-bold">
+                        {item.label}
+                        <ProtoDot on={item.prototyped} />
+                      </span>
+                      {item.hint ? (
+                        <span className="block text-xs text-muted-foreground">{item.hint}</span>
+                      ) : null}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
+
     </div>
   );
 }
