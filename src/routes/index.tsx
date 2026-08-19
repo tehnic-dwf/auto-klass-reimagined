@@ -18,6 +18,7 @@ import {
 import heroGrila from "@/assets/hero-grila.jpg";
 import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { AmbientPalette } from "@/components/ambient/AmbientPalette";
+import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
