@@ -2,10 +2,16 @@ import { Link } from "@tanstack/react-router";
 import {
   CalendarClock,
   ChevronDown,
+  ExternalLink,
+  Globe,
+  Heart,
+  Mail,
   Menu,
   MessageCircle,
   Phone,
   Search,
+  ShoppingCart,
+  User,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +21,8 @@ import { Button } from "@/components/ui/button";
 import { contact } from "@/data/company";
 import { navigation, type NavGroup, type NavLink } from "@/data/navigation";
 import { cn } from "@/lib/utils";
+
+const OUT = "/in-afara-scopului";
 
 /** Badge discret pentru ecranele efectiv construite în prototip. */
 function ProtoDot({ on }: { on?: boolean | undefined }) {
@@ -36,7 +44,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
       <Link
         to={group.to!}
         {...(group.hash ? { hash: group.hash } : {})}
-        className="whitespace-nowrap py-2 text-[13px] text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+        className="whitespace-nowrap px-3 py-2.5 text-[13px] text-primary-foreground/80 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
         {group.label}
@@ -60,7 +68,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-1 whitespace-nowrap py-2 text-[13px] transition-colors",
+          "flex items-center gap-1 whitespace-nowrap px-3 py-2.5 text-[13px] transition-colors",
           open
             ? "text-primary-foreground"
             : "text-primary-foreground/80 hover:text-primary-foreground",
@@ -175,6 +183,36 @@ function MobileGroup({
   );
 }
 
+function UtilityIcon({
+  to,
+  label,
+  icon: Icon,
+  count,
+}: {
+  to: string;
+  label: string;
+  icon: React.ElementType;
+  count?: number;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group relative flex flex-col items-center gap-1 p-2 text-[11px] font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+      aria-label={label}
+    >
+      <div className="relative">
+        <Icon className="size-6" aria-hidden />
+        {count ? (
+          <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
+            {count}
+          </span>
+        ) : null}
+      </div>
+      <span className="hidden xl:inline">{label}</span>
+    </Link>
+  );
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
@@ -191,16 +229,103 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground">
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4">
+        {/* Desktop: top strip + middle strip + nav strip */}
+        <div className="hidden lg:block">
+          {/* Top strip */}
+          <div className="border-b border-primary-foreground/10 bg-black/20">
+            <div className="mx-auto flex h-9 w-full max-w-7xl items-center justify-between px-4 text-xs">
+              <div className="flex items-center gap-4">
+                <Link
+                  to={OUT}
+                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                >
+                  Contact
+                </Link>
+                <Link
+                  to={OUT}
+                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                >
+                  Piese auto <ExternalLink className="size-3" aria-hidden />
+                </Link>
+                <Link
+                  to={OUT}
+                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                >
+                  Închirieri auto <ExternalLink className="size-3" aria-hidden />
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <span className="text-primary-foreground/60">
+                  Ai nevoie de ajutor? Contactează-ne la:
+                </span>
+                <a
+                  href={contact.phoneHref}
+                  className="flex items-center gap-1.5 font-bold transition-colors hover:text-white"
+                >
+                  <Phone className="size-3.5" aria-hidden />
+                  {contact.phone}
+                </a>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                >
+                  <Mail className="size-3.5" aria-hidden />
+                  {contact.email}
+                </a>
+                <button
+                  type="button"
+                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                >
+                  <Globe className="size-3.5" aria-hidden />
+                  Română
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle strip */}
+          <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between gap-6 px-4">
+            <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Autoklass — acasă">
+              <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
+            </Link>
+
+            {/* Search bar */}
+            <div className="mx-4 flex flex-1 justify-center">
+              <Link
+                to="/autoturisme"
+                className="flex h-11 w-full max-w-xl items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-4 text-sm text-primary-foreground/60 transition-colors hover:border-primary-foreground/30 hover:text-primary-foreground/80"
+              >
+                <Search className="size-5 shrink-0" aria-hidden />
+                <span className="truncate">Termenul dumneavoastră de căutare...</span>
+              </Link>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-1">
+              <UtilityIcon to="/comparatie" label="Favorite" icon={Heart} count={0} />
+              <UtilityIcon to={OUT} label="Autentificare" icon={User} />
+              <UtilityIcon to={OUT} label="Coșul meu" icon={ShoppingCart} count={0} />
+            </div>
+          </div>
+
+          {/* Nav strip */}
+          <div className="border-t border-primary-foreground/10">
+            <nav
+              className="mx-auto flex h-12 w-full max-w-7xl items-center px-4"
+              aria-label="Navigație principală"
+            >
+              {navigation.map((group) => (
+                <DesktopGroup key={group.label} group={group} />
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Mobile: single strip */}
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4 lg:hidden">
           <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
             <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
           </Link>
-
-          <nav className="hidden items-center gap-4 lg:flex" aria-label="Navigație principală">
-            {navigation.map((group) => (
-              <DesktopGroup key={group.label} group={group} />
-            ))}
-          </nav>
 
           <div className="flex items-center gap-1">
             <a
@@ -213,7 +338,7 @@ export function SiteHeader() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground lg:hidden"
+              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
               aria-label={open ? "Închide meniul" : "Deschide meniul"}
               aria-expanded={open}
               onClick={() => setOpen((value) => !value)}
