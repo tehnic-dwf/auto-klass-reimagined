@@ -1,16 +1,16 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
   ArrowLeft,
   BadgeCheck,
-  CalendarClock,
   Check,
   MapPin,
   MessageCircle,
   Phone,
   ShieldCheck,
-  UserRound,
+  X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
@@ -73,34 +73,50 @@ export const Route = createFileRoute("/autoturisme/$slug")({
 
 type ActionMode = "test-drive" | "consultant";
 
+/** Afișarea formularului diferă peste/sub `lg`, deci avem nevoie de breakpoint în JS. */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  return isDesktop;
+}
+
 /**
- * Galerie sobră: fața mașinii prima, apoi interiorul, exemplarul din stoc și un detaliu.
+ * Galerie sobră: exemplarul real din stoc primul, apoi imaginile de prezentare
+ * (marcate ca atare, ca să nu pară că sunt tot mașina din anunț).
  */
 function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
   const shots = [
     {
-      src: heroGrila,
-      alt: `${vehicle.title} văzut frontal, cu grila și farurile aprinse`,
-      label: "Față",
-      caption: "Grila și privirea farurilor — prima impresie, cea care rămâne.",
-    },
-    {
-      src: interiorAmbiental,
-      alt: `Interior ${vehicle.title}, seara`,
-      label: "Interior",
-      caption: "Habitaclul, așa cum îl vezi la volan după apus.",
-    },
-    {
       src: gallerySize(vehicle.image),
       alt: vehicle.title,
-      label: "Exterior",
+      label: "Mașina din stoc",
       caption: `${vehicle.title}, exact mașina din stocul de la ${vehicle.branch}.`,
     },
     {
+      src: heroGrila,
+      alt: "Imagine de prezentare: Mercedes-Benz văzut frontal",
+      label: "Prezentare: față",
+      caption: "Imagine de prezentare — grila și privirea farurilor.",
+    },
+    {
+      src: interiorAmbiental,
+      alt: "Imagine de prezentare: interior Mercedes-Benz seara",
+      label: "Prezentare: interior",
+      caption: "Imagine de prezentare — habitaclul după apus.",
+    },
+    {
       src: detaliuGrila,
-      alt: "Detaliu grilă și stea Mercedes-Benz",
-      label: "Detaliu",
-      caption: "Cromul grilei și steaua, în lumină rece.",
+      alt: "Imagine de prezentare: detaliu grilă și stea Mercedes-Benz",
+      label: "Prezentare: detaliu",
+      caption: "Imagine de prezentare — cromul grilei și steaua.",
     },
   ];
 
@@ -109,8 +125,13 @@ function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
 
   return (
     <div>
-      <div className="overflow-hidden rounded-sm border border-border bg-muted">
-        <img src={shot.src} alt={shot.alt} className="aspect-[16/10] w-full object-cover" />
+      <div className="overflow-hidden rounded-lg border border-border bg-muted">
+        <img
+          key={shot.src}
+          src={shot.src}
+          alt={shot.alt}
+          className="aspect-[16/10] w-full object-cover transition-opacity duration-150"
+        />
       </div>
       <p className="mt-3 text-xs text-muted-foreground">{shot.caption}</p>
 
@@ -120,9 +141,9 @@ function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
             key={item.label}
             type="button"
             onClick={() => setActive(index)}
-            aria-current={index === active}
+            aria-pressed={index === active}
             aria-label={item.label}
-            className={`overflow-hidden rounded-sm border-2 bg-muted text-left transition-colors ${
+            className={`press min-h-11 overflow-hidden rounded-sm border-2 bg-muted text-left ${
               index === active ? "border-foreground" : "border-transparent"
             }`}
           >
@@ -143,13 +164,99 @@ function VehicleDetailPage() {
   const { vehicle } = Route.useLoaderData();
   const [mode, setMode] = useState<ActionMode | null>(null);
   const [sent, setSent] = useState<ActionMode | null>(null);
+  const isDesktop = useIsDesktop();
 
   const similar = vehicles
     .filter((item) => item.slug !== vehicle.slug && item.bodyType === vehicle.bodyType)
     .slice(0, 3);
 
+  const closeForm = () => {
+    setMode(null);
+    setSent(null);
+  };
+
+  const priceMeta = [
+    vehicle.vat === "deductibil" ? "TVA deductibil" : "TVA nedeductibil",
+    vehicle.listPriceEur ? `preț de listă ${formatPrice(vehicle.listPriceEur)} €` : null,
+    vehicle.hybrid ? "hibrid plug-in" : null,
+    vehicle.reserved ? "rezervat" : null,
+  ].filter(Boolean) as string[];
+
+  const decisionOptions = (
+    <>
+      <div className="mt-6 space-y-3">
+        <Button
+          className="press w-full"
+          size="lg"
+          onClick={() => {
+            setMode("test-drive");
+            setSent(null);
+          }}
+        >
+          Programează un test drive
+        </Button>
+        <Button
+          variant="outline"
+          className="press w-full"
+          onClick={() => {
+            setMode("consultant");
+            setSent(null);
+          }}
+        >
+          Cere să fii sunat
+        </Button>
+      </div>
+
+      <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
+        <BadgeCheck className="mt-0.5 size-5 shrink-0 text-trust" strokeWidth={2} aria-hidden />
+        Un consultant îți răspunde în maximum 2 ore lucrătoare, cu nume și număr direct.
+      </p>
+
+      <div className="mt-6 space-y-2 border-t border-border pt-5">
+        <a
+          href={contact.whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex min-h-12 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
+          Scrie pe WhatsApp
+        </a>
+        <a
+          href={contact.phoneHref}
+          className="flex min-h-12 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <Phone className="size-5" strokeWidth={1.5} aria-hidden />
+          Sună acum · {contact.phone}
+        </a>
+        <FavoriteButton
+          slug={vehicle.slug}
+          withLabel
+          className="w-full justify-start border-0 bg-transparent px-0 text-muted-foreground"
+        />
+        <Link
+          to="/comparatie"
+          className="flex min-h-12 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Vezi mașinile salvate
+        </Link>
+      </div>
+    </>
+  );
+
+  const leadForm = mode ? (
+    <LeadForm
+      mode={mode}
+      sent={sent === mode}
+      onSubmit={() => setSent(mode)}
+      onClose={closeForm}
+      branch={vehicle.branch}
+      backLabel="Înapoi la opțiuni"
+    />
+  ) : null;
+
   return (
-    <div className="min-h-screen bg-background pb-28 md:pb-0">
+    <div className="min-h-screen bg-background pb-28 lg:pb-0">
       <SiteHeader />
 
       <main className="mx-auto w-full max-w-7xl px-5 py-8 md:px-6 md:py-12">
@@ -157,30 +264,26 @@ function VehicleDetailPage() {
           to="/autoturisme"
           className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground"
         >
-          <ArrowLeft className="size-4" aria-hidden />
+          <ArrowLeft className="size-5" strokeWidth={1.5} aria-hidden />
           Înapoi la stoc
         </Link>
 
-        <div className="mt-4 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+        <div className="mt-4 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
           <div>
             <VehicleGallery vehicle={vehicle} />
 
-            <div className="mt-8">
+            {/* Rezumatul rămâne pe mobil sub galerie; pe desktop e în panoul de decizie. */}
+            <div className="mt-8 lg:hidden">
               <Badge variant={vehicle.condition === "nou" ? "default" : "secondary"}>
                 {vehicle.condition === "nou" ? "Mașină nouă" : "Rulat verificat"}
               </Badge>
 
               <h1 className="mt-5 text-3xl md:text-4xl">{vehicle.title}</h1>
 
-              <p className="mt-6 font-display text-4xl">{formatPrice(vehicle.priceEur)} €</p>
-              <p className="mt-2 text-xs text-muted-foreground">
-                {vehicle.vat === "deductibil" ? "TVA deductibil" : "TVA nedeductibil"}
-                {vehicle.listPriceEur
-                  ? ` · preț de listă ${formatPrice(vehicle.listPriceEur)} €`
-                  : ""}
-                {vehicle.hybrid ? " · hibrid plug-in" : ""}
-                {vehicle.reserved ? " · rezervat" : ""}
+              <p className="mt-5 font-display text-4xl tabular-nums">
+                {formatPrice(vehicle.priceEur)} €
               </p>
+              <p className="mt-2 text-xs text-muted-foreground">{priceMeta.join(" · ")}</p>
               {vehicle.availability ? (
                 <p className="mt-1 text-xs text-accent">{vehicle.availability}</p>
               ) : null}
@@ -190,7 +293,7 @@ function VehicleDetailPage() {
 
             <div className="mt-12 border-t border-border pt-8">
               <h2 className="flex items-center gap-2 text-lg">
-                <ShieldCheck className="size-5 text-trust" aria-hidden />
+                <ShieldCheck className="size-5 text-trust" strokeWidth={2} aria-hidden />
                 Ce e verificat înainte să ajungă la tine
               </h2>
               <ul className="mt-5 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
@@ -201,7 +304,11 @@ function VehicleDetailPage() {
                   "Garanție inclusă, fără costuri ascunse",
                 ].map((item) => (
                   <li key={item} className="flex gap-3">
-                    <Check className="mt-1 size-4 shrink-0 text-trust" aria-hidden />
+                    <Check
+                      className="mt-1 size-5 shrink-0 text-trust"
+                      strokeWidth={2}
+                      aria-hidden
+                    />
                     {item}
                   </li>
                 ))}
@@ -216,88 +323,42 @@ function VehicleDetailPage() {
           </div>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="rounded-sm border border-border bg-card p-6">
+            <div className="rounded-lg border border-border bg-card p-6">
+              {/* Antetul deciziei: stare, model, preț, TVA, sucursală */}
+              <div className="hidden lg:block">
+                <p className="eyebrow">
+                  {vehicle.condition === "nou" ? "Mașină nouă" : "Rulat verificat"}
+                </p>
+                <h1 className="mt-3 text-2xl leading-snug">{vehicle.title}</h1>
+                <p className="mt-4 font-display text-3xl tabular-nums">
+                  {formatPrice(vehicle.priceEur)} €
+                </p>
+                <p className="mt-2 text-xs text-muted-foreground">{priceMeta.join(" · ")}</p>
+                {vehicle.availability ? (
+                  <p className="mt-1 text-xs text-accent">{vehicle.availability}</p>
+                ) : null}
+                <div className="mt-4 border-t border-border pt-4" />
+              </div>
+
               <p className="flex items-start gap-3 text-sm">
-                <MapPin className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden />
+                <MapPin
+                  className="mt-0.5 size-5 shrink-0 text-muted-foreground"
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
                 <span>
                   Poți vedea mașina la <strong>{vehicle.branch}</strong>
                 </span>
               </p>
 
-              <div className="mt-6 space-y-3">
-                <Button
-                  className="w-full"
-                  size="lg"
-                  onClick={() => {
-                    setMode("test-drive");
-                    setSent(null);
-                  }}
-                >
-                  <CalendarClock className="size-4" aria-hidden />
-                  Programează test drive
-                </Button>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => {
-                      setMode("consultant");
-                      setSent(null);
-                    }}
-                  >
-                    <UserRound className="size-4" aria-hidden />
-                    Consultant
-                  </Button>
-                  <Button asChild variant="outline">
-                    <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="size-4" aria-hidden />
-                      WhatsApp
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-              <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
-                <BadgeCheck className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
-                Un consultant îți răspunde în maximum 2 ore lucrătoare, cu nume și număr direct.
-              </p>
-
-              <div className="mt-6 space-y-3 border-t border-border pt-6">
-                <a
-                  href={contact.phoneHref}
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-sm border border-border text-sm font-bold"
-                >
-                  <Phone className="size-4" aria-hidden />
-                  {contact.phone}
-                </a>
-
-                <FavoriteButton slug={vehicle.slug} withLabel className="w-full" />
-                <Link
-                  to="/comparatie"
-                  className="flex min-h-11 items-center justify-center text-xs text-muted-foreground"
-                >
-                  Vezi lista salvată și compară
-                </Link>
-              </div>
+              {/* Pe desktop formularul înlocuiește conținutul cardului, în loc să apară dedesubt */}
+              {isDesktop && mode ? leadForm : decisionOptions}
             </div>
-
-            {mode ? (
-              <LeadForm
-                mode={mode}
-                sent={sent === mode}
-                onSubmit={() => setSent(mode)}
-                onClose={() => {
-                  setMode(null);
-                  setSent(null);
-                }}
-                branch={vehicle.branch}
-              />
-            ) : null}
           </aside>
         </div>
 
         {similar.length > 0 ? (
-          <section className="mt-20 border-t border-border pt-12">
+          <section className="mt-16 border-t border-border pt-10">
             <h2 className="text-2xl">Alternative similare din stoc</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((item) => (
@@ -305,7 +366,7 @@ function VehicleDetailPage() {
                   key={item.slug}
                   to="/autoturisme/$slug"
                   params={{ slug: item.slug }}
-                  className="flex gap-4 rounded-sm border border-border bg-card p-4 transition-colors hover:border-foreground/25"
+                  className="flex gap-4 rounded-lg border border-border bg-card p-4 transition-colors hover:border-foreground/25"
                 >
                   <img
                     src={item.image}
@@ -315,7 +376,7 @@ function VehicleDetailPage() {
                   />
                   <span className="min-w-0 text-sm">
                     <span className="block">{item.title}</span>
-                    <span className="mt-2 block font-display text-xl">
+                    <span className="mt-2 block font-display text-xl tabular-nums">
                       {formatPrice(item.priceEur)} €
                     </span>
                     <span className="mt-1 block text-xs text-muted-foreground">
@@ -331,16 +392,35 @@ function VehicleDetailPage() {
 
       <SiteFooter />
 
-      <div className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 px-3 pt-3 backdrop-blur md:hidden">
-        <div className="flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <p className="font-display text-xl leading-none">{formatPrice(vehicle.priceEur)} €</p>
+      {/* Dock de conversie al mașinii: vizibil până la lg (inclusiv 768px) */}
+      <div className="bottom-safe fixed inset-x-3 z-40 lg:hidden">
+        <div className="flex items-center gap-3 rounded-lg border border-border bg-card/95 p-3 shadow-panel backdrop-blur">
+          <div className="min-w-0 flex-1">
+            <p className="font-display text-xl leading-none tabular-nums">
+              {formatPrice(vehicle.priceEur)} €
+            </p>
             <p className="mt-1 truncate text-xs text-muted-foreground">
               {vehicle.branch.replace("Autoklass ", "")}
             </p>
           </div>
+          <a
+            href={contact.phoneHref}
+            aria-label={`Sună acum la ${contact.phone}`}
+            className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border"
+          >
+            <Phone className="size-5" strokeWidth={1.5} aria-hidden />
+          </a>
+          <a
+            href={contact.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Scrie pe WhatsApp"
+            className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border"
+          >
+            <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
+          </a>
           <Button
-            className="shrink-0"
+            className="press h-13 shrink-0"
             onClick={() => {
               setMode("test-drive");
               setSent(null);
@@ -350,6 +430,46 @@ function VehicleDetailPage() {
           </Button>
         </div>
       </div>
+
+      {/* Sub lg: același formular, în bottom sheet accesibil */}
+      <DialogPrimitive.Root
+        open={!isDesktop && mode !== null}
+        onOpenChange={(next) => {
+          if (!next) closeForm();
+        }}
+      >
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-[60] bg-primary/60 lg:hidden" />
+          <DialogPrimitive.Content
+            aria-label={mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}
+            className="pb-safe fixed inset-x-0 bottom-0 z-[70] max-h-[92svh] overflow-y-auto rounded-t-lg border-t border-border bg-card px-5 pt-5 lg:hidden"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <DialogPrimitive.Title className="text-lg">
+                {mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}
+              </DialogPrimitive.Title>
+              <DialogPrimitive.Close
+                aria-label="Închide"
+                className="flex size-11 shrink-0 items-center justify-center rounded-sm border border-border"
+              >
+                <X className="size-5" strokeWidth={1.5} aria-hidden />
+              </DialogPrimitive.Close>
+            </div>
+            {mode ? (
+              <LeadForm
+                mode={mode}
+                sent={sent === mode}
+                onSubmit={() => setSent(mode)}
+                onClose={closeForm}
+                branch={vehicle.branch}
+                backLabel="Închide"
+                bare
+                autoFocusFirst
+              />
+            ) : null}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </div>
   );
 }
@@ -393,18 +513,24 @@ function LeadForm({
   onSubmit,
   onClose,
   branch,
+  backLabel,
+  bare = false,
+  autoFocusFirst = false,
 }: {
   mode: ActionMode;
   sent: boolean;
   onSubmit: () => void;
   onClose: () => void;
   branch: string;
+  backLabel: string;
+  bare?: boolean;
+  autoFocusFirst?: boolean;
 }) {
   if (sent) {
     return (
-      <div className="mt-4 rounded-sm border border-trust bg-trust/10 p-5">
+      <div className={bare ? "py-5" : "mt-6 border-t border-border pt-6"}>
         <h3 className="flex items-center gap-2 text-base">
-          <Check className="size-4 text-trust" aria-hidden />
+          <Check className="size-5 text-trust" strokeWidth={2} aria-hidden />
           Cererea a plecat
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -415,9 +541,9 @@ function LeadForm({
           </a>
           .
         </p>
-        <DemoNotice className="mt-4 bg-card" />
-        <Button variant="outline" className="mt-4 rounded-sm" onClick={onClose}>
-          Închide
+        <DemoNotice className="mt-4 bg-secondary" />
+        <Button variant="outline" className="press mt-4 w-full" onClick={onClose}>
+          {backLabel}
         </Button>
       </div>
     );
@@ -425,16 +551,18 @@ function LeadForm({
 
   return (
     <form
-      className="mt-4 rounded-sm border border-border bg-card p-5 shadow-card"
+      className={bare ? "py-5" : "mt-6 border-t border-border pt-6"}
       onSubmit={(event) => {
         event.preventDefault();
         onSubmit();
       }}
     >
-      <h3 className="text-base">
-        {mode === "test-drive" ? "Programare test drive" : "Discuție cu un consultant"}
-      </h3>
-      <p className="mt-1 text-sm text-muted-foreground">
+      {bare ? null : (
+        <h3 className="text-base">
+          {mode === "test-drive" ? "Programează un test drive" : "Cere să fii sunat"}
+        </h3>
+      )}
+      <p className={bare ? "text-sm text-muted-foreground" : "mt-1 text-sm text-muted-foreground"}>
         {mode === "test-drive"
           ? "Spune-ne când poți veni. Pregătim mașina și actele înainte să ajungi."
           : "Îți răspundem la întrebări despre preț, finanțare sau istoricul mașinii."}
@@ -443,7 +571,13 @@ function LeadForm({
       <div className="mt-4 space-y-3">
         <div>
           <Label htmlFor="lead-name">Nume</Label>
-          <Input id="lead-name" required className="mt-1 rounded-sm" autoComplete="name" />
+          <Input
+            id="lead-name"
+            required
+            className="mt-1 rounded-sm"
+            autoComplete="name"
+            autoFocus={autoFocusFirst}
+          />
         </div>
         <div>
           <Label htmlFor="lead-phone">Telefon</Label>
@@ -469,11 +603,11 @@ function LeadForm({
         )}
       </div>
 
-      <Button type="submit" className="mt-4 w-full rounded-sm" size="lg">
+      <Button type="submit" className="press mt-5 w-full" size="lg">
         Trimite cererea
       </Button>
-      <Button type="button" variant="ghost" className="mt-1 w-full rounded-sm" onClick={onClose}>
-        Renunță
+      <Button type="button" variant="ghost" className="mt-1 w-full" onClick={onClose}>
+        {backLabel}
       </Button>
     </form>
   );

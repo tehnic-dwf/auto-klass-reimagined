@@ -220,22 +220,35 @@
   );
 }
 
-/* Scrim localizat: doar în spatele copy-ului, ca vopseaua și grila să rămână
-   vizibile în dreapta cadrului. */
+/* Scrim localizat: pe mobil acoperă stabil toată zona de text (jos),
+   pe desktop se retrage spre stânga ca vopseaua și grila să rămână vizibile. */
 @utility hero-copy-scrim {
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in oklab, var(--color-primary) 86%, transparent) 0%,
-      color-mix(in oklab, var(--color-primary) 62%, transparent) 42%,
-      color-mix(in oklab, var(--color-primary) 12%, transparent) 72%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to top,
-      color-mix(in oklab, var(--color-primary) 55%, transparent) 0%,
-      transparent 55%
-    );
+  pointer-events: none;
+  background-image: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--color-primary) 92%, transparent) 0%,
+    color-mix(in oklab, var(--color-primary) 78%, transparent) 38%,
+    color-mix(in oklab, var(--color-primary) 34%, transparent) 72%,
+    color-mix(in oklab, var(--color-primary) 12%, transparent) 100%
+  );
+}
+
+@media (min-width: 1024px) {
+  .hero-copy-scrim {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--color-primary) 88%, transparent) 0%,
+        color-mix(in oklab, var(--color-primary) 66%, transparent) 40%,
+        color-mix(in oklab, var(--color-primary) 14%, transparent) 74%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in oklab, var(--color-primary) 52%, transparent) 0%,
+        transparent 58%
+      );
+  }
 }
 
 /* Gradient de sus pentru headerul suprapus pe hero */
@@ -247,13 +260,42 @@
   );
 }
 
+/* Rail orizontal nativ cu scroll-snap (fără dependințe de carusel) */
+@utility snap-rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.snap-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@utility snap-card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* Stare apăsată discretă pentru acțiuni */
+@utility press {
+  transition-property: transform, background-color, border-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.press:active {
+  transform: scale(0.96);
+}
+
 /* Secvență discretă de primă încărcare; doar dacă utilizatorul nu cere
    reducerea mișcării. */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes hero-rise {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(28px);
     }
     to {
       opacity: 1;
@@ -261,9 +303,54 @@
     }
   }
 
-  .hero-rise {
-    animation: hero-rise 620ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  @keyframes hero-media {
+    from {
+      transform: scale(1.035);
+    }
+    to {
+      transform: scale(1);
+    }
   }
+
+  .hero-rise {
+    animation: hero-rise 820ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  }
+
+  .hero-media {
+    animation: hero-media 1200ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  }
+
+  /* Dezvăluire la intrarea în viewport (IntersectionObserver) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 700ms cubic-bezier(0.16, 0.84, 0.24, 1),
+      transform 700ms cubic-bezier(0.16, 0.84, 0.24, 1);
+  }
+
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Tranziție pe proprietăți exacte pentru acordeoane de navigație.
+   Regula de bază e mereu activă (altfel conținutul închis ar rămâne vizibil);
+   sub prefers-reduced-motion durata e anulată global mai jos. */
+.nav-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    grid-template-rows 280ms cubic-bezier(0.16, 0.84, 0.24, 1),
+    opacity 280ms cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+.nav-collapse[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -289,4 +376,8 @@
 
 @utility pt-safe {
   padding-top: env(safe-area-inset-top);
+}
+
+@utility bottom-safe {
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
