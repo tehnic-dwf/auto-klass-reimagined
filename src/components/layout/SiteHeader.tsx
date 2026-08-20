@@ -43,7 +43,15 @@ function DesktopGroup({
   onOpen: () => void;
   onClose: () => void;
 }) {
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTimers = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    if (openTimer.current) clearTimeout(openTimer.current);
+    closeTimer.current = null;
+    openTimer.current = null;
+  };
 
   if (!group.items) {
     return (
@@ -63,17 +71,23 @@ function DesktopGroup({
   return (
     <div
       onMouseEnter={() => {
-        if (timer.current) clearTimeout(timer.current);
-        onOpen();
+        // Hover deschide doar după o intenție clară, ca primul click să nu închidă.
+        clearTimers();
+        openTimer.current = setTimeout(onOpen, 260);
       }}
       onMouseLeave={() => {
-        timer.current = setTimeout(onClose, 140);
+        clearTimers();
+        closeTimer.current = setTimeout(onClose, 140);
       }}
     >
       <button
         type="button"
         aria-expanded={open}
-        onClick={() => (open ? onClose() : onOpen())}
+        onClick={() => {
+          clearTimers();
+          if (open) onClose();
+          else onOpen();
+        }}
         className={cn(
           "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-2 text-sm transition-colors xl:px-4",
           open
@@ -88,6 +102,7 @@ function DesktopGroup({
           aria-hidden
         />
       </button>
+
 
       {open ? (
         <div className="absolute inset-x-0 top-full z-50 border-t border-border bg-card text-foreground shadow-panel">
