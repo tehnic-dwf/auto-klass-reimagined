@@ -27,8 +27,7 @@ export function PhotoUpload() {
         <ImagePlus className="size-5 text-accent" aria-hidden />
         <span className="text-sm font-bold">Adaugă poze cu avaria</span>
         <span className="text-xs text-muted-foreground">
-          3–6 poze: ansamblu, detaliu avarie, talon. Ne ajută să estimăm înainte de
-          constatare.
+          3–6 poze: ansamblu, detaliu avarie, talon. Ne ajută să estimăm înainte de constatare.
         </span>
       </label>
       <input

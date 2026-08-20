@@ -407,11 +407,9 @@ export const vehicles: Vehicle[] = [
   },
 ];
 
-export const getVehicle = (slug: string) =>
-  vehicles.find((vehicle) => vehicle.slug === slug);
+export const getVehicle = (slug: string) => vehicles.find((vehicle) => vehicle.slug === slug);
 
 export const formatPrice = (value: number) =>
   new Intl.NumberFormat("ro-RO", { maximumFractionDigits: 0 }).format(value);
 
-export const formatKm = (value: number) =>
-  `${new Intl.NumberFormat("ro-RO").format(value)} km`;
+export const formatKm = (value: number) => `${new Intl.NumberFormat("ro-RO").format(value)} km`;

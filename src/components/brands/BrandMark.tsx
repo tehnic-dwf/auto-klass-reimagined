@@ -9,11 +9,7 @@ function MercedesStar({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} fill="none" aria-hidden>
       <circle cx="24" cy="24" r="21" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M24 24V5M24 24 7.6 33.5M24 24l16.4 9.5"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
+      <path d="M24 24V5M24 24 7.6 33.5M24 24l16.4 9.5" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }
@@ -30,11 +26,7 @@ function SmartMark({ className }: { className?: string }) {
 function HondaMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} fill="none" aria-hidden>
-      <path
-        d="M6 10h6v10h24V10h6v28h-6V27H12v11H6z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
+      <path d="M6 10h6v10h24V10h6v28h-6V27H12v11H6z" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }

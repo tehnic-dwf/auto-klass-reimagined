@@ -2,8 +2,6 @@ import { Link } from "@tanstack/react-router";
 import {
   CalendarClock,
   ChevronDown,
-  ExternalLink,
-  Globe,
   Heart,
   Mail,
   Menu,
@@ -24,7 +22,7 @@ import { cn } from "@/lib/utils";
 
 const OUT = "/in-afara-scopului";
 
-/** Badge discret pentru ecranele efectiv construite în prototip. */
+/** Marcaj discret pentru ecranele efectiv construite în prototip. */
 function ProtoDot({ on }: { on?: boolean | undefined }) {
   if (!on) return null;
   return (
@@ -47,7 +45,6 @@ function groupSections(items: NavLink[]): Array<[string, NavLink[]]> {
 }
 
 function DesktopGroup({ group }: { group: NavGroup }) {
-
   const [open, setOpen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -56,13 +53,15 @@ function DesktopGroup({ group }: { group: NavGroup }) {
       <Link
         to={group.to!}
         {...(group.hash ? { hash: group.hash } : {})}
-        className="whitespace-nowrap px-3 py-2.5 text-[13px] text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+        className="whitespace-nowrap px-4 py-3 text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
         {group.label}
       </Link>
     );
   }
+
+  const sections = groupSections(group.items);
 
   return (
     <div
@@ -72,7 +71,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         setOpen(true);
       }}
       onMouseLeave={() => {
-        timer.current = setTimeout(() => setOpen(false), 120);
+        timer.current = setTimeout(() => setOpen(false), 140);
       }}
     >
       <button
@@ -80,55 +79,54 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-1 whitespace-nowrap px-3 py-2.5 text-[13px] transition-colors",
+          "flex items-center gap-1.5 whitespace-nowrap px-4 py-3 text-sm transition-colors",
           open
             ? "text-primary-foreground"
-            : "text-primary-foreground/80 hover:text-primary-foreground",
+            : "text-primary-foreground/75 hover:text-primary-foreground",
         )}
       >
         {group.label}
         <ChevronDown
-          className={cn("size-3.5 transition-transform", open && "rotate-180")}
+          className={cn("size-4 transition-transform", open && "rotate-180")}
           aria-hidden
         />
       </button>
 
       <div
         className={cn(
-          "absolute left-0 top-full z-50 border border-border bg-card p-4 text-foreground shadow-card",
-          groupSections(group.items).length > 1 ? "w-[720px]" : "w-72",
+          "absolute left-0 top-full z-50 rounded-sm border border-border bg-card p-6 text-foreground shadow-panel",
+          sections.length > 1 ? "w-[46rem]" : "w-80",
           open ? "block" : "hidden",
         )}
       >
-        <div className="ambient-line mb-3 h-px w-full" aria-hidden />
         <div
           className={cn(
-            "grid gap-x-6 gap-y-4",
-            groupSections(group.items).length > 1 ? "grid-cols-3" : "grid-cols-1",
+            "grid gap-x-8 gap-y-6",
+            sections.length > 1 ? "grid-cols-3" : "grid-cols-1",
           )}
         >
-          {groupSections(group.items).map(([section, items]) => (
+          {sections.map(([section, items]) => (
             <div key={section}>
               {section ? (
-                <p className="mb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                  {section}
-                </p>
+                <p className="eyebrow mb-3 border-b border-border pb-2">{section}</p>
               ) : null}
-              <ul>
+              <ul className="space-y-1">
                 {items.map((item) => (
                   <li key={`${item.label}-${item.to}`}>
                     <Link
                       to={item.to}
                       {...(item.hash ? { hash: item.hash } : {})}
                       onClick={() => setOpen(false)}
-                      className="block rounded-sm px-3 py-2 hover:bg-muted"
+                      className="block rounded-sm px-3 py-2 transition-colors hover:bg-muted"
                     >
                       <span className="block text-sm font-bold">
                         {item.label}
                         <ProtoDot on={item.prototyped} />
                       </span>
                       {item.hint ? (
-                        <span className="block text-xs text-muted-foreground">{item.hint}</span>
+                        <span className="mt-0.5 block text-xs text-muted-foreground">
+                          {item.hint}
+                        </span>
                       ) : null}
                     </Link>
                   </li>
@@ -138,18 +136,11 @@ function DesktopGroup({ group }: { group: NavGroup }) {
           ))}
         </div>
       </div>
-
     </div>
   );
 }
 
-function MobileGroup({
-  group,
-  onNavigate,
-}: {
-  group: NavGroup;
-  onNavigate: () => void;
-}) {
+function MobileGroup({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
 
   if (!group.items) {
@@ -159,7 +150,7 @@ function MobileGroup({
           to={group.to!}
           {...(group.hash ? { hash: group.hash } : {})}
           onClick={onNavigate}
-          className="block px-1 py-4 text-base font-bold"
+          className="flex min-h-14 items-center text-base font-bold"
         >
           {group.label}
         </Link>
@@ -173,12 +164,12 @@ function MobileGroup({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-1 py-4 text-left text-base font-bold"
+        className="flex min-h-14 w-full items-center justify-between gap-4 text-left text-base font-bold"
       >
         {group.label}
         <ChevronDown
           className={cn(
-            "size-5 text-primary-foreground/70 transition-transform",
+            "size-5 shrink-0 text-primary-foreground/60 transition-transform",
             open && "rotate-180",
           )}
           aria-hidden
@@ -186,13 +177,11 @@ function MobileGroup({
       </button>
 
       {open ? (
-        <div className="pb-3 pl-1">
+        <div className="pb-4">
           {groupSections(group.items).map(([section, items]) => (
-            <div key={section} className="mb-2">
+            <div key={section} className="mb-4 last:mb-0">
               {section ? (
-                <p className="px-3 pt-2 text-[11px] font-bold uppercase tracking-wider text-primary-foreground/45">
-                  {section}
-                </p>
+                <p className="eyebrow mb-1 text-primary-foreground/55">{section}</p>
               ) : null}
               <ul>
                 {items.map((item: NavLink) => (
@@ -201,16 +190,14 @@ function MobileGroup({
                       to={item.to}
                       {...(item.hash ? { hash: item.hash } : {})}
                       onClick={onNavigate}
-                      className="block rounded-sm px-3 py-2.5 hover:bg-primary-foreground/10"
+                      className="flex min-h-12 flex-col justify-center rounded-sm py-2 transition-colors hover:bg-primary-foreground/10"
                     >
-                      <span className="block text-sm">
+                      <span className="text-sm">
                         {item.label}
                         <ProtoDot on={item.prototyped} />
                       </span>
                       {item.hint ? (
-                        <span className="block text-xs text-primary-foreground/55">
-                          {item.hint}
-                        </span>
+                        <span className="text-xs text-primary-foreground/55">{item.hint}</span>
                       ) : null}
                     </Link>
                   </li>
@@ -220,37 +207,27 @@ function MobileGroup({
           ))}
         </div>
       ) : null}
-
     </li>
   );
 }
 
-function UtilityIcon({
+function ActionIcon({
   to,
   label,
   icon: Icon,
-  count,
 }: {
   to: string;
   label: string;
   icon: React.ElementType;
-  count?: number;
 }) {
   return (
     <Link
       to={to}
-      className="group relative flex flex-col items-center gap-1 p-2 text-[11px] font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+      className="flex size-11 items-center justify-center rounded-sm text-primary-foreground/75 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
       aria-label={label}
+      title={label}
     >
-      <div className="relative">
-        <Icon className="size-6" aria-hidden />
-        {count ? (
-          <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
-            {count}
-          </span>
-        ) : null}
-      </div>
-      <span className="hidden xl:inline">{label}</span>
+      <Icon className="size-5" aria-hidden />
     </Link>
   );
 }
@@ -270,123 +247,91 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-border bg-primary text-primary-foreground">
-        {/* Desktop: top strip + middle strip + nav strip */}
+      <header className="sticky top-0 z-50 bg-primary text-primary-foreground">
+        {/* Desktop: două niveluri — utilitar subțire + rândul principal */}
         <div className="hidden lg:block">
-          {/* Top strip */}
-          <div className="border-b border-primary-foreground/10 bg-black/20">
-            <div className="mx-auto flex h-9 w-full max-w-7xl items-center justify-between px-4 text-xs">
-              <div className="flex items-center gap-4">
-                <Link
-                  to={OUT}
-                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                >
+          <div className="border-b border-primary-foreground/10">
+            <div className="mx-auto flex h-11 w-full max-w-7xl items-center justify-between gap-8 px-6 text-xs">
+              <div className="flex items-center gap-6 text-primary-foreground/65">
+                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
                   Contact
                 </Link>
-                <Link
-                  to={OUT}
-                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                >
-                  Piese auto <ExternalLink className="size-3" aria-hidden />
+                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
+                  Piese auto
                 </Link>
-                <Link
-                  to={OUT}
-                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                >
-                  Închirieri auto <ExternalLink className="size-3" aria-hidden />
+                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
+                  Închirieri auto
+                </Link>
+                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
+                  Română
                 </Link>
               </div>
 
-              <div className="flex items-center gap-4">
-                <span className="text-primary-foreground/60">
-                  Ai nevoie de ajutor? Contactează-ne la:
-                </span>
-                <a
-                  href={contact.phoneHref}
-                  className="flex items-center gap-1.5 font-bold transition-colors hover:text-white"
-                >
-                  <Phone className="size-3.5" aria-hidden />
-                  {contact.phone}
-                </a>
+              <div className="flex items-center gap-6">
                 <a
                   href={`mailto:${contact.email}`}
-                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                  className="flex items-center gap-2 text-primary-foreground/65 transition-colors hover:text-primary-foreground"
                 >
-                  <Mail className="size-3.5" aria-hidden />
+                  <Mail className="size-4" aria-hidden />
                   {contact.email}
                 </a>
-                <button
-                  type="button"
-                  className="flex items-center gap-1.5 text-primary-foreground/70 transition-colors hover:text-primary-foreground"
+                <a
+                  href={contact.phoneHref}
+                  className="flex items-center gap-2 font-bold transition-colors hover:text-primary-foreground"
                 >
-                  <Globe className="size-3.5" aria-hidden />
-                  Română
-                </button>
+                  <Phone className="size-4" aria-hidden />
+                  {contact.phone}
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Middle strip */}
-          <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between gap-6 px-4">
-            <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Autoklass — acasă">
+          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-8 px-6">
+            <Link to="/" className="shrink-0" aria-label="Autoklass — acasă">
               <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
             </Link>
 
-            {/* Search bar */}
-            <div className="mx-4 flex flex-1 justify-center">
-              <Link
-                to="/autoturisme"
-                className="flex h-11 w-full max-w-xl items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-4 text-sm text-primary-foreground/60 transition-colors hover:border-primary-foreground/30 hover:text-primary-foreground/80"
-              >
-                <Search className="size-5 shrink-0" aria-hidden />
-                <span className="truncate">Termenul dumneavoastră de căutare...</span>
-              </Link>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-1">
-              <UtilityIcon to="/comparatie" label="Favorite" icon={Heart} count={0} />
-              <UtilityIcon to={OUT} label="Autentificare" icon={User} />
-              <UtilityIcon to={OUT} label="Coșul meu" icon={ShoppingCart} count={0} />
-            </div>
-          </div>
-
-          {/* Nav strip */}
-          <div className="border-t border-primary-foreground/10">
-            <nav
-              className="mx-auto flex h-12 w-full max-w-7xl items-center px-4"
-              aria-label="Navigație principală"
-            >
+            <nav className="flex flex-1 items-center" aria-label="Navigație principală">
               {navigation.map((group) => (
                 <DesktopGroup key={group.label} group={group} />
               ))}
             </nav>
+
+            <div className="flex shrink-0 items-center gap-1">
+              <ActionIcon to="/autoturisme" label="Caută în stoc" icon={Search} />
+              <ActionIcon to="/comparatie" label="Mașini salvate" icon={Heart} />
+              <ActionIcon to={OUT} label="Autentificare" icon={User} />
+              <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
+              <Button asChild variant="secondary" className="ml-3">
+                <Link to="/service/programare">Programare service</Link>
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile: single strip */}
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-3 px-4 lg:hidden">
-          <Link to="/" className="flex items-center gap-2" aria-label="Autoklass — acasă">
-            <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
+        {/* Mobile: un singur nivel de 64px */}
+        <div className="flex h-16 w-full items-center justify-between gap-3 px-4 lg:hidden">
+          <Link to="/" aria-label="Autoklass — acasă">
+            <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
           </Link>
 
           <div className="flex items-center gap-1">
             <a
               href={contact.phoneHref}
-              className="hidden items-center gap-2 rounded-sm px-3 py-2 text-sm font-bold text-primary-foreground sm:flex"
+              aria-label={`Sună la ${contact.phone}`}
+              className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
             >
-              <Phone className="size-4 text-accent" aria-hidden />
-              {contact.phone}
+              <Phone className="size-5" aria-hidden />
             </a>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+            <button
+              type="button"
+              className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
               aria-label={open ? "Închide meniul" : "Deschide meniul"}
               aria-expanded={open}
               onClick={() => setOpen((value) => !value)}
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
-            </Button>
+              {open ? <X className="size-6" /> : <Menu className="size-6" />}
+            </button>
           </div>
         </div>
       </header>
@@ -402,46 +347,55 @@ export function SiteHeader() {
         aria-label="Meniu"
       >
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary-foreground/15 px-4">
-          <img src={logoUrl} alt="Autoklass" className="h-6 w-auto" />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+          <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
+          <button
+            type="button"
+            className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
             aria-label="Închide meniul"
             onClick={() => setOpen(false)}
           >
-            <X className="size-5" />
-          </Button>
+            <X className="size-6" />
+          </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 pb-8">
+        <div className="flex-1 overflow-y-auto px-5 pb-8">
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
-            className="my-4 flex items-center gap-3 rounded-sm border border-primary-foreground/20 bg-primary-foreground/5 px-3 py-3 text-sm text-primary-foreground/70"
+            className="my-5 flex min-h-12 items-center gap-3 rounded-sm border border-primary-foreground/20 px-4 text-sm text-primary-foreground/75"
           >
-            <Search className="size-4" aria-hidden />
-            Caută în stoc: noi și rulate, în aceeași listă
+            <Search className="size-5 shrink-0" aria-hidden />
+            Caută în stoc: noi și rulate
           </Link>
 
           <ul>
             {navigation.map((group) => (
-              <MobileGroup
-                key={group.label}
-                group={group}
-                onNavigate={() => setOpen(false)}
-              />
+              <MobileGroup key={group.label} group={group} onNavigate={() => setOpen(false)} />
             ))}
+            <MobileGroup
+              group={{
+                label: "Autoklass",
+                items: [
+                  { label: "Mașini salvate și comparație", to: "/comparatie", prototyped: true },
+                  { label: "Autentificare", to: OUT },
+                  { label: "Coșul meu", to: OUT },
+                  { label: "Contact", to: OUT },
+                  { label: "Despre noi", to: OUT },
+                  { label: "Blog", to: OUT },
+                ],
+              }}
+              onNavigate={() => setOpen(false)}
+            />
           </ul>
 
           {/* Cele 3 micro-conversii rămân la finalul meniului */}
-          <div className="mt-8 space-y-2 border-t border-primary-foreground/15 pt-6">
+          <div className="mt-8 space-y-3 border-t border-primary-foreground/15 pt-6">
             <a
               href={contact.phoneHref}
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm bg-primary-foreground px-4 py-3 text-sm font-bold text-primary"
+              className="flex min-h-12 items-center gap-3 rounded-sm bg-primary-foreground px-4 text-sm font-bold text-primary"
             >
-              <Phone className="size-4" aria-hidden />
+              <Phone className="size-5" aria-hidden />
               Sună {contact.phone}
             </a>
             <a
@@ -449,17 +403,17 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+              className="flex min-h-12 items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 text-sm font-bold"
             >
-              <MessageCircle className="size-4 text-trust" aria-hidden />
+              <MessageCircle className="size-5" aria-hidden />
               Scrie pe WhatsApp
             </a>
             <Link
               to="/service/programare"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 py-3 text-sm font-bold"
+              className="flex min-h-12 items-center gap-3 rounded-sm border border-primary-foreground/25 px-4 text-sm font-bold"
             >
-              <CalendarClock className="size-4 text-accent" aria-hidden />
+              <CalendarClock className="size-5" aria-hidden />
               Programare service
             </Link>
           </div>

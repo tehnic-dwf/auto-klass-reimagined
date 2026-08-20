@@ -1,14 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Clock,
-  Car,
-  Phone,
-  ShieldCheck,
-  Wrench,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock, Car, Phone, ShieldCheck, Wrench } from "lucide-react";
 import { useState } from "react";
 
 import { DemoNotice } from "@/components/DemoNotice";
@@ -109,8 +100,8 @@ function ServiceBookingPage() {
             <Check className="size-8 text-trust" aria-hidden />
             <h1 className="mt-3 text-2xl">Cererea de programare a fost trimisă</h1>
             <p className="mt-2 text-muted-foreground">
-              Un consilier service de la {branch} te sună pentru confirmarea orei în
-              maximum 2 ore lucrătoare.
+              Un consilier service de la {branch} te sună pentru confirmarea orei în maximum 2 ore
+              lucrătoare.
             </p>
 
             <dl className="mt-6 space-y-2 border-t border-trust/30 pt-4 text-sm">
@@ -120,21 +111,16 @@ function ServiceBookingPage() {
                 label="Când"
                 value={`${date || "dată de confirmat"} · ${slot ?? "interval de confirmat"}`}
               />
-              <Row
-                label="Mașină de schimb"
-                value={replacementCar ? "Solicitată" : "Nu"}
-              />
+              <Row label="Mașină de schimb" value={replacementCar ? "Solicitată" : "Nu"} />
               <Row label="Estimare orientativă" value={selectedService?.estimate ?? "-"} />
             </dl>
 
             <p className="mt-6 text-sm text-muted-foreground">
-              Nu începem nicio lucrare peste estimarea confirmată de tine. Primești un SMS
-              cu stadiul mașinii la preluare, la aprobarea devizului și la finalizare.
+              Nu începem nicio lucrare peste estimarea confirmată de tine. Primești un SMS cu
+              stadiul mașinii la preluare, la aprobarea devizului și la finalizare.
             </p>
 
             <DemoNotice className="mt-4 bg-card" />
-
-
 
             <Button asChild variant="outline" className="mt-6 rounded-sm">
               <a href={contact.phoneHref}>
@@ -157,8 +143,8 @@ function ServiceBookingPage() {
         <p className="eyebrow">Service autorizat · {branches.length} locații</p>
         <h1 className="mt-2 text-2xl md:text-3xl">Programare service în 3 pași</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Fără formulare lungi și fără telefoane pierdute. Îți confirmăm ora în maximum 2
-          ore lucrătoare.
+          Fără formulare lungi și fără telefoane pierdute. Îți confirmăm ora în maximum 2 ore
+          lucrătoare.
         </p>
 
         <div className="mt-5 flex items-center gap-3">
@@ -187,21 +173,17 @@ function ServiceBookingPage() {
                       <Wrench className="size-4 text-accent" aria-hidden />
                       {item.title}
                     </span>
-                    <span className="mt-1 block text-sm text-muted-foreground">
-                      {item.hint}
-                    </span>
+                    <span className="mt-1 block text-sm text-muted-foreground">{item.hint}</span>
                   </span>
-                  <span className="shrink-0 text-xs text-muted-foreground">
-                    {item.estimate}
-                  </span>
+                  <span className="shrink-0 text-xs text-muted-foreground">{item.estimate}</span>
                 </button>
               ))}
             </div>
 
             <p className="mt-4 flex gap-2 rounded-sm bg-secondary p-3 text-sm text-muted-foreground">
               <ShieldCheck className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
-              Estimările sunt orientative. Costul final se confirmă după diagnoză și nu
-              începem lucrarea fără acordul tău.
+              Estimările sunt orientative. Costul final se confirmă după diagnoză și nu începem
+              lucrarea fără acordul tău.
             </p>
           </section>
         ) : null}
@@ -219,9 +201,7 @@ function ServiceBookingPage() {
                   onClick={() => setBranch(item.name)}
                   className={cn(
                     "flex w-full flex-col rounded-sm border p-3 text-left",
-                    branch === item.name
-                      ? "border-accent bg-accent/5"
-                      : "border-border bg-card",
+                    branch === item.name ? "border-accent bg-accent/5" : "border-border bg-card",
                   )}
                 >
                   <span className="text-sm font-bold">{item.name}</span>
@@ -273,9 +253,7 @@ function ServiceBookingPage() {
             >
               <Car className="mt-0.5 size-4 text-accent" aria-hidden />
               <span>
-                <span className="block text-sm font-bold">
-                  Am nevoie de mașină de schimb
-                </span>
+                <span className="block text-sm font-bold">Am nevoie de mașină de schimb</span>
                 <span className="block text-sm text-muted-foreground">
                   În limita disponibilității flotei; îți confirmăm la telefon.
                 </span>
@@ -296,12 +274,7 @@ function ServiceBookingPage() {
             <div className="mt-4 space-y-3">
               <div>
                 <Label htmlFor="booking-name">Nume</Label>
-                <Input
-                  id="booking-name"
-                  required
-                  autoComplete="name"
-                  className="mt-1 rounded-sm"
-                />
+                <Input id="booking-name" required autoComplete="name" className="mt-1 rounded-sm" />
               </div>
               <div>
                 <Label htmlFor="booking-phone">Telefon</Label>

@@ -30,12 +30,13 @@ export function FavoriteButton({
         toggle(slug);
       }}
       className={cn(
-        "inline-flex items-center gap-2 rounded-sm border border-border bg-background/90 px-2 py-2 text-sm transition-colors hover:border-accent",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-sm border border-border bg-card/95 px-3 text-sm transition-colors hover:border-foreground/30",
+        withLabel ? "min-w-11" : "size-11 px-0",
         active && "border-accent text-accent",
         className,
       )}
     >
-      <Heart className={cn("size-4", active && "fill-current")} aria-hidden />
+      <Heart className={cn("size-5 shrink-0", active && "fill-current")} aria-hidden />
       {withLabel ? (active ? "Salvată" : "Salvează pentru comparație") : null}
     </button>
   );

@@ -85,15 +85,14 @@ function ListingPage() {
         <p className="eyebrow">Stoc unificat</p>
         <h1 className="mt-2 text-2xl md:text-4xl">Autoturisme noi și rulate</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul
-          afișat este prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
+          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul afișat este
+          prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
         </p>
 
         <div className="mt-4 flex items-center gap-2 rounded-sm border border-border bg-secondary px-3 py-2 text-sm">
           <ShieldCheck className="size-4 shrink-0 text-trust" aria-hidden />
           <span>
-            Mașinile rulate au kilometraj verificat și istoric de service în rețeaua
-            autorizată.
+            Mașinile rulate au kilometraj verificat și istoric de service în rețeaua autorizată.
           </span>
         </div>
 
@@ -138,9 +137,7 @@ function ListingPage() {
           <div className="mt-4 grid gap-6 rounded-sm border border-border bg-card p-4 md:grid-cols-3">
             <div>
               <Label className="text-sm font-bold">Buget maxim</Label>
-              <p className="mt-1 text-sm text-muted-foreground">
-                până la {formatPrice(budget)} €
-              </p>
+              <p className="mt-1 text-sm text-muted-foreground">până la {formatPrice(budget)} €</p>
               <Slider
                 className="mt-3"
                 min={20000}
@@ -225,8 +222,7 @@ function ListingPage() {
           <div className="mt-6 rounded-sm border border-border bg-secondary p-8 text-center">
             <p className="text-base font-bold">Nicio mașină pentru aceste filtre</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă
-              locație.
+              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă locație.
             </p>
             <Button className="mt-4 rounded-sm" onClick={resetAll}>
               Șterge filtrele

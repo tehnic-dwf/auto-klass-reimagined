@@ -44,8 +44,20 @@ export const navigation: NavGroup[] = [
         hint: "listă unificată, același ecran",
         prototyped: true,
       },
-      { section: "Stoc", label: "Mașini noi", to: "/autoturisme", hint: "filtru \"Nou\"", prototyped: true },
-      { section: "Stoc", label: "Mașini rulate", to: "/autoturisme", hint: "filtru \"Rulat\"", prototyped: true },
+      {
+        section: "Stoc",
+        label: "Mașini noi",
+        to: "/autoturisme",
+        hint: 'filtru "Nou"',
+        prototyped: true,
+      },
+      {
+        section: "Stoc",
+        label: "Mașini rulate",
+        to: "/autoturisme",
+        hint: 'filtru "Rulat"',
+        prototyped: true,
+      },
       {
         section: "Stoc",
         label: "Disponibile imediat",
@@ -56,7 +68,13 @@ export const navigation: NavGroup[] = [
       { section: "Stoc", label: "Campanii și oferte", to: OUT },
 
       // ── Mărci ───────────────────────────────────────────────
-      { section: "Mărci", label: "Mercedes-Benz", to: "/autoturisme", hint: "428 în stoc", prototyped: true },
+      {
+        section: "Mărci",
+        label: "Mercedes-Benz",
+        to: "/autoturisme",
+        hint: "428 în stoc",
+        prototyped: true,
+      },
       { section: "Mărci", label: "smart", to: OUT },
       { section: "Mărci", label: "Honda", to: OUT },
       { section: "Mărci", label: "Volkswagen · Audi", to: OUT },
