@@ -1,16 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  BadgeCheck,
-  CalendarCheck,
-  Car,
-  ClipboardList,
-  Clock,
-  MapPin,
-  Phone,
-  ShieldCheck,
-  Wrench,
-} from "lucide-react";
+import { ArrowRight, BadgeCheck, Clock, MapPin, Phone, ShieldCheck } from "lucide-react";
 
 import heroGrila from "@/assets/hero-grila.jpg";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
@@ -51,37 +40,31 @@ export const Route = createFileRoute("/")({
 
 const intents = [
   {
-    icon: Car,
     title: "Vreau o mașină",
     body: "Stoc unificat, nou și rulat, cu prețul final vizibil pe fiecare mașină.",
     to: "/autoturisme" as const,
   },
   {
-    icon: CalendarCheck,
     title: "Vreau programare service",
     body: "3 pași, fără telefon. Îți confirmăm ora în maximum 2 ore lucrătoare.",
     to: "/service/programare" as const,
   },
   {
-    icon: ClipboardList,
     title: "Am avut un accident",
     body: "Deschidem dosarul de daună și îți rezervăm mașina de schimb.",
     to: "/service/dosar-daune" as const,
   },
   {
-    icon: Wrench,
     title: "Am o problemă chiar acum",
     body: "Bec aprins sau zgomot suspect: sună direct, fără formular lung.",
     to: "/service/urgent" as const,
   },
   {
-    icon: Car,
     title: "Vreau să vând mașina",
     body: "Evaluare cu interval de preț și ofertă scrisă, cu termen asumat.",
     to: "/buy-back" as const,
   },
   {
-    icon: ShieldCheck,
     title: "Vreau să știu ce verificați",
     body: "Peste 100 de puncte de control și raportul pe care îl primești înainte.",
     to: "/verificare-masini-rulate" as const,
@@ -156,7 +139,6 @@ function HomePage() {
     .filter((vehicle) => !vehicle.reserved && vehicle.condition === "rulat")
     .slice(0, 3);
   const featured = [...newCars, ...usedCars];
-  const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
   const heroStats = [
     { value: formatPrice(stockFacts.totalMercedes), label: "În stoc" },
@@ -166,61 +148,79 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <SiteHeader />
+      <SiteHeader overlay />
 
       <main>
-        {/* 1. Hero editorial: imaginea respiră, textul stă jos, un singur overlay */}
-        <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
+        {/* 1. Hero cinematic: media full-bleed, scrim doar în spatele copy-ului */}
+        <section className="relative isolate -mt-16 overflow-hidden lg:-mt-20 bg-primary text-primary-foreground">
           <img
             src={heroGrila}
             alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
             width={1920}
             height={1280}
-            className="absolute inset-0 size-full object-cover object-[center_30%]"
+            className="absolute inset-0 size-full object-cover object-[62%_38%] md:object-[center_34%]"
           />
-          <div className="hero-scrim absolute inset-0" aria-hidden />
+          <div className="hero-copy-scrim absolute inset-0" aria-hidden />
 
-          <div className="relative mx-auto flex min-h-[32rem] w-full max-w-7xl flex-col justify-end px-5 pb-12 pt-32 md:min-h-[42rem] md:px-6 md:pb-16 md:pt-40">
-            <p className="eyebrow text-primary-foreground/80">
+          <div className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-end px-5 pb-16 pt-28 md:px-6 md:pb-20 md:pt-32">
+            <p
+              className="eyebrow hero-rise text-primary-foreground/80"
+              style={{ animationDelay: "0ms" }}
+            >
               Dealer autorizat Mercedes-Benz din 2001
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl leading-[1.05] md:text-6xl">
-              O mașină care se potrivește cui ai devenit.
+            <h1
+              className="hero-rise mt-6 text-balance font-display"
+              style={{
+                animationDelay: "100ms",
+                fontSize: "clamp(3rem, 5.2vw, 5.75rem)",
+                lineHeight: 0.98,
+                maxWidth: "12ch",
+              }}
+            >
+              Mercedes-Benz-ul care se potrivește cu cine ai devenit.
             </h1>
-            <p className="mt-6 max-w-xl text-base text-primary-foreground/85">
-              {formatPrice(stockFacts.totalMercedes)} de Mercedes-Benz în stoc,{" "}
-              {stockFacts.newMercedes} noi și {stockFacts.usedMercedes} rulate verificate, de la{" "}
-              {formatPrice(cheapest)} €. Prețul e scris, termenul e asumat.
+            <p
+              className="hero-rise mt-6 text-pretty text-base text-primary-foreground/85"
+              style={{ animationDelay: "200ms", maxWidth: "42ch" }}
+            >
+              Prețul e scris, termenul e asumat. Alegi în ritmul tău.
             </p>
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div
+              className="hero-rise mt-10 flex flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: "300ms" }}
+            >
               <Button asChild size="lg" variant="secondary">
                 <Link to="/autoturisme">
                   Vezi stocul disponibil
-                  <ArrowRight className="size-4" aria-hidden />
+                  <ArrowRight className="size-4" strokeWidth={2} aria-hidden />
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
               >
                 <Link to="/service/programare">Programare service</Link>
               </Button>
             </div>
           </div>
+        </section>
 
-          <div className="relative border-t border-primary-foreground/15">
-            <div className="mx-auto grid w-full max-w-7xl grid-cols-3 gap-x-6 px-5 py-8 md:px-6">
-              {heroStats.map((stat) => (
-                <div key={stat.label}>
-                  <p className="font-display text-2xl leading-none md:text-3xl">{stat.value}</p>
-                  <p className="mt-2 text-xs text-primary-foreground/65">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Rail de dovezi, pe fundal ivory, imediat sub hero */}
+        <section aria-label="Autoklass în cifre" className="border-b border-border bg-background">
+          <dl className="mx-auto grid w-full max-w-7xl grid-cols-3 gap-x-6 px-5 py-8 md:px-6 md:py-10">
+            {heroStats.map((stat) => (
+              <div key={stat.label}>
+                <dd className="font-display text-2xl leading-none tabular-nums md:text-4xl">
+                  {stat.value}
+                </dd>
+                <dt className="mt-2 text-xs text-muted-foreground">{stat.label}</dt>
+              </div>
+            ))}
+          </dl>
         </section>
 
         {/* 2. O singură suprafață pentru toate intențiile și serviciile */}
@@ -237,11 +237,11 @@ function HomePage() {
                 to={intent.to}
                 className="group flex flex-col gap-3 bg-card p-8 transition-colors hover:bg-muted"
               >
-                <intent.icon className="size-6 text-foreground" aria-hidden />
                 <h3 className="text-lg leading-snug">{intent.title}</h3>
-                <p className="text-sm text-muted-foreground">{intent.body}</p>
+                <p className="text-pretty text-sm text-muted-foreground">{intent.body}</p>
                 <ArrowRight
-                  className="mt-auto size-5 text-accent transition-transform group-hover:translate-x-1"
+                  className="mt-auto size-4 text-accent transition-transform group-hover:translate-x-1"
+                  strokeWidth={2}
                   aria-hidden
                 />
               </Link>

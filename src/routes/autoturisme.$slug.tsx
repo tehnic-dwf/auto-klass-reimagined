@@ -359,22 +359,20 @@ function VehicleDetailPage() {
 
 function SpecTable({ vehicle }: { vehicle: Vehicle }) {
   const specs = [
-    { icon: Fuel, label: "Combustibil", value: vehicle.fuel },
-    { icon: Settings2, label: "Putere", value: `${vehicle.powerHp} CP` },
-    { icon: Settings2, label: "Cutie", value: vehicle.gearbox },
-    { icon: Settings2, label: "Tracțiune", value: vehicle.drive },
+    { label: "Combustibil", value: vehicle.fuel },
+    { label: "Putere", value: `${vehicle.powerHp} CP` },
+    { label: "Cutie", value: vehicle.gearbox },
+    { label: "Tracțiune", value: vehicle.drive },
     {
-      icon: Gauge,
       label: "Kilometraj",
       value: vehicle.km === null ? "0 km (nou)" : formatKm(vehicle.km),
     },
     {
-      icon: CalendarClock,
       label: "Prima înmatriculare",
       value: `${vehicle.registrationMonth} ${vehicle.year}`,
     },
-    { icon: Settings2, label: "Capacitate", value: `${vehicle.engineCc} cm³` },
-    { icon: MapPin, label: "Sucursală", value: vehicle.branch },
+    { label: "Capacitate", value: `${vehicle.engineCc} cm³` },
+    { label: "Sucursală", value: vehicle.branch },
   ];
 
   return (

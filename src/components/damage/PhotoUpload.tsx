@@ -24,7 +24,7 @@ export function PhotoUpload() {
         htmlFor="damage-photos"
         className="mt-2 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border border-dashed border-border bg-secondary p-6 text-center"
       >
-        <ImagePlus className="size-5 text-accent" aria-hidden />
+        <ImagePlus className="size-5 text-accent" strokeWidth={1.5} aria-hidden />
         <span className="text-sm font-bold">Adaugă poze cu avaria</span>
         <span className="text-xs text-muted-foreground">
           3–6 poze: ansamblu, detaliu avarie, talon. Ne ajută să estimăm înainte de constatare.
@@ -64,9 +64,9 @@ export function PhotoUpload() {
                     return current.filter((item) => item.id !== photo.id);
                   })
                 }
-                className="absolute right-1 top-1 rounded-sm bg-background/90 p-1"
+                className="absolute right-1 top-1 flex size-10 items-center justify-center rounded-sm bg-background/90"
               >
-                <X className="size-3" aria-hidden />
+                <X className="size-5" strokeWidth={1.5} aria-hidden />
               </button>
             </li>
           ))}

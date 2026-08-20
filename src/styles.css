@@ -68,8 +68,7 @@
 }
 
 @theme inline {
-  --font-sans:
-    "MBCorpoText", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "MBCorpoText", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "MBCorpoTitle", "MBCorpoText", sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -219,6 +218,52 @@
     color-mix(in oklab, var(--color-primary) 58%, transparent) 45%,
     color-mix(in oklab, var(--color-primary) 22%, transparent) 100%
   );
+}
+
+/* Scrim localizat: doar în spatele copy-ului, ca vopseaua și grila să rămână
+   vizibile în dreapta cadrului. */
+@utility hero-copy-scrim {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-primary) 86%, transparent) 0%,
+      color-mix(in oklab, var(--color-primary) 62%, transparent) 42%,
+      color-mix(in oklab, var(--color-primary) 12%, transparent) 72%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to top,
+      color-mix(in oklab, var(--color-primary) 55%, transparent) 0%,
+      transparent 55%
+    );
+}
+
+/* Gradient de sus pentru headerul suprapus pe hero */
+@utility header-overlay-scrim {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--color-primary) 72%, transparent) 0%,
+    transparent 100%
+  );
+}
+
+/* Secvență discretă de primă încărcare; doar dacă utilizatorul nu cere
+   reducerea mișcării. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-rise {
+    animation: hero-rise 620ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
