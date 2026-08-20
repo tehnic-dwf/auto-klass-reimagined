@@ -256,7 +256,7 @@ export function SiteHeader() {
               <img src={logoUrl} alt="Autoklass" className="h-7 w-auto xl:h-8" />
             </Link>
 
-            <nav className="flex flex-1 items-center" aria-label="Navigație principală">
+            <nav className="flex min-w-0 flex-1 items-center" aria-label="Navigație principală">
               {navigation.map((group) => (
                 <DesktopGroup key={group.label} group={group} />
               ))}
@@ -265,8 +265,12 @@ export function SiteHeader() {
             <div className="flex shrink-0 items-center gap-0.5">
               <ActionIcon to="/autoturisme" label="Caută în stoc" icon={Search} />
               <ActionIcon to="/comparatie" label="Mașini salvate" icon={Heart} />
-              <ActionIcon to={OUT} label="Autentificare" icon={User} />
-              <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
+              <span className="hidden xl:flex">
+                <ActionIcon to={OUT} label="Autentificare" icon={User} />
+              </span>
+              <span className="hidden xl:flex">
+                <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
+              </span>
               <Button asChild variant="secondary" size="sm" className="ml-2 xl:hidden">
                 <Link to="/service/programare">Programare</Link>
               </Button>
