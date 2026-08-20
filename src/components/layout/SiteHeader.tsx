@@ -278,7 +278,6 @@ export function SiteHeader() {
                 <Link to="/service/programare">Programare service</Link>
               </Button>
             </div>
-
           </div>
         </div>
 
