@@ -1,18 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { CalendarClock, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { contact } from "@/data/company";
 import { cn } from "@/lib/utils";
 
 /**
- * Bară de micro-conversii pe mobil: sună, WhatsApp, programare service.
- * Apare doar după ce butonul „Cum funcționează procesul, pas cu pas”
- * (id-ul primit ca `triggerId`) a ieșit din viewport — nu de la început,
- * ca să nu acopere hero-ul.
+ * Dock flotant de acțiuni rapide pe mobil: sună, WhatsApp, programare service.
+ * Apare doar după ce hero-ul a ieșit din viewport, ca să nu acopere povestea
+ * de sus. Inset pe toate laturile, cu safe-area iOS.
  */
 export function MobileStickyBar({
-  triggerId = "cum-functioneaza-cta",
+  triggerId = "acasa-hero",
   className,
 }: {
   triggerId?: string;
@@ -27,7 +26,6 @@ export function MobileStickyBar({
         setVisible(false);
         return;
       }
-      // Vizibil doar după ce trigger-ul a ieșit din viewport în sus.
       setVisible(target.getBoundingClientRect().bottom < 0);
     };
 
@@ -40,42 +38,37 @@ export function MobileStickyBar({
     };
   }, [triggerId]);
 
+  if (!visible) return null;
+
   return (
-    <div
-      aria-hidden={!visible}
-      className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur transition-transform duration-300 md:hidden",
-        visible ? "translate-y-0" : "pointer-events-none translate-y-full",
-        className,
-      )}
+    <nav
+      aria-label="Acțiuni rapide"
+      className={cn("bottom-safe fixed inset-x-3 z-40 md:hidden", className)}
     >
-      {visible ? (
-        <div className="pb-safe grid grid-cols-3 gap-2 px-2 pt-2">
-          <a
-            href={contact.phoneHref}
-            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
-          >
-            <Phone className="size-5" strokeWidth={1.5} aria-hidden />
-            Sună
-          </a>
-          <a
-            href={contact.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
-          >
-            <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
-            WhatsApp
-          </a>
-          <Link
-            to="/service/programare"
-            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm bg-primary text-xs font-bold text-primary-foreground"
-          >
-            <CalendarClock className="size-5" strokeWidth={1.5} aria-hidden />
-            Programare
-          </Link>
-        </div>
-      ) : null}
-    </div>
+      <div className="flex items-center gap-2 rounded-lg border border-border bg-card/95 p-2 shadow-panel backdrop-blur">
+        <a
+          href={contact.phoneHref}
+          aria-label={`Sună la ${contact.phone}`}
+          className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border text-foreground"
+        >
+          <Phone className="size-5" strokeWidth={1.5} aria-hidden />
+        </a>
+        <a
+          href={contact.whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Scrie pe WhatsApp"
+          className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border text-foreground"
+        >
+          <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
+        </a>
+        <Link
+          to="/service/programare"
+          className="press flex h-13 min-h-13 flex-1 items-center justify-center rounded-sm bg-primary px-4 text-sm font-bold text-primary-foreground"
+        >
+          Programare service
+        </Link>
+      </div>
+    </nav>
   );
 }
