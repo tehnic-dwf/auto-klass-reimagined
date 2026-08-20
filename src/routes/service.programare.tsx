@@ -230,7 +230,7 @@ function ServiceBookingPage() {
                       type="button"
                       onClick={() => setSlot(item)}
                       className={cn(
-                        "rounded-sm border px-2 py-2 text-xs",
+                        "flex min-h-11 items-center justify-center rounded-sm border px-2 text-xs",
                         slot === item
                           ? "border-accent bg-accent/5 font-bold"
                           : "border-border bg-card",
@@ -238,6 +238,7 @@ function ServiceBookingPage() {
                     >
                       {item}
                     </button>
+
                   ))}
                 </div>
               </div>
