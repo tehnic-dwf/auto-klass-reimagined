@@ -170,8 +170,11 @@ function FaqList() {
               id={`faq-panel-${index}`}
               role="region"
               aria-labelledby={`faq-trigger-${index}`}
+              aria-hidden={!expanded}
+              {...(expanded ? {} : { inert: true })}
             >
               <p className="overflow-hidden pb-5 text-sm text-muted-foreground">{item.a}</p>
+
             </div>
           </div>
         );
