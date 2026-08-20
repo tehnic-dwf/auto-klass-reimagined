@@ -175,10 +175,10 @@ function HomePage() {
                 animationDelay: "100ms",
                 fontSize: "clamp(3rem, 5.2vw, 5.75rem)",
                 lineHeight: 0.98,
-                maxWidth: "12ch",
+                maxWidth: "13ch",
               }}
             >
-              Mercedes-Benz-ul care se potrivește cu cine ai devenit.
+              Mașina potrivită pentru cine ai devenit.
             </h1>
             <p
               className="hero-rise mt-6 text-pretty text-base text-primary-foreground/85"
