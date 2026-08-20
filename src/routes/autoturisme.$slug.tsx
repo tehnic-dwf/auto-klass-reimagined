@@ -388,18 +388,19 @@ function SpecTable({ vehicle }: { vehicle: Vehicle }) {
   ];
 
   return (
-    <div className="mt-6">
-      <h2 className="text-base">Date tehnice</h2>
-      <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+    <div className="mt-12 border-t border-border pt-8">
+      <h2 className="text-lg">Date tehnice</h2>
+      <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3">
         {specs.map((spec) => (
-          <div key={spec.label} className="border-b border-border pb-2">
+          <div key={spec.label} className="min-w-0">
             <dt className="text-xs text-muted-foreground">{spec.label}</dt>
-            <dd className="mt-0.5">{spec.value}</dd>
+            <dd className="mt-1 text-sm">{spec.value}</dd>
           </div>
         ))}
       </dl>
     </div>
   );
+
 }
 
 function LeadForm({
