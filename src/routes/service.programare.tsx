@@ -136,7 +136,7 @@ function ServiceBookingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-28 md:pb-0">
+    <div className="min-h-screen bg-background pb-36 md:pb-0">
       <SiteHeader />
 
       <main className="mx-auto w-full max-w-2xl px-4 py-8">
@@ -352,7 +352,7 @@ function ServiceBookingPage() {
       <SiteFooter />
 
       {/* Bară fixă mobil: acțiunea principală mereu la degetul mare */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
+      <div className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-3 pt-3 backdrop-blur md:hidden">
         {step < 3 ? (
           <Button
             className="w-full rounded-sm"
@@ -371,13 +371,14 @@ function ServiceBookingPage() {
         {step > 1 ? (
           <button
             type="button"
-            className="mt-2 w-full text-center text-sm text-muted-foreground"
+            className="mt-1 flex min-h-11 w-full items-center justify-center text-center text-sm text-muted-foreground"
             onClick={() => setStep((value) => Math.max(1, value - 1))}
           >
             Înapoi la pasul {step - 1}
           </button>
         ) : null}
       </div>
+
     </div>
   );
 }

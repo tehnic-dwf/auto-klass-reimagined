@@ -340,7 +340,7 @@ function DamageFilePage() {
 
       <SiteFooter />
 
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
+      <div className="pb-safe fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-border bg-background/95 px-3 pt-3 backdrop-blur md:hidden">
         <Button asChild variant="outline" className="rounded-sm">
           <a href={contact.phoneHref}>
             <Phone className="mr-1 size-4" aria-hidden />
@@ -351,6 +351,7 @@ function DamageFilePage() {
           <a href="#formular-daune">Deschide dosarul</a>
         </Button>
       </div>
+
     </div>
   );
 }
