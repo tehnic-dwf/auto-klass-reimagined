@@ -44,34 +44,33 @@ export function MobileStickyBar({
     <div
       aria-hidden={!visible}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur transition-transform duration-300 md:hidden",
+        "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur transition-transform duration-300 md:hidden",
         visible ? "translate-y-0" : "pointer-events-none translate-y-full",
         className,
       )}
     >
-      <div className="ambient-line h-px w-full" aria-hidden />
       <div className="grid grid-cols-3 gap-2 p-2">
         <a
           href={contact.phoneHref}
-          className="flex flex-col items-center gap-1 rounded-sm border border-border py-2 text-xs font-bold"
+          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
         >
-          <Phone className="size-4 text-accent" aria-hidden />
+          <Phone className="size-5" aria-hidden />
           Sună
         </a>
         <a
           href={contact.whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center gap-1 rounded-sm border border-border py-2 text-xs font-bold"
+          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
         >
-          <MessageCircle className="size-4 text-trust" aria-hidden />
+          <MessageCircle className="size-5" aria-hidden />
           WhatsApp
         </a>
         <Link
           to="/service/programare"
-          className="flex flex-col items-center gap-1 rounded-sm bg-primary py-2 text-xs font-bold text-primary-foreground"
+          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm bg-primary text-xs font-bold text-primary-foreground"
         >
-          <CalendarClock className="size-4" aria-hidden />
+          <CalendarClock className="size-5" aria-hidden />
           Programare
         </Link>
       </div>

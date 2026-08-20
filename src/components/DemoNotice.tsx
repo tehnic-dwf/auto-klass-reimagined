@@ -10,15 +10,16 @@ export function DemoNotice({ className }: { className?: string }) {
   return (
     <p
       className={cn(
-        "flex gap-2 rounded-sm border border-border bg-secondary p-3 text-xs text-muted-foreground",
+        "flex gap-3 rounded-sm border border-border bg-secondary p-4 text-xs text-muted-foreground",
         className,
       )}
     >
-      <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+      <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
+
       <span>
-        <strong>Prototip demonstrativ.</strong> Este o simulare de interfață: datele
-        completate rămân în browserul tău și nu ajung la Autoklass. Pentru o solicitare
-        reală, folosește telefonul afișat.
+        <strong>Prototip demonstrativ.</strong> Este o simulare de interfață: datele completate
+        rămân în browserul tău și nu ajung la Autoklass. Pentru o solicitare reală, folosește
+        telefonul afișat.
       </span>
     </p>
   );

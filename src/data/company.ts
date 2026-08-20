@@ -127,7 +127,6 @@ export const brandAuthorizations: BrandAuthorization[] = [
   },
 ];
 
-
 /** Cifre din raportul de analiză Autoklass (stoc Mercedes-Benz, august 2026). */
 export const stockFacts = {
   totalMercedes: 1172,
@@ -158,13 +157,11 @@ export const insurers = [
   },
   {
     name: "Generali",
-    detail:
-      "Soluționăm rapid orice dosar Generali, cu transparență totală pe fiecare etapă.",
+    detail: "Soluționăm rapid orice dosar Generali, cu transparență totală pe fiecare etapă.",
   },
   {
     name: "UNIQA",
-    detail:
-      "Simplificăm întregul proces pentru daunele UNIQA, preluând toate formalitățile.",
+    detail: "Simplificăm întregul proces pentru daunele UNIQA, preluând toate formalitățile.",
   },
 ];
 

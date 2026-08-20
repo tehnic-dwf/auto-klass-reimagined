@@ -123,9 +123,8 @@ function InspectionPage() {
               Ce verificăm, punct cu punct, înainte să punem o mașină în stoc
             </h1>
             <p className="mt-3 max-w-2xl text-primary-foreground/85">
-              Peste 100 de puncte de control, istoric confirmat în sistemul oficial și
-              raport pe care îl primești înainte de test drive. Fără „a fost a unui domn
-              bătrân”.
+              Peste 100 de puncte de control, istoric confirmat în sistemul oficial și raport pe
+              care îl primești înainte de test drive. Fără „a fost a unui domn bătrân”.
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
@@ -189,9 +188,7 @@ function InspectionPage() {
             {faq.map((item, index) => (
               <AccordionItem key={item.q} value={`check-${index}`}>
                 <AccordionTrigger className="text-left">{item.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {item.a}
-                </AccordionContent>
+                <AccordionContent className="text-muted-foreground">{item.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

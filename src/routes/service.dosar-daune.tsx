@@ -1,13 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  Check,
-  ClipboardCheck,
-  Car,
-  FileText,
-  Phone,
-  ShieldCheck,
-  Wrench,
-} from "lucide-react";
+import { Check, ClipboardCheck, Car, FileText, Phone, ShieldCheck, Wrench } from "lucide-react";
 import { useState } from "react";
 
 import { PhotoUpload } from "@/components/damage/PhotoUpload";
@@ -106,8 +98,8 @@ function DamageFilePage() {
               Ai avut un accident? Ne ocupăm noi de dosar.
             </h1>
             <p className="mt-3 max-w-2xl text-primary-foreground/85">
-              Deschidem dosarul de daună în câteva ore, comunicăm direct cu asiguratorul și
-              îți rezervăm mașina de schimb. Tu nu alergi între birouri.
+              Deschidem dosarul de daună în câteva ore, comunicăm direct cu asiguratorul și îți
+              rezervăm mașina de schimb. Tu nu alergi între birouri.
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row">
               <Button asChild size="lg" variant="secondary" className="rounded-sm">
@@ -161,9 +153,8 @@ function DamageFilePage() {
             </ul>
             <p className="mt-4 flex gap-2 text-sm text-muted-foreground">
               <ShieldCheck className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
-              Dauna se anunță în maximum 24–48 de ore de la incident, în funcție de
-              asigurator. Dacă nu ai toate documentele, deschide oricum dosarul — te ghidăm
-              noi.
+              Dauna se anunță în maximum 24–48 de ore de la incident, în funcție de asigurator. Dacă
+              nu ai toate documentele, deschide oricum dosarul — te ghidăm noi.
             </p>
           </div>
         </section>
@@ -174,9 +165,8 @@ function DamageFilePage() {
               <Check className="size-8 text-trust" aria-hidden />
               <h2 className="mt-3 text-2xl">Dosarul tău a intrat în lucru</h2>
               <p className="mt-2 text-muted-foreground">
-                Un coordonator daune te contactează în maximum 2 ore lucrătoare pentru
-                programarea constatării{needsCar ? " și confirmarea mașinii de schimb" : ""}
-                .
+                Un coordonator daune te contactează în maximum 2 ore lucrătoare pentru programarea
+                constatării{needsCar ? " și confirmarea mașinii de schimb" : ""}.
               </p>
               <p className="mt-4 text-sm text-muted-foreground">
                 Asigurator: <strong>{insurer ?? "de stabilit"}</strong> · Sucursală:{" "}
@@ -190,7 +180,6 @@ function DamageFilePage() {
                 </a>
               </Button>
             </div>
-
           ) : (
             <form
               className="rounded-sm border border-border bg-card p-5 shadow-card"
@@ -252,7 +241,6 @@ function DamageFilePage() {
 
               <DemoNotice className="mt-4" />
 
-
               <Label className="mt-5 block text-sm font-bold">Asigurator</Label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {insurers.map((item) => (
@@ -289,9 +277,7 @@ function DamageFilePage() {
                 </p>
               ) : null}
 
-              <Label className="mt-5 block text-sm font-bold">
-                Unde vrei să faci constatarea
-              </Label>
+              <Label className="mt-5 block text-sm font-bold">Unde vrei să faci constatarea</Label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {branches.map((item) => (
                   <button
@@ -320,9 +306,7 @@ function DamageFilePage() {
               >
                 <Car className="mt-0.5 size-4 text-accent" aria-hidden />
                 <span>
-                  <span className="block text-sm font-bold">
-                    Rezervă-mi mașină de schimb
-                  </span>
+                  <span className="block text-sm font-bold">Rezervă-mi mașină de schimb</span>
                   <span className="block text-sm text-muted-foreground">
                     În limita disponibilității flotei, conform condițiilor asiguratorului.
                   </span>
@@ -346,9 +330,7 @@ function DamageFilePage() {
               {damageFaq.map((item, index) => (
                 <AccordionItem key={item.q} value={`faq-${index}`}>
                   <AccordionTrigger className="text-left">{item.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {item.a}
-                  </AccordionContent>
+                  <AccordionContent className="text-muted-foreground">{item.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

@@ -60,8 +60,8 @@ function ComparePage() {
         <p className="eyebrow text-muted-foreground">Lista ta</p>
         <h1 className="mt-2 text-2xl md:text-3xl">Compară fără grabă</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
-          Mașinile salvate rămân aici, în browserul tău. Nu îți cerem cont și nu îți
-          trimitem notificări. Când vrei, ceri un consultant sau un test drive.
+          Mașinile salvate rămân aici, în browserul tău. Nu îți cerem cont și nu îți trimitem
+          notificări. Când vrei, ceri un consultant sau un test drive.
         </p>
         <DemoNotice className="mt-4" />
 
@@ -139,12 +139,7 @@ function ComparePage() {
                   Discută cu un consultant
                 </a>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-sm"
-                onClick={() => clear()}
-              >
+              <Button variant="outline" size="lg" className="rounded-sm" onClick={() => clear()}>
                 Golește lista
               </Button>
             </div>

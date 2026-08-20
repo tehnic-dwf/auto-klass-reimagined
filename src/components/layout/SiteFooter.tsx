@@ -1,118 +1,98 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
+import logoUrl from "@/assets/autoklass-logo.png";
 import { branches, contact } from "@/data/company";
 
 const OUT = "/in-afara-scopului";
 
+const columns: Array<{
+  title: string;
+  links: Array<{ label: string; to: string; hash?: string }>;
+}> = [
+  {
+    title: "Cumpără",
+    links: [
+      { label: "Stoc: noi și rulate", to: "/autoturisme" },
+      { label: "Cum verificăm rulatele", to: "/verificare-masini-rulate" },
+      { label: "Mașini salvate și comparație", to: "/comparatie" },
+      { label: "Cum cumpăr?", to: "/", hash: "cum-functioneaza" },
+      { label: "Îți cumpărăm mașina", to: "/buy-back" },
+    ],
+  },
+  {
+    title: "Service",
+    links: [
+      { label: "Programare service", to: "/service/programare" },
+      { label: "Service urgent", to: "/service/urgent" },
+      { label: "Dosar daună", to: "/service/dosar-daune" },
+      { label: "Piese și accesorii", to: OUT },
+    ],
+  },
+  {
+    title: "Autoklass",
+    links: [
+      { label: "Sucursale", to: "/", hash: "sucursale" },
+      { label: "Despre noi", to: OUT },
+      { label: "Cariere", to: OUT },
+      { label: "Blog", to: OUT },
+      { label: "Contact", to: OUT },
+    ],
+  },
+];
+
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-border bg-primary text-primary-foreground">
-      <div className="mx-auto w-full max-w-6xl px-4 py-10">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="border-t border-border bg-primary text-primary-foreground">
+      <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-6">
+        <div className="grid gap-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
-            <p className="font-display text-lg">Autoklass</p>
-            <p className="mt-2 text-sm text-primary-foreground/70">
-              {contact.legalName} · CUI {contact.cui}
-            </p>
-            <div className="mt-4 space-y-2 text-sm">
-              <a href={contact.phoneHref} className="flex items-center gap-2 font-bold">
-                <Phone className="size-4" aria-hidden />
+            <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
+            <div className="mt-6 space-y-3 text-sm">
+              <a href={contact.phoneHref} className="flex items-center gap-3 font-bold">
+                <Phone className="size-5 shrink-0" aria-hidden />
                 {contact.phone}
               </a>
               <a
                 href={`mailto:${contact.email}`}
-                className="flex items-center gap-2 text-primary-foreground/80"
+                className="flex items-center gap-3 text-primary-foreground/75"
               >
-                <Mail className="size-4" aria-hidden />
+                <Mail className="size-5 shrink-0" aria-hidden />
                 {contact.email}
               </a>
             </div>
-          </div>
-
-          <div>
-            <p className="eyebrow text-primary-foreground/60">Ce poți face aici</p>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <Link to="/autoturisme" className="text-primary-foreground/85">
-                  Stoc autoturisme noi și rulate
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/programare" className="text-primary-foreground/85">
-                  Programare service
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/dosar-daune" className="text-primary-foreground/85">
-                  Dosar daună și mașină de schimb
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="eyebrow text-primary-foreground/60">Autoklass</p>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <Link to="/" hash="sucursale" className="text-primary-foreground/85">
-                  Sucursale
-                </Link>
-              </li>
-              <li>
-                <Link to={OUT} className="text-primary-foreground/85">
-                  Povestea Autoklass
-                </Link>
-              </li>
-              <li>
-                <Link to={OUT} className="text-primary-foreground/85">
-                  Cariere
-                </Link>
-              </li>
-              <li>
-                <Link to={OUT} className="text-primary-foreground/85">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link to="/" hash="cum-functioneaza" className="text-primary-foreground/85">
-                  Cum cumpăr?
-                </Link>
-              </li>
-              <li>
-                <Link to={OUT} className="text-primary-foreground/85">
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="eyebrow text-primary-foreground/60">
-              Sucursale cu service ({branches.length})
+            <p className="mt-6 text-xs text-primary-foreground/60">
+              {branches.length} sucursale în România: Otopeni, Băneasa, Pipera, Militari,
+              Cluj-Napoca, Sibiu, Brașov, Timișoara, Ploiești.
             </p>
-            <ul className="mt-3 space-y-2 text-sm text-primary-foreground/80">
-              {branches.slice(0, 5).map((branch) => (
-                <li key={branch.name} className="flex gap-2">
-                  <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
-                  <span>
-                    <span className="block text-primary-foreground">{branch.name}</span>
-                    {branch.address}
-                  </span>
-                </li>
-              ))}
-              <li className="text-primary-foreground/60">
-                și {branches.length - 5} alte locații: Sibiu, Brașov, Timișoara,
-                Ploiești.
-              </li>
-            </ul>
           </div>
+
+          {columns.map((column) => (
+            <nav key={column.title} aria-label={column.title}>
+              <p className="eyebrow text-primary-foreground/55">{column.title}</p>
+              <ul className="mt-4 space-y-3 text-sm">
+                {column.links.map((link) => (
+                  <li key={`${column.title}-${link.label}`}>
+                    <Link
+                      to={link.to}
+                      {...(link.hash ? { hash: link.hash } : {})}
+                      className="text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        <p className="mt-10 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/60">
-          Prototip de redesign realizat pe baza datelor publice Autoklass. Prețurile și
-          stocul sunt cele afișate pe autoklass.ro în august 2026.
-        </p>
+        <div className="mt-14 flex flex-col gap-2 border-t border-primary-foreground/15 pt-8 text-xs text-primary-foreground/60 md:flex-row md:justify-between">
+          <p>
+            {contact.legalName} · CUI {contact.cui}
+          </p>
+          <p>Prototip de redesign pe baza datelor publice Autoklass, august 2026.</p>
+        </div>
       </div>
     </footer>
   );

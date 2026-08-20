@@ -17,7 +17,6 @@ import { useState } from "react";
 
 import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
-import { AmbientPalette } from "@/components/ambient/AmbientPalette";
 import interiorAmbiental from "@/assets/interior-lumina-ambientala.jpg";
 import { DemoNotice } from "@/components/DemoNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -78,8 +77,7 @@ export const Route = createFileRoute("/autoturisme/$slug")({
 type ActionMode = "test-drive" | "consultant";
 
 /**
- * Galerie ordonată după impactul emoțional documentat: fața mașinii (grila) prima,
- * lumina ambientală imediat după — nu la finalul specificațiilor.
+ * Galerie sobră: fața mașinii prima, apoi interiorul, exemplarul din stoc și un detaliu.
  */
 function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
   const shots = [
@@ -88,28 +86,24 @@ function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
       alt: `${vehicle.title} văzut frontal, cu grila și farurile aprinse`,
       label: "Față",
       caption: "Grila și privirea farurilor — prima impresie, cea care rămâne.",
-      ambient: false,
     },
     {
       src: interiorAmbiental,
-      alt: `Interior ${vehicle.title} noaptea, cu lumina ambientală aprinsă`,
-      label: "Lumină ambientală",
-      caption: "Lumină care transformă fiecare drum de seară într-o experiență.",
-      ambient: true,
+      alt: `Interior ${vehicle.title}, seara`,
+      label: "Interior",
+      caption: "Habitaclul, așa cum îl vezi la volan după apus.",
     },
     {
       src: gallerySize(vehicle.image),
       alt: vehicle.title,
       label: "Exterior",
       caption: `${vehicle.title}, exact mașina din stocul de la ${vehicle.branch}.`,
-      ambient: false,
     },
     {
       src: detaliuGrila,
       alt: "Detaliu grilă și stea Mercedes-Benz",
       label: "Detaliu",
       caption: "Cromul grilei și steaua, în lumină rece.",
-      ambient: false,
     },
   ];
 
@@ -118,46 +112,29 @@ function VehicleGallery({ vehicle }: { vehicle: Vehicle }) {
 
   return (
     <div>
-      <div className="relative isolate overflow-hidden rounded-sm border border-border bg-primary">
-        <img src={shot.src} alt={shot.alt} className="aspect-[4/3] w-full object-cover" />
-        {shot.ambient ? (
-          <div
-            className="ambient-bloom pointer-events-none absolute inset-0 mix-blend-screen"
-            aria-hidden
-          />
-        ) : null}
+      <div className="overflow-hidden rounded-sm border border-border bg-muted">
+        <img src={shot.src} alt={shot.alt} className="aspect-[16/10] w-full object-cover" />
       </div>
-      <p className="mt-2 text-sm text-muted-foreground">{shot.caption}</p>
+      <p className="mt-3 text-xs text-muted-foreground">{shot.caption}</p>
 
-      {shot.ambient ? (
-        <div className="mt-3 rounded-sm bg-primary p-3 text-primary-foreground">
-          <p className="eyebrow text-primary-foreground/60">
-            Lumină ambientală — 64 de culori
-          </p>
-          <AmbientPalette compact className="mt-2" />
-        </div>
-      ) : null}
-
-      <div className="mt-3 grid grid-cols-4 gap-2">
+      <div className="mt-4 grid grid-cols-4 gap-3">
         {shots.map((item, index) => (
           <button
             key={item.label}
             type="button"
             onClick={() => setActive(index)}
             aria-current={index === active}
-            className={`relative overflow-hidden rounded-sm border bg-primary text-left ${
-              index === active ? "border-accent" : "border-border"
+            aria-label={item.label}
+            className={`overflow-hidden rounded-sm border-2 bg-muted text-left transition-colors ${
+              index === active ? "border-foreground" : "border-transparent"
             }`}
           >
             <img
               src={item.src}
               alt=""
               loading="lazy"
-              className="aspect-[4/3] w-full object-cover"
+              className="aspect-[16/10] w-full object-cover"
             />
-            <span className="absolute inset-x-0 bottom-0 bg-primary/70 px-1.5 py-1 text-[0.6rem] uppercase tracking-[0.1em] text-primary-foreground">
-              {item.label}
-            </span>
           </button>
         ))}
       </div>
@@ -178,79 +155,66 @@ function VehicleDetailPage() {
     <div className="min-h-screen bg-background pb-24 md:pb-0">
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-6">
+      <main className="mx-auto w-full max-w-7xl px-5 py-8 md:px-6 md:py-12">
         <Link
           to="/autoturisme"
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground"
+          className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground"
         >
           <ArrowLeft className="size-4" aria-hidden />
           Înapoi la stoc
         </Link>
 
-        <div className="mt-4 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+        <div className="mt-4 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+
           <div>
             <VehicleGallery vehicle={vehicle} />
 
+            <div className="mt-8">
+              <Badge variant={vehicle.condition === "nou" ? "default" : "secondary"}>
+                {vehicle.condition === "nou" ? "Mașină nouă" : "Rulat verificat"}
+              </Badge>
 
-            <div className="mt-5">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge
-                  variant={vehicle.condition === "nou" ? "default" : "secondary"}
-                  className="rounded-sm"
-                >
-                  {vehicle.condition === "nou" ? "Mașină nouă" : "Rulat verificat"}
-                </Badge>
-                {vehicle.reserved ? (
-                  <Badge variant="outline" className="rounded-sm">
-                    Rezervat
-                  </Badge>
-                ) : null}
-                {vehicle.hybrid ? (
-                  <Badge variant="outline" className="rounded-sm">
-                    Hibrid plug-in
-                  </Badge>
-                ) : null}
-              </div>
+              <h1 className="mt-5 text-3xl md:text-4xl">{vehicle.title}</h1>
 
-              <h1 className="mt-3 text-2xl md:text-3xl">{vehicle.title}</h1>
-
-              <p className="mt-3 font-display text-3xl">
+              <p className="mt-6 font-display text-4xl">
                 {formatPrice(vehicle.priceEur)} €
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="mt-2 text-xs text-muted-foreground">
                 {vehicle.vat === "deductibil" ? "TVA deductibil" : "TVA nedeductibil"}
                 {vehicle.listPriceEur
                   ? ` · preț de listă ${formatPrice(vehicle.listPriceEur)} €`
                   : ""}
+                {vehicle.hybrid ? " · hibrid plug-in" : ""}
+                {vehicle.reserved ? " · rezervat" : ""}
               </p>
               {vehicle.availability ? (
-                <p className="mt-1 text-sm text-accent">{vehicle.availability}</p>
+                <p className="mt-1 text-xs text-accent">{vehicle.availability}</p>
               ) : null}
             </div>
 
             <SpecTable vehicle={vehicle} />
 
-            <div className="mt-6 rounded-sm border border-border bg-secondary p-4">
-              <h2 className="flex items-center gap-2 text-base">
-                <ShieldCheck className="size-4 text-trust" aria-hidden />
+            <div className="mt-12 border-t border-border pt-8">
+              <h2 className="flex items-center gap-2 text-lg">
+                <ShieldCheck className="size-5 text-trust" aria-hidden />
                 Ce e verificat înainte să ajungă la tine
               </h2>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <ul className="mt-5 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
                 {[
                   "Kilometraj verificat și confirmat în documente",
                   "Istoric de service în rețeaua autorizată",
                   "Verificare tehnică pe 100+ puncte de control",
                   "Garanție inclusă, fără costuri ascunse",
                 ].map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <Check className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
+                  <li key={item} className="flex gap-3">
+                    <Check className="mt-1 size-4 shrink-0 text-trust" aria-hidden />
                     {item}
                   </li>
                 ))}
               </ul>
               <Link
                 to="/verificare-masini-rulate"
-                className="mt-3 inline-block text-sm font-bold text-accent underline underline-offset-4"
+                className="mt-6 inline-flex min-h-11 items-center text-sm font-bold text-accent"
               >
                 Vezi toată lista de verificări
               </Link>
@@ -258,76 +222,71 @@ function VehicleDetailPage() {
 
           </div>
 
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-sm border border-border bg-card p-5 shadow-card">
-              <p className="flex items-center gap-2 text-sm">
-                <MapPin className="size-4 text-accent" aria-hidden />
-                Poți vedea mașina la <strong>{vehicle.branch}</strong>
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <div className="rounded-sm border border-border bg-card p-6">
+              <p className="flex items-start gap-3 text-sm">
+                <MapPin className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden />
+                <span>
+                  Poți vedea mașina la <strong>{vehicle.branch}</strong>
+                </span>
               </p>
 
-              <div className="mt-4 space-y-2">
+              <div className="mt-6 space-y-3">
                 <Button
-                  className="w-full rounded-sm"
+                  className="w-full"
                   size="lg"
                   onClick={() => {
                     setMode("test-drive");
                     setSent(null);
                   }}
                 >
-                  <CalendarClock className="mr-1 size-4" aria-hidden />
+                  <CalendarClock className="size-4" aria-hidden />
                   Programează test drive
                 </Button>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto]">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <Button
                     variant="outline"
-                    className="w-full rounded-sm"
-                    size="lg"
+                    className="w-full"
                     onClick={() => {
                       setMode("consultant");
                       setSent(null);
                     }}
                   >
-                    <UserRound className="mr-1 size-4" aria-hidden />
-                    Vorbește cu un consultant
+                    <UserRound className="size-4" aria-hidden />
+                    Consultant
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-sm">
-                    <a
-                      href={contact.whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MessageCircle className="mr-1 size-4 text-trust" aria-hidden />
+                  <Button asChild variant="outline">
+                    <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="size-4" aria-hidden />
                       WhatsApp
                     </a>
                   </Button>
                 </div>
               </div>
 
-              <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                <BadgeCheck className="size-4 shrink-0 text-trust" aria-hidden />
+              <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
+                <BadgeCheck className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
                 Un consultant îți răspunde în maximum 2 ore lucrătoare, cu nume și număr
                 direct.
               </p>
 
-              <a
-                href={contact.phoneHref}
-                className="mt-4 flex items-center justify-center gap-2 rounded-sm border border-border py-2.5 text-sm font-bold"
-              >
-                <Phone className="size-4" aria-hidden />
-                {contact.phone}
-              </a>
+              <div className="mt-6 space-y-3 border-t border-border pt-6">
+                <a
+                  href={contact.phoneHref}
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-sm border border-border text-sm font-bold"
+                >
+                  <Phone className="size-4" aria-hidden />
+                  {contact.phone}
+                </a>
 
-              <FavoriteButton
-                slug={vehicle.slug}
-                withLabel
-                className="mt-2 w-full justify-center"
-              />
-              <Link
-                to="/comparatie"
-                className="mt-2 block text-center text-xs text-muted-foreground underline underline-offset-4"
-              >
-                Vezi lista salvată și compară
-              </Link>
+                <FavoriteButton slug={vehicle.slug} withLabel className="w-full" />
+                <Link
+                  to="/comparatie"
+                  className="flex min-h-11 items-center justify-center text-xs text-muted-foreground"
+                >
+                  Vezi lista salvată și compară
+                </Link>
+              </div>
             </div>
 
 
@@ -347,28 +306,28 @@ function VehicleDetailPage() {
         </div>
 
         {similar.length > 0 ? (
-          <section className="mt-12">
-            <h2 className="text-xl">Alternative similare din stoc</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <section className="mt-20 border-t border-border pt-12">
+            <h2 className="text-2xl">Alternative similare din stoc</h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((item) => (
                 <Link
                   key={item.slug}
                   to="/autoturisme/$slug"
                   params={{ slug: item.slug }}
-                  className="flex gap-3 rounded-sm border border-border bg-card p-3 shadow-card"
+                  className="flex gap-4 rounded-sm border border-border bg-card p-4 transition-colors hover:border-foreground/25"
                 >
                   <img
                     src={item.image}
                     alt={item.title}
                     loading="lazy"
-                    className="size-20 shrink-0 rounded-sm object-cover"
+                    className="size-24 shrink-0 rounded-sm object-cover"
                   />
-                  <span className="text-sm">
+                  <span className="min-w-0 text-sm">
                     <span className="block">{item.title}</span>
-                    <span className="mt-1 block font-bold">
+                    <span className="mt-2 block font-display text-xl">
                       {formatPrice(item.priceEur)} €
                     </span>
-                    <span className="block text-xs text-muted-foreground">
+                    <span className="mt-1 block text-xs text-muted-foreground">
                       {item.km === null ? "nou" : formatKm(item.km)}
                     </span>
                   </span>
@@ -377,22 +336,23 @@ function VehicleDetailPage() {
             </div>
           </section>
         ) : null}
+
       </main>
 
       <SiteFooter />
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="font-display text-lg leading-none">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 p-3 backdrop-blur md:hidden">
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="font-display text-xl leading-none">
               {formatPrice(vehicle.priceEur)} €
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="mt-1 truncate text-xs text-muted-foreground">
               {vehicle.branch.replace("Autoklass ", "")}
             </p>
           </div>
           <Button
-            className="rounded-sm"
+            className="shrink-0"
             onClick={() => {
               setMode("test-drive");
               setSent(null);
@@ -402,6 +362,7 @@ function VehicleDetailPage() {
           </Button>
         </div>
       </div>
+
     </div>
   );
 }
@@ -427,18 +388,19 @@ function SpecTable({ vehicle }: { vehicle: Vehicle }) {
   ];
 
   return (
-    <div className="mt-6">
-      <h2 className="text-base">Date tehnice</h2>
-      <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+    <div className="mt-12 border-t border-border pt-8">
+      <h2 className="text-lg">Date tehnice</h2>
+      <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3">
         {specs.map((spec) => (
-          <div key={spec.label} className="border-b border-border pb-2">
+          <div key={spec.label} className="min-w-0">
             <dt className="text-xs text-muted-foreground">{spec.label}</dt>
-            <dd className="mt-0.5">{spec.value}</dd>
+            <dd className="mt-1 text-sm">{spec.value}</dd>
           </div>
         ))}
       </dl>
     </div>
   );
+
 }
 
 function LeadForm({
@@ -462,8 +424,8 @@ function LeadForm({
           Cererea a plecat
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Te contactează un consultant de la {branch} în maximum 2 ore lucrătoare. Dacă
-          preferi acum, sună la{" "}
+          Te contactează un consultant de la {branch} în maximum 2 ore lucrătoare. Dacă preferi
+          acum, sună la{" "}
           <a href={contact.phoneHref} className="font-bold text-foreground">
             {contact.phone}
           </a>
@@ -474,7 +436,6 @@ function LeadForm({
           Închide
         </Button>
       </div>
-
     );
   }
 
@@ -527,12 +488,7 @@ function LeadForm({
       <Button type="submit" className="mt-4 w-full rounded-sm" size="lg">
         Trimite cererea
       </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        className="mt-1 w-full rounded-sm"
-        onClick={onClose}
-      >
+      <Button type="button" variant="ghost" className="mt-1 w-full rounded-sm" onClick={onClose}>
         Renunță
       </Button>
     </form>

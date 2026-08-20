@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Construction } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -16,38 +16,31 @@ export function OutOfScope({ title, persona, notes }: OutOfScopeProps) {
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <section className="bg-primary py-12 text-primary-foreground md:py-16">
-          <div className="mx-auto w-full max-w-3xl px-4">
-            <span className="inline-flex items-center gap-2 rounded-sm border border-primary-foreground/25 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary-foreground/80">
-              <Construction className="size-3.5" aria-hidden />
-              Pagină out of scope
-            </span>
+        <section className="bg-primary py-16 text-primary-foreground md:py-20">
+          <div className="mx-auto w-full max-w-3xl px-5 md:px-6">
+            <p className="eyebrow text-primary-foreground/60">Pagină out of scope</p>
             <h1 className="mt-4 text-3xl md:text-4xl">{title}</h1>
-            <p className="mt-3 text-sm leading-relaxed text-primary-foreground/80">
-              Acest flux este documentat, dar nu face parte din cele 6 ecrane
-              prototipate în runda curentă. Navigația îl păstrează vizibil ca să
-              vedem arhitectura completă a site-ului.
+            <p className="mt-5 text-base text-primary-foreground/80">
+              Acest flux este documentat, dar nu face parte din cele 6 ecrane prototipate în runda
+              curentă. Navigația îl păstrează vizibil ca să vedem arhitectura completă a site-ului.
             </p>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-3xl px-4 py-12">
-          <h2 className="rule-accent text-xl">Persona și tonul fluxului</h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{persona}</p>
+        <section className="mx-auto w-full max-w-3xl px-5 py-16 md:px-6">
+          <p className="eyebrow">Persona și tonul fluxului</p>
+          <p className="mt-4 text-base text-muted-foreground">{persona}</p>
 
-          <h2 className="rule-accent mt-10 text-xl">Ce ar trebui să conțină</h2>
-          <ul className="mt-4 space-y-2.5">
+          <p className="eyebrow mt-12">Ce ar trebui să conțină</p>
+          <ul className="mt-4 divide-y divide-border border-y border-border">
             {notes.map((note) => (
-              <li
-                key={note}
-                className="rounded-sm border border-border bg-card p-4 text-sm leading-relaxed text-muted-foreground shadow-card"
-              >
+              <li key={note} className="py-5 text-sm text-muted-foreground">
                 {note}
               </li>
             ))}
           </ul>
 
-          <Button asChild variant="outline" className="mt-8">
+          <Button asChild variant="outline" className="mt-10">
             <Link to="/">
               <ArrowLeft className="size-4" aria-hidden />
               Înapoi la prima pagină
