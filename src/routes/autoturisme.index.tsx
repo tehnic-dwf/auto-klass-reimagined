@@ -81,57 +81,56 @@ function ListingPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+      <main className="mx-auto w-full max-w-7xl px-5 py-12 md:px-6 md:py-16">
         <p className="eyebrow">Stoc unificat</p>
-        <h1 className="mt-2 text-2xl md:text-4xl">Autoturisme noi și rulate</h1>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul afișat este
-          prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
+        <h1 className="mt-4 text-3xl md:text-5xl">Autoturisme noi și rulate</h1>
+        <p className="mt-5 max-w-2xl text-base text-muted-foreground">
+          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul
+          afișat este prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
         </p>
 
-        <div className="mt-4 flex items-center gap-2 rounded-sm border border-border bg-secondary px-3 py-2 text-sm">
-          <ShieldCheck className="size-4 shrink-0 text-trust" aria-hidden />
-          <span>
-            Mașinile rulate au kilometraj verificat și istoric de service în rețeaua autorizată.
-          </span>
-        </div>
+        <p className="mt-6 flex max-w-2xl items-start gap-3 text-sm text-muted-foreground">
+          <ShieldCheck className="mt-0.5 size-5 shrink-0 text-trust" aria-hidden />
+          Mașinile rulate au kilometraj verificat și istoric de service în rețeaua
+          autorizată.
+        </p>
 
         {/* Selector principal: nou / rulat / toate — vizibil fără a deschide filtrele */}
-        <div className="mt-6 flex flex-wrap items-center gap-2">
+        <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-8">
           <ToggleGroup
             type="single"
             value={condition}
             onValueChange={(value) => value && setCondition(value as ConditionFilter)}
-            className="rounded-sm border border-border"
+            className="gap-2"
           >
-            <ToggleGroupItem value="toate" className="rounded-sm px-4">
+            <ToggleGroupItem value="toate" variant="outline">
               Toate ({vehicles.length})
             </ToggleGroupItem>
-            <ToggleGroupItem value="nou" className="rounded-sm px-4">
+            <ToggleGroupItem value="nou" variant="outline">
               Noi ({vehicles.filter((v) => v.condition === "nou").length})
             </ToggleGroupItem>
-            <ToggleGroupItem value="rulat" className="rounded-sm px-4">
+            <ToggleGroupItem value="rulat" variant="outline">
               Rulate ({vehicles.filter((v) => v.condition === "rulat").length})
             </ToggleGroupItem>
           </ToggleGroup>
 
           <Button
             variant="outline"
-            className="rounded-sm"
             onClick={() => setFiltersOpen((value) => !value)}
             aria-expanded={filtersOpen}
           >
-            <Filter className="mr-1 size-4" aria-hidden />
+            <Filter className="size-4" aria-hidden />
             Filtre{activeCount > 0 ? ` (${activeCount})` : ""}
           </Button>
 
           {activeCount > 0 ? (
-            <Button variant="ghost" className="rounded-sm" onClick={resetAll}>
-              <X className="mr-1 size-4" aria-hidden />
+            <Button variant="ghost" onClick={resetAll}>
+              <X className="size-4" aria-hidden />
               Șterge filtrele
             </Button>
           ) : null}
         </div>
+
 
         {filtersOpen ? (
           <div className="mt-4 grid gap-6 rounded-sm border border-border bg-card p-4 md:grid-cols-3">
