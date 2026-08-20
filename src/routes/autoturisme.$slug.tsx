@@ -267,8 +267,10 @@ function VehicleDetailPage() {
       onClose={closeForm}
       branch={vehicle.branch}
       backLabel="Înapoi la opțiuni"
+      autoFocusFirst
     />
   ) : null;
+
 
   return (
     <div className="min-h-screen bg-background pb-28 lg:pb-0">
