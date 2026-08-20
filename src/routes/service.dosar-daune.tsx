@@ -87,7 +87,7 @@ function DamageFilePage() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-0">
+    <div className="min-h-screen bg-background pb-28 md:pb-0">
       <SiteHeader />
 
       <main>
@@ -249,7 +249,7 @@ function DamageFilePage() {
                     type="button"
                     onClick={() => setInsurer(item.name)}
                     className={cn(
-                      "rounded-sm border px-3 py-2 text-sm",
+                      "inline-flex min-h-11 items-center rounded-sm border px-3 text-sm",
                       insurer === item.name
                         ? "border-accent bg-accent/5 font-bold"
                         : "border-border",
@@ -262,7 +262,7 @@ function DamageFilePage() {
                   type="button"
                   onClick={() => setInsurer("Alt asigurator")}
                   className={cn(
-                    "rounded-sm border px-3 py-2 text-sm",
+                    "inline-flex min-h-11 items-center rounded-sm border px-3 text-sm",
                     insurer === "Alt asigurator"
                       ? "border-accent bg-accent/5 font-bold"
                       : "border-border",
@@ -285,7 +285,7 @@ function DamageFilePage() {
                     type="button"
                     onClick={() => setBranch(item.name)}
                     className={cn(
-                      "rounded-sm border px-3 py-2 text-sm",
+                      "inline-flex min-h-11 items-center rounded-sm border px-3 text-sm",
                       branch === item.name
                         ? "border-accent bg-accent/5 font-bold"
                         : "border-border",

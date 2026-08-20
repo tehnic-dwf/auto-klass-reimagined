@@ -152,7 +152,7 @@ function VehicleDetailPage() {
     .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-0">
+    <div className="min-h-screen bg-background pb-28 md:pb-0">
       <SiteHeader />
 
       <main className="mx-auto w-full max-w-7xl px-5 py-8 md:px-6 md:py-12">
