@@ -177,7 +177,7 @@ function Stepper({ step }: { step: number }) {
             />
             <p
               className={cn(
-                "mt-2 flex items-center gap-1.5 text-xs",
+                "mt-2 flex min-h-[2.25rem] items-start gap-1.5 text-xs leading-snug",
                 current ? "font-bold text-foreground" : "text-muted-foreground",
               )}
               {...(current ? { "aria-current": "step" as const } : {})}
@@ -187,7 +187,7 @@ function Stepper({ step }: { step: number }) {
               ) : (
                 <span className="tabular-nums">{stage}.</span>
               )}
-              <span className="truncate">{label}</span>
+              <span className="min-w-0 text-balance">{label}</span>
               {complete ? <span className="sr-only">(finalizat)</span> : null}
             </p>
           </li>

@@ -213,11 +213,11 @@ function HomePage() {
         <section aria-label="Autoklass în cifre" className="border-b border-border bg-background">
           <dl className="mx-auto grid w-full max-w-7xl grid-cols-3 gap-x-6 px-5 py-8 md:px-6 md:py-10">
             {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <dd className="font-display text-2xl leading-none tabular-nums md:text-4xl">
+              <div key={stat.label} className="flex flex-col">
+                <dt className="order-2 mt-2 text-xs text-muted-foreground">{stat.label}</dt>
+                <dd className="order-1 font-display text-2xl leading-none tabular-nums md:text-4xl">
                   {stat.value}
                 </dd>
-                <dt className="mt-2 text-xs text-muted-foreground">{stat.label}</dt>
               </div>
             ))}
           </dl>

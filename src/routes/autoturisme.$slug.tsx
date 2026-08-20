@@ -4,12 +4,9 @@ import {
   BadgeCheck,
   CalendarClock,
   Check,
-  Fuel,
-  Gauge,
   MapPin,
   MessageCircle,
   Phone,
-  Settings2,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
