@@ -164,7 +164,6 @@ function HomePage() {
     { value: "2h", label: "Timp de răspuns" },
   ];
 
-
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       <SiteHeader />
@@ -222,7 +221,6 @@ function HomePage() {
               ))}
             </div>
           </div>
-
         </section>
 
         {/* 2. O singură suprafață pentru toate intențiile și serviciile */}
@@ -275,7 +273,6 @@ function HomePage() {
                 Toate mașinile
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
-
             </div>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

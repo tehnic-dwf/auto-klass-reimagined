@@ -43,7 +43,6 @@ export function OutOfScope({ title, persona, notes }: OutOfScopeProps) {
             ))}
           </ul>
 
-
           <Button asChild variant="outline" className="mt-10">
             <Link to="/">
               <ArrowLeft className="size-4" aria-hidden />

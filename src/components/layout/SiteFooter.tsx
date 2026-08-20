@@ -47,14 +47,15 @@ export function SiteFooter() {
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-6">
         <div className="grid gap-12 md:grid-cols-[1.2fr_repeat(3,1fr)]">
           <div>
-            <Link to="/" className="inline-flex min-h-11 items-center" aria-label="Autoklass — acasă">
+            <Link
+              to="/"
+              className="inline-flex min-h-11 items-center"
+              aria-label="Autoklass — acasă"
+            >
               <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
             </Link>
             <div className="mt-6 space-y-1 text-sm">
-              <a
-                href={contact.phoneHref}
-                className="flex min-h-11 items-center gap-3 font-bold"
-              >
+              <a href={contact.phoneHref} className="flex min-h-11 items-center gap-3 font-bold">
                 <Phone className="size-5 shrink-0" aria-hidden />
                 {contact.phone}
               </a>
@@ -90,7 +91,6 @@ export function SiteFooter() {
               </ul>
             </nav>
           ))}
-
         </div>
 
         <div className="mt-14 flex flex-col gap-2 border-t border-primary-foreground/15 pt-8 text-xs text-primary-foreground/60 md:flex-row md:justify-between">

@@ -238,7 +238,6 @@ function ServiceBookingPage() {
                     >
                       {item}
                     </button>
-
                   ))}
                 </div>
               </div>
@@ -378,7 +377,6 @@ function ServiceBookingPage() {
           </button>
         ) : null}
       </div>
-
     </div>
   );
 }

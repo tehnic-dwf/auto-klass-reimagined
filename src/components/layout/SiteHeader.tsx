@@ -4,7 +4,6 @@ import {
   ChevronDown,
   Heart,
   Menu,
-
   MessageCircle,
   Phone,
   Search,
@@ -138,7 +137,6 @@ function DesktopGroup({ group }: { group: NavGroup }) {
   );
 }
 
-
 function MobileGroup({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
 
@@ -258,7 +256,6 @@ export function SiteHeader() {
               <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
             </Link>
 
-
             <nav className="flex flex-1 items-center" aria-label="Navigație principală">
               {navigation.map((group) => (
                 <DesktopGroup key={group.label} group={group} />
@@ -282,7 +279,6 @@ export function SiteHeader() {
           <Link to="/" className="flex min-h-11 items-center" aria-label="Autoklass — acasă">
             <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
           </Link>
-
 
           <div className="flex items-center gap-1">
             <a
@@ -330,7 +326,6 @@ export function SiteHeader() {
         </div>
 
         <div className="pb-safe-lg flex-1 overflow-y-auto px-5">
-
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}

@@ -351,7 +351,6 @@ function DamageFilePage() {
           <a href="#formular-daune">Deschide dosarul</a>
         </Button>
       </div>
-
     </div>
   );
 }

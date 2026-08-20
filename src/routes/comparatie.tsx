@@ -111,7 +111,6 @@ function ComparePage() {
                           <Trash2 className="size-4" aria-hidden />
                           Scoate
                         </button>
-
                       </th>
                     ))}
                   </tr>

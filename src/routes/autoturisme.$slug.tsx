@@ -165,7 +165,6 @@ function VehicleDetailPage() {
         </Link>
 
         <div className="mt-4 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
-
           <div>
             <VehicleGallery vehicle={vehicle} />
 
@@ -176,9 +175,7 @@ function VehicleDetailPage() {
 
               <h1 className="mt-5 text-3xl md:text-4xl">{vehicle.title}</h1>
 
-              <p className="mt-6 font-display text-4xl">
-                {formatPrice(vehicle.priceEur)} €
-              </p>
+              <p className="mt-6 font-display text-4xl">{formatPrice(vehicle.priceEur)} €</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 {vehicle.vat === "deductibil" ? "TVA deductibil" : "TVA nedeductibil"}
                 {vehicle.listPriceEur
@@ -219,7 +216,6 @@ function VehicleDetailPage() {
                 Vezi toată lista de verificări
               </Link>
             </div>
-
           </div>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -266,8 +262,7 @@ function VehicleDetailPage() {
 
               <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
                 <BadgeCheck className="mt-0.5 size-4 shrink-0 text-trust" aria-hidden />
-                Un consultant îți răspunde în maximum 2 ore lucrătoare, cu nume și număr
-                direct.
+                Un consultant îți răspunde în maximum 2 ore lucrătoare, cu nume și număr direct.
               </p>
 
               <div className="mt-6 space-y-3 border-t border-border pt-6">
@@ -288,7 +283,6 @@ function VehicleDetailPage() {
                 </Link>
               </div>
             </div>
-
 
             {mode ? (
               <LeadForm
@@ -336,7 +330,6 @@ function VehicleDetailPage() {
             </div>
           </section>
         ) : null}
-
       </main>
 
       <SiteFooter />
@@ -344,9 +337,7 @@ function VehicleDetailPage() {
       <div className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 px-3 pt-3 backdrop-blur md:hidden">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <p className="font-display text-xl leading-none">
-              {formatPrice(vehicle.priceEur)} €
-            </p>
+            <p className="font-display text-xl leading-none">{formatPrice(vehicle.priceEur)} €</p>
             <p className="mt-1 truncate text-xs text-muted-foreground">
               {vehicle.branch.replace("Autoklass ", "")}
             </p>
@@ -362,7 +353,6 @@ function VehicleDetailPage() {
           </Button>
         </div>
       </div>
-
     </div>
   );
 }
@@ -400,7 +390,6 @@ function SpecTable({ vehicle }: { vehicle: Vehicle }) {
       </dl>
     </div>
   );
-
 }
 
 function LeadForm({
