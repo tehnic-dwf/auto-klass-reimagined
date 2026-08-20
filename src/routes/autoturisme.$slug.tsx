@@ -166,13 +166,31 @@ function VehicleDetailPage() {
   const [sent, setSent] = useState<ActionMode | null>(null);
   const isDesktop = useIsDesktop();
 
+  // Reținem exact butonul care a deschis formularul, ca focusul să revină acolo.
+  const dockTestDriveRef = useRef<HTMLButtonElement | null>(null);
+  const panelTestDriveRef = useRef<HTMLButtonElement | null>(null);
+  const panelCallbackRef = useRef<HTMLButtonElement | null>(null);
+  const lastTrigger = useRef<HTMLButtonElement | null>(null);
+
   const similar = vehicles
     .filter((item) => item.slug !== vehicle.slug && item.bodyType === vehicle.bodyType)
     .slice(0, 3);
 
+  const openMode = (next: ActionMode, trigger: React.RefObject<HTMLButtonElement | null>) => {
+    lastTrigger.current = trigger.current;
+    setMode(next);
+    setSent(null);
+  };
+
+  const restoreFocus = () => {
+    const target = lastTrigger.current;
+    if (target) requestAnimationFrame(() => target.focus());
+  };
+
   const closeForm = () => {
     setMode(null);
     setSent(null);
+    restoreFocus();
   };
 
   const priceMeta = [
@@ -186,26 +204,23 @@ function VehicleDetailPage() {
     <>
       <div className="mt-6 space-y-3">
         <Button
+          ref={panelTestDriveRef}
           className="press w-full"
           size="lg"
-          onClick={() => {
-            setMode("test-drive");
-            setSent(null);
-          }}
+          onClick={() => openMode("test-drive", panelTestDriveRef)}
         >
           Programează un test drive
         </Button>
         <Button
+          ref={panelCallbackRef}
           variant="outline"
           className="press w-full"
-          onClick={() => {
-            setMode("consultant");
-            setSent(null);
-          }}
+          onClick={() => openMode("consultant", panelCallbackRef)}
         >
           Cere să fii sunat
         </Button>
       </div>
+
 
       <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
         <BadgeCheck className="mt-0.5 size-5 shrink-0 text-trust" strokeWidth={2} aria-hidden />
