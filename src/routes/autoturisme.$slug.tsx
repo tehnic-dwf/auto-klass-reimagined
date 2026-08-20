@@ -394,9 +394,9 @@ function VehicleDetailPage() {
 
       {/* Dock de conversie al mașinii: vizibil până la lg (inclusiv 768px) */}
       <div className="bottom-safe fixed inset-x-3 z-40 lg:hidden">
-        <div className="flex items-center gap-3 rounded-lg border border-border bg-card/95 p-3 shadow-panel backdrop-blur">
+        <div className="flex items-center gap-2 rounded-lg border border-border bg-card/95 p-2 shadow-panel backdrop-blur min-[390px]:gap-3 min-[390px]:p-3">
           <div className="min-w-0 flex-1">
-            <p className="font-display text-xl leading-none tabular-nums">
+            <p className="whitespace-nowrap font-display text-xl leading-none tabular-nums">
               {formatPrice(vehicle.priceEur)} €
             </p>
             <p className="mt-1 truncate text-xs text-muted-foreground">
@@ -415,21 +415,22 @@ function VehicleDetailPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Scrie pe WhatsApp"
-            className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border"
+            className="press hidden size-12 shrink-0 items-center justify-center rounded-sm border border-border min-[390px]:flex"
           >
             <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
           </a>
           <Button
-            className="press h-13 shrink-0"
+            ref={dockTestDriveRef}
+            className="press h-13 shrink-0 whitespace-nowrap px-3 min-[390px]:px-4"
             onClick={() => {
-              setMode("test-drive");
-              setSent(null);
+              openMode("test-drive", dockTestDriveRef);
             }}
           >
             Test drive
           </Button>
         </div>
       </div>
+
 
       {/* Sub lg: același formular, în bottom sheet accesibil */}
       <DialogPrimitive.Root
