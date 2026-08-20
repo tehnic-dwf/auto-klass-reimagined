@@ -376,9 +376,9 @@ function HomePage() {
               </p>
             </Reveal>
 
-            <ol className="mt-8 border-t border-border md:mt-10">
+            <Reveal delay={80} as="ol" className="mt-8 border-t border-border md:mt-10">
               {processSteps.map((step, index) => (
-                <Reveal key={step.title} as="li" delay={Math.min(index, 4) * 80}>
+                <li key={step.title}>
                   <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 border-b border-border py-5 md:grid-cols-[4rem_minmax(0,18rem)_minmax(0,1fr)] md:gap-x-8">
                     <p className="font-display text-xl leading-none tabular-nums text-muted-foreground md:text-2xl">
                       0{index + 1}
@@ -388,18 +388,22 @@ function HomePage() {
                       {step.body}
                     </p>
                   </div>
-                </Reveal>
+                </li>
               ))}
-            </ol>
+            </Reveal>
 
-            <div className="mt-12 grid gap-8 border-t border-border pt-10 md:grid-cols-3 md:gap-10">
-              {promises.map((promise, index) => (
-                <Reveal key={promise.title} delay={index * 80}>
+            <Reveal
+              delay={160}
+              className="mt-12 grid gap-8 border-t border-border pt-10 md:grid-cols-3 md:gap-10"
+            >
+              {promises.map((promise) => (
+                <div key={promise.title}>
                   <h3 className="text-lg leading-snug">{promise.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{promise.body}</p>
-                </Reveal>
+                </div>
               ))}
-            </div>
+            </Reveal>
+
           </div>
         </section>
 
