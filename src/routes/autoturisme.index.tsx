@@ -133,12 +133,14 @@ function ListingPage() {
 
 
         {filtersOpen ? (
-          <div className="mt-4 grid gap-6 rounded-sm border border-border bg-card p-4 md:grid-cols-3">
+          <div className="mt-6 grid gap-8 rounded-sm border border-border bg-card p-6 md:grid-cols-3">
             <div>
               <Label className="text-sm font-bold">Buget maxim</Label>
-              <p className="mt-1 text-sm text-muted-foreground">până la {formatPrice(budget)} €</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                până la {formatPrice(budget)} €
+              </p>
               <Slider
-                className="mt-3"
+                className="mt-4"
                 min={20000}
                 max={maxPrice}
                 step={1000}
@@ -153,32 +155,24 @@ function ListingPage() {
                 type="multiple"
                 value={fuels}
                 onValueChange={setFuels}
-                className="mt-3 flex-wrap justify-start gap-2"
+                className="mt-4 flex-wrap justify-start gap-2"
               >
                 {["Benzină", "Diesel"].map((fuel) => (
-                  <ToggleGroupItem
-                    key={fuel}
-                    value={fuel}
-                    className="rounded-sm border border-border px-3"
-                  >
+                  <ToggleGroupItem key={fuel} value={fuel} variant="outline">
                     {fuel}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
 
-              <Label className="mt-4 block text-sm font-bold">Carosier</Label>
+              <Label className="mt-6 block text-sm font-bold">Carosier</Label>
               <ToggleGroup
                 type="multiple"
                 value={bodies}
                 onValueChange={setBodies}
-                className="mt-3 flex-wrap justify-start gap-2"
+                className="mt-4 flex-wrap justify-start gap-2"
               >
                 {["Limuzină", "Sedan", "SUV", "Coupe"].map((body) => (
-                  <ToggleGroupItem
-                    key={body}
-                    value={body}
-                    className="rounded-sm border border-border px-3"
-                  >
+                  <ToggleGroupItem key={body} value={body} variant="outline">
                     {body}
                   </ToggleGroupItem>
                 ))}
@@ -187,11 +181,10 @@ function ListingPage() {
 
             <div>
               <Label className="text-sm font-bold">Sucursală</Label>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <Button
                   variant={branch === "toate" ? "default" : "outline"}
                   size="sm"
-                  className="rounded-sm"
                   onClick={() => setBranch("toate")}
                 >
                   Toate
@@ -201,7 +194,6 @@ function ListingPage() {
                     key={item.name}
                     variant={branch === item.name ? "default" : "outline"}
                     size="sm"
-                    className="rounded-sm"
                     onClick={() => setBranch(item.name)}
                   >
                     {item.name.replace("Autoklass ", "")}
@@ -212,28 +204,30 @@ function ListingPage() {
           </div>
         ) : null}
 
-        <p className="mt-6 text-sm text-muted-foreground">
+        <p className="mt-10 text-sm text-muted-foreground">
           {filtered.length} {filtered.length === 1 ? "mașină" : "mașini"} afișate din{" "}
           {vehicles.length} în acest prototip
         </p>
 
         {filtered.length === 0 ? (
-          <div className="mt-6 rounded-sm border border-border bg-secondary p-8 text-center">
-            <p className="text-base font-bold">Nicio mașină pentru aceste filtre</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă locație.
+          <div className="mt-6 rounded-sm border border-border bg-secondary p-10 text-center">
+            <p className="text-lg">Nicio mașină pentru aceste filtre</p>
+            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
+              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă
+              locație.
             </p>
-            <Button className="mt-4 rounded-sm" onClick={resetAll}>
+            <Button className="mt-6" onClick={resetAll}>
               Șterge filtrele
             </Button>
           </div>
         ) : (
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((vehicle) => (
               <VehicleCard key={vehicle.slug} vehicle={vehicle} />
             ))}
           </div>
         )}
+
       </main>
 
       <SiteFooter />
