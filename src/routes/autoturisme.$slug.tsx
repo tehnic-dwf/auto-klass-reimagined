@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
@@ -166,13 +166,31 @@ function VehicleDetailPage() {
   const [sent, setSent] = useState<ActionMode | null>(null);
   const isDesktop = useIsDesktop();
 
+  // Reținem exact butonul care a deschis formularul, ca focusul să revină acolo.
+  const dockTestDriveRef = useRef<HTMLButtonElement | null>(null);
+  const panelTestDriveRef = useRef<HTMLButtonElement | null>(null);
+  const panelCallbackRef = useRef<HTMLButtonElement | null>(null);
+  const lastTrigger = useRef<HTMLButtonElement | null>(null);
+
   const similar = vehicles
     .filter((item) => item.slug !== vehicle.slug && item.bodyType === vehicle.bodyType)
     .slice(0, 3);
 
+  const openMode = (next: ActionMode, trigger: React.RefObject<HTMLButtonElement | null>) => {
+    lastTrigger.current = trigger.current;
+    setMode(next);
+    setSent(null);
+  };
+
+  const restoreFocus = () => {
+    const target = lastTrigger.current;
+    if (target) requestAnimationFrame(() => target.focus());
+  };
+
   const closeForm = () => {
     setMode(null);
     setSent(null);
+    restoreFocus();
   };
 
   const priceMeta = [
@@ -186,26 +204,23 @@ function VehicleDetailPage() {
     <>
       <div className="mt-6 space-y-3">
         <Button
+          ref={panelTestDriveRef}
           className="press w-full"
           size="lg"
-          onClick={() => {
-            setMode("test-drive");
-            setSent(null);
-          }}
+          onClick={() => openMode("test-drive", panelTestDriveRef)}
         >
           Programează un test drive
         </Button>
         <Button
+          ref={panelCallbackRef}
           variant="outline"
           className="press w-full"
-          onClick={() => {
-            setMode("consultant");
-            setSent(null);
-          }}
+          onClick={() => openMode("consultant", panelCallbackRef)}
         >
           Cere să fii sunat
         </Button>
       </div>
+
 
       <p className="mt-5 flex items-start gap-3 text-xs text-muted-foreground">
         <BadgeCheck className="mt-0.5 size-5 shrink-0 text-trust" strokeWidth={2} aria-hidden />
@@ -252,8 +267,10 @@ function VehicleDetailPage() {
       onClose={closeForm}
       branch={vehicle.branch}
       backLabel="Înapoi la opțiuni"
+      autoFocusFirst
     />
   ) : null;
+
 
   return (
     <div className="min-h-screen bg-background pb-28 lg:pb-0">
@@ -394,9 +411,9 @@ function VehicleDetailPage() {
 
       {/* Dock de conversie al mașinii: vizibil până la lg (inclusiv 768px) */}
       <div className="bottom-safe fixed inset-x-3 z-40 lg:hidden">
-        <div className="flex items-center gap-3 rounded-lg border border-border bg-card/95 p-3 shadow-panel backdrop-blur">
+        <div className="flex items-center gap-2 rounded-lg border border-border bg-card/95 p-2 shadow-panel backdrop-blur min-[390px]:gap-3 min-[390px]:p-3">
           <div className="min-w-0 flex-1">
-            <p className="font-display text-xl leading-none tabular-nums">
+            <p className="whitespace-nowrap font-display text-xl leading-none tabular-nums">
               {formatPrice(vehicle.priceEur)} €
             </p>
             <p className="mt-1 truncate text-xs text-muted-foreground">
@@ -415,21 +432,22 @@ function VehicleDetailPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Scrie pe WhatsApp"
-            className="press flex size-12 shrink-0 items-center justify-center rounded-sm border border-border"
+            className="press hidden size-12 shrink-0 items-center justify-center rounded-sm border border-border min-[390px]:flex"
           >
             <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
           </a>
           <Button
-            className="press h-13 shrink-0"
+            ref={dockTestDriveRef}
+            className="press h-13 shrink-0 whitespace-nowrap px-3 min-[390px]:px-4"
             onClick={() => {
-              setMode("test-drive");
-              setSent(null);
+              openMode("test-drive", dockTestDriveRef);
             }}
           >
             Test drive
           </Button>
         </div>
       </div>
+
 
       {/* Sub lg: același formular, în bottom sheet accesibil */}
       <DialogPrimitive.Root
@@ -442,8 +460,13 @@ function VehicleDetailPage() {
           <DialogPrimitive.Overlay className="fixed inset-0 z-[60] bg-primary/60 lg:hidden" />
           <DialogPrimitive.Content
             aria-label={mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              lastTrigger.current?.focus();
+            }}
             className="pb-safe fixed inset-x-0 bottom-0 z-[70] max-h-[92svh] overflow-y-auto rounded-t-lg border-t border-border bg-card px-5 pt-5 lg:hidden"
           >
+
             <div className="flex items-start justify-between gap-4">
               <DialogPrimitive.Title className="text-lg">
                 {mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}

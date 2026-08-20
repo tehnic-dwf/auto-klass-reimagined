@@ -48,9 +48,10 @@ export function Reveal({
       ref={ref}
       className={cn("reveal", className)}
       data-visible={visible ? "true" : "false"}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${Math.min(Math.max(delay, 0), 160)}ms` }}
     >
       {children}
     </Tag>
   );
+
 }

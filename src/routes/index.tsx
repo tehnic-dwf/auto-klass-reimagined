@@ -2,7 +2,6 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 import { useState } from "react";
 
-import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
 import { BrandMark } from "@/components/brands/BrandMark";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
@@ -75,7 +74,7 @@ const intents = [
   },
   {
     title: "Văd cum verificați mașinile rulate",
-    body: "Peste 100 de puncte de control și raport înainte de decizie.",
+    body: "Peste 100 de puncte de control și un raport clar înainte de decizie.",
     action: "Vezi verificările",
     to: "/verificare-masini-rulate" as const,
   },
@@ -87,7 +86,7 @@ const promises = [
     body: "Orice cerere trimisă prin site primește răspuns de la un consultant, cu nume și număr direct.",
   },
   {
-    title: "Prețul afișat este prețul discutat",
+    title: "Prețul final, afișat de la început.",
     body: "Fiecare mașină are prețul, regimul de TVA și sucursala. Fără „preț la cerere”.",
   },
   {
@@ -171,8 +170,11 @@ function FaqList() {
               id={`faq-panel-${index}`}
               role="region"
               aria-labelledby={`faq-trigger-${index}`}
+              aria-hidden={!expanded}
+              {...(expanded ? {} : { inert: true })}
             >
               <p className="overflow-hidden pb-5 text-sm text-muted-foreground">{item.a}</p>
+
             </div>
           </div>
         );
@@ -226,7 +228,7 @@ function HomePage() {
               className="hero-rise mt-5 font-display"
               style={{
                 animationDelay: "180ms",
-                fontSize: "clamp(3rem, 6.6vw, 7rem)",
+                fontSize: "clamp(3rem, 7.6vw, 7rem)",
                 lineHeight: 0.96,
                 maxWidth: "16ch",
               }}
@@ -277,32 +279,30 @@ function HomePage() {
         </section>
 
         {/* 2. Intenții */}
-        <section className="mx-auto w-full max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <section className="mx-auto w-full max-w-7xl px-5 pb-12 pt-12 md:px-6 lg:pb-20 lg:pt-16">
           <Reveal className="max-w-2xl">
             <p className="eyebrow">Începe de aici</p>
             <h2 className="mt-3 text-3xl md:text-4xl">Cu ce vrei să începem?</h2>
           </Reveal>
 
-          <div className="mt-8 border-t border-border md:mt-10">
-            {intents.map((intent, index) => (
-              <Reveal key={intent.title} delay={Math.min(index, 4) * 80}>
-                <Link
-                  to={intent.to}
-                  className="group grid grid-cols-1 items-baseline gap-x-8 gap-y-2 border-b border-border py-6 transition-colors hover:bg-muted/60 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] md:py-7"
-                >
-                  <h3 className="text-xl leading-snug md:text-2xl">{intent.title}</h3>
-                  <p className="text-pretty text-sm text-muted-foreground">{intent.body}</p>
-                  <span className="text-sm font-bold text-accent md:text-right">
-                    {intent.action}
-                  </span>
-                </Link>
-              </Reveal>
+          <Reveal delay={80} className="mt-8 block border-t border-border md:mt-10">
+            {intents.map((intent) => (
+              <Link
+                key={intent.title}
+                to={intent.to}
+                className="group grid grid-cols-1 items-baseline gap-x-8 gap-y-2 border-b border-border py-6 transition-colors hover:bg-muted/60 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] md:py-7"
+              >
+                <h3 className="text-xl leading-snug md:text-2xl">{intent.title}</h3>
+                <p className="text-pretty text-sm text-muted-foreground">{intent.body}</p>
+                <span className="text-sm font-bold text-accent md:text-right">{intent.action}</span>
+              </Link>
             ))}
-          </div>
+          </Reveal>
+
         </section>
 
         {/* 3. Selecție din stoc */}
-        <section className="border-y border-border bg-secondary py-14 md:py-24">
+        <section className="border-y border-border bg-secondary pb-14 pt-12 lg:pb-24 lg:pt-20">
           <div className="mx-auto w-full max-w-7xl px-5 md:px-6">
             <Reveal className="max-w-3xl">
               <p className="eyebrow">Disponibile acum</p>
@@ -316,11 +316,11 @@ function HomePage() {
             </Reveal>
 
             {/* Mobil: rail nativ cu scroll-snap. Desktop: grilă pe 3 coloane. */}
-            <div className="snap-rail -mx-5 mt-8 gap-4 px-5 pb-2 md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-3">
+            <div className="snap-rail -mx-5 mt-8 gap-4 px-5 pb-2 lg:mx-0 lg:mt-10 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0">
               {featured.map((vehicle) => (
                 <div
                   key={vehicle.slug}
-                  className="snap-card w-[86vw] max-w-sm md:w-auto md:max-w-none"
+                  className="snap-card w-[86vw] max-w-sm lg:w-auto lg:max-w-none"
                 >
                   <VehicleCard vehicle={vehicle} />
                 </div>
@@ -334,7 +334,7 @@ function HomePage() {
         </section>
 
         {/* 4. Film de prezentare */}
-        <section className="mx-auto w-full max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <section className="mx-auto w-full max-w-7xl px-5 pb-12 pt-12 md:px-6 lg:pb-20 lg:pt-16">
           <div className="grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-16">
             <Reveal>
               <p className="eyebrow">Test drive</p>
@@ -355,8 +355,8 @@ function HomePage() {
               <LiteYouTube
                 videoId="q3q-DQcUegk"
                 title="Autoklass Sibiu - Centru Autorizat Mercedes-Benz si Honda"
-                posterSrc={detaliuGrila}
-                posterAlt="Imagine de prezentare: detaliu de grilă și stea Mercedes-Benz"
+                posterSrc="https://i.ytimg.com/vi/q3q-DQcUegk/maxresdefault.jpg"
+                posterAlt="Cadru din filmul de prezentare al reprezentanței Autoklass Sibiu"
                 caption="Autoklass Sibiu · 1:02"
                 playLabel="Vezi reprezentanța Autoklass Sibiu"
               />
@@ -367,21 +367,21 @@ function HomePage() {
         {/* 5. Proces + promisiuni */}
         <section
           id="cum-functioneaza"
-          className="border-t border-border bg-secondary py-14 md:py-24"
+          className="border-t border-border bg-secondary pb-14 pt-12 lg:pb-24 lg:pt-20"
         >
           <div className="mx-auto w-full max-w-7xl scroll-mt-24 px-5 md:px-6">
             <Reveal className="max-w-2xl">
               <p className="eyebrow">Procesul</p>
               <h2 className="mt-3 text-3xl md:text-4xl">De la alegere la cheie, în 5 pași.</h2>
               <p className="mt-4 text-base text-muted-foreground">
-                Poți opri oricând, la orice pas. Prețul final e comunicat înainte să începem orice
-                lucrare.
+                Poți opri oricând, la orice pas. Primești oferta finală și documentele înainte să
+                decizi.
               </p>
             </Reveal>
 
-            <ol className="mt-8 border-t border-border md:mt-10">
+            <Reveal delay={80} as="ol" className="mt-8 border-t border-border md:mt-10">
               {processSteps.map((step, index) => (
-                <Reveal key={step.title} as="li" delay={Math.min(index, 4) * 80}>
+                <li key={step.title}>
                   <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 border-b border-border py-5 md:grid-cols-[4rem_minmax(0,18rem)_minmax(0,1fr)] md:gap-x-8">
                     <p className="font-display text-xl leading-none tabular-nums text-muted-foreground md:text-2xl">
                       0{index + 1}
@@ -391,25 +391,29 @@ function HomePage() {
                       {step.body}
                     </p>
                   </div>
-                </Reveal>
+                </li>
               ))}
-            </ol>
+            </Reveal>
 
-            <div className="mt-12 grid gap-8 border-t border-border pt-10 md:grid-cols-3 md:gap-10">
-              {promises.map((promise, index) => (
-                <Reveal key={promise.title} delay={index * 80}>
+            <Reveal
+              delay={160}
+              className="mt-12 grid gap-8 border-t border-border pt-10 md:grid-cols-3 md:gap-10"
+            >
+              {promises.map((promise) => (
+                <div key={promise.title}>
                   <h3 className="text-lg leading-snug">{promise.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{promise.body}</p>
-                </Reveal>
+                </div>
               ))}
-            </div>
+            </Reveal>
+
           </div>
         </section>
 
         {/* 6. Rețeaua */}
         <section
           id="sucursale"
-          className="scroll-mt-24 border-t border-border bg-primary py-14 text-primary-foreground md:py-24"
+          className="scroll-mt-24 border-t border-border bg-primary pb-14 pt-12 text-primary-foreground lg:pb-24 lg:pt-20"
         >
           <div className="mx-auto w-full max-w-7xl px-5 md:px-6">
             <Reveal className="max-w-2xl">
@@ -421,11 +425,11 @@ function HomePage() {
               </p>
             </Reveal>
 
-            <ul className="snap-rail -mx-5 mt-8 gap-4 px-5 pb-2 md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-6 md:overflow-visible md:px-0 lg:grid-cols-3">
+            <ul className="snap-rail -mx-5 mt-8 gap-4 px-5 pb-2 lg:mx-0 lg:mt-10 lg:grid lg:grid-cols-3 lg:gap-x-10 lg:gap-y-6 lg:overflow-visible lg:px-0">
               {branches.map((branch) => (
                 <li
                   key={branch.name}
-                  className="snap-card w-[76vw] max-w-xs border-t border-primary-foreground/20 pt-4 md:w-auto md:max-w-none"
+                  className="snap-card w-[76vw] max-w-xs border-t border-primary-foreground/20 pt-4 lg:w-auto lg:max-w-none"
                 >
                   <p className="text-base leading-snug">{branch.name}</p>
                   <p className="mt-1 text-xs text-primary-foreground/70">
@@ -459,7 +463,7 @@ function HomePage() {
         </section>
 
         {/* 7. Întrebări + închidere */}
-        <section className="mx-auto w-full max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <section className="mx-auto w-full max-w-7xl px-5 pb-12 pt-12 md:px-6 lg:pb-20 lg:pt-16">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <p className="eyebrow">Înainte de prima vizită</p>
@@ -469,7 +473,9 @@ function HomePage() {
 
             <Reveal delay={80} className="lg:sticky lg:top-28 lg:self-start">
               <div className="rounded-lg bg-secondary p-7 md:p-10">
-                <h2 className="text-2xl md:text-3xl">Începe de la mașină sau de la o întrebare.</h2>
+                <h2 className="text-2xl md:text-3xl">
+                  Alege o mașină din stoc sau vorbește direct cu echipa Autoklass.
+                </h2>
                 <p className="mt-4 text-base text-muted-foreground">
                   Răspundem în maximum 2 ore lucrătoare, cu nume și număr direct. Fără obligația de
                   a cumpăra.
