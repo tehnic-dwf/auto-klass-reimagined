@@ -4,7 +4,7 @@ import {
   ChevronDown,
   Heart,
   Menu,
-  Menu,
+
   MessageCircle,
   Phone,
   Search,
