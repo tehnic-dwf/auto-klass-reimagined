@@ -279,9 +279,10 @@ export function SiteHeader() {
 
         {/* Mobile: un singur nivel de 64px */}
         <div className="flex h-16 w-full items-center justify-between gap-3 px-4 lg:hidden">
-          <Link to="/" aria-label="Autoklass — acasă">
+          <Link to="/" className="flex min-h-11 items-center" aria-label="Autoklass — acasă">
             <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
           </Link>
+
 
           <div className="flex items-center gap-1">
             <a
