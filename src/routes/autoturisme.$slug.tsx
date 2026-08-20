@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import detaliuGrila from "@/assets/detaliu-grila.jpg";
 import heroGrila from "@/assets/hero-grila.jpg";
