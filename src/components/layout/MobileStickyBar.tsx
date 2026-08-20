@@ -49,31 +49,33 @@ export function MobileStickyBar({
         className,
       )}
     >
-      <div className="pb-safe grid grid-cols-3 gap-2 px-2 pt-2">
-        <a
-          href={contact.phoneHref}
-          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
-        >
-          <Phone className="size-5" aria-hidden />
-          Sună
-        </a>
-        <a
-          href={contact.whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
-        >
-          <MessageCircle className="size-5" aria-hidden />
-          WhatsApp
-        </a>
-        <Link
-          to="/service/programare"
-          className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm bg-primary text-xs font-bold text-primary-foreground"
-        >
-          <CalendarClock className="size-5" aria-hidden />
-          Programare
-        </Link>
-      </div>
+      {visible ? (
+        <div className="pb-safe grid grid-cols-3 gap-2 px-2 pt-2">
+          <a
+            href={contact.phoneHref}
+            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
+          >
+            <Phone className="size-5" strokeWidth={1.5} aria-hidden />
+            Sună
+          </a>
+          <a
+            href={contact.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
+          >
+            <MessageCircle className="size-5" strokeWidth={1.5} aria-hidden />
+            WhatsApp
+          </a>
+          <Link
+            to="/service/programare"
+            className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm bg-primary text-xs font-bold text-primary-foreground"
+          >
+            <CalendarClock className="size-5" strokeWidth={1.5} aria-hidden />
+            Programare
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 }

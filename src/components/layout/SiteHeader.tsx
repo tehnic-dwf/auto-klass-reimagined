@@ -224,13 +224,14 @@ function ActionIcon({
       aria-label={label}
       title={label}
     >
-      <Icon className="size-5" aria-hidden />
+      <Icon className="size-5" strokeWidth={1.5} aria-hidden />
     </Link>
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Cât timp meniul e deschis, pagina de dedesubt nu se mai mișcă.
   useEffect(() => {
@@ -242,9 +243,29 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  // Varianta suprapusă (doar homepage): transparent peste hero, grafit după scroll.
+  useEffect(() => {
+    if (!overlay) return;
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [overlay]);
+
+  const heroState = overlay && !scrolled;
+
   return (
     <>
-      <header className="sticky top-0 z-50 bg-primary text-primary-foreground">
+      <header
+        className={cn(
+          "sticky top-0 z-50 text-primary-foreground transition-colors duration-300",
+          heroState
+            ? "header-overlay-scrim bg-transparent"
+            : overlay
+              ? "bg-primary/90 backdrop-blur"
+              : "bg-primary",
+        )}
+      >
         {/* Desktop: un singur rând de 80px */}
         <div className="hidden lg:block">
           <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-3 px-4 xl:gap-6 xl:px-6">
@@ -271,10 +292,27 @@ export function SiteHeader() {
               <span className="hidden xl:flex">
                 <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
               </span>
-              <Button asChild variant="secondary" size="sm" className="ml-1 px-3 xl:hidden">
+              <Button
+                asChild
+                variant={heroState ? "outline" : "secondary"}
+                size="sm"
+                className={cn(
+                  "ml-1 px-3 xl:hidden",
+                  heroState &&
+                    "border-primary-foreground/45 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground",
+                )}
+              >
                 <Link to="/service/programare">Programare</Link>
               </Button>
-              <Button asChild variant="secondary" className="ml-3 hidden xl:inline-flex">
+              <Button
+                asChild
+                variant={heroState ? "outline" : "secondary"}
+                className={cn(
+                  "ml-3 hidden xl:inline-flex",
+                  heroState &&
+                    "border-primary-foreground/45 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground",
+                )}
+              >
                 <Link to="/service/programare">Programare service</Link>
               </Button>
             </div>
@@ -293,7 +331,7 @@ export function SiteHeader() {
               aria-label={`Sună la ${contact.phone}`}
               className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
             >
-              <Phone className="size-5" aria-hidden />
+              <Phone className="size-5" strokeWidth={1.5} aria-hidden />
             </a>
             <button
               type="button"
@@ -338,7 +376,7 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
             className="my-5 flex min-h-12 items-center gap-3 rounded-sm border border-primary-foreground/20 px-4 text-sm text-primary-foreground/75"
           >
-            <Search className="size-5 shrink-0" aria-hidden />
+            <Search className="size-5 shrink-0" strokeWidth={1.5} aria-hidden />
             Caută în stoc: noi și rulate
           </Link>
 
@@ -369,7 +407,7 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="flex min-h-12 items-center gap-3 rounded-sm bg-primary-foreground px-4 text-sm font-bold text-primary"
             >
-              <Phone className="size-5" aria-hidden />
+              <Phone className="size-5" strokeWidth={1.5} aria-hidden />
               Sună {contact.phone}
             </a>
             <a
