@@ -460,8 +460,13 @@ function VehicleDetailPage() {
           <DialogPrimitive.Overlay className="fixed inset-0 z-[60] bg-primary/60 lg:hidden" />
           <DialogPrimitive.Content
             aria-label={mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              lastTrigger.current?.focus();
+            }}
             className="pb-safe fixed inset-x-0 bottom-0 z-[70] max-h-[92svh] overflow-y-auto rounded-t-lg border-t border-border bg-card px-5 pt-5 lg:hidden"
           >
+
             <div className="flex items-start justify-between gap-4">
               <DialogPrimitive.Title className="text-lg">
                 {mode === "consultant" ? "Cere să fii sunat" : "Programează un test drive"}
