@@ -106,11 +106,12 @@ function ComparePage() {
                         <button
                           type="button"
                           onClick={() => remove(vehicle.slug)}
-                          className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive"
+                          className="mt-1 inline-flex min-h-11 items-center gap-2 text-xs text-muted-foreground hover:text-destructive"
                         >
-                          <Trash2 className="size-3" aria-hidden />
+                          <Trash2 className="size-4" aria-hidden />
                           Scoate
                         </button>
+
                       </th>
                     ))}
                   </tr>

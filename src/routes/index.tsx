@@ -159,11 +159,11 @@ function HomePage() {
   const cheapest = Math.min(...vehicles.map((vehicle) => vehicle.priceEur));
 
   const heroStats = [
-    { value: formatPrice(stockFacts.newMercedes), label: "Mercedes-Benz noi" },
-    { value: formatPrice(stockFacts.usedMercedes), label: "Rulate verificate" },
+    { value: formatPrice(stockFacts.totalMercedes), label: "În stoc" },
     { value: String(stockFacts.branchCount), label: "Sucursale" },
     { value: "2h", label: "Timp de răspuns" },
   ];
+
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
@@ -213,15 +213,16 @@ function HomePage() {
           </div>
 
           <div className="relative border-t border-primary-foreground/15">
-            <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-y-6 px-5 py-8 md:grid-cols-4 md:px-6">
+            <div className="mx-auto grid w-full max-w-7xl grid-cols-3 gap-x-6 px-5 py-8 md:px-6">
               {heroStats.map((stat) => (
                 <div key={stat.label}>
-                  <p className="font-display text-3xl leading-none">{stat.value}</p>
+                  <p className="font-display text-2xl leading-none md:text-3xl">{stat.value}</p>
                   <p className="mt-2 text-xs text-primary-foreground/65">{stat.label}</p>
                 </div>
               ))}
             </div>
           </div>
+
         </section>
 
         {/* 2. O singură suprafață pentru toate intențiile și serviciile */}
@@ -269,11 +270,12 @@ function HomePage() {
               </div>
               <Link
                 to="/autoturisme"
-                className="hidden shrink-0 items-center gap-2 text-sm font-bold text-accent md:inline-flex"
+                className="hidden min-h-11 shrink-0 items-center gap-2 text-sm font-bold text-accent md:inline-flex"
               >
                 Toate mașinile
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
+
             </div>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
