@@ -48,16 +48,15 @@ export const navigation: NavGroup[] = [
         section: "Stoc",
         label: "Mașini noi",
         to: "/autoturisme",
-        hint: 'filtru "Nou"',
         prototyped: true,
       },
       {
         section: "Stoc",
         label: "Mașini rulate",
         to: "/autoturisme",
-        hint: 'filtru "Rulat"',
         prototyped: true,
       },
+
       {
         section: "Stoc",
         label: "Disponibile imediat",

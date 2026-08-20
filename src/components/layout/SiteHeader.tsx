@@ -196,7 +196,13 @@ function MobileGroup({
         />
       </button>
 
-      <div className="nav-collapse" data-open={open ? "true" : "false"}>
+      <div
+        className="nav-collapse"
+        data-open={open ? "true" : "false"}
+        aria-hidden={!open}
+        {...(open ? {} : { inert: true })}
+      >
+
         <div className="overflow-hidden bg-primary-foreground/[0.06]">
           <div className="px-5 py-3">
             {groupSections(group.items).map(([section, items]) => (
