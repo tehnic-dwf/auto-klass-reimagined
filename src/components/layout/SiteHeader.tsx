@@ -52,7 +52,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
       <Link
         to={group.to!}
         {...(group.hash ? { hash: group.hash } : {})}
-        className="flex min-h-11 items-center whitespace-nowrap px-3 text-sm text-primary-foreground/75 xl:px-4 transition-colors hover:text-primary-foreground"
+        className="flex min-h-11 items-center whitespace-nowrap px-2 text-sm text-primary-foreground/75 xl:px-4 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
         {group.label}
@@ -79,7 +79,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-3 text-sm transition-colors xl:px-4",
+          "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-2 text-sm transition-colors xl:px-4",
           open
             ? "text-primary-foreground"
             : "text-primary-foreground/75 hover:text-primary-foreground",
@@ -247,13 +247,13 @@ export function SiteHeader() {
       <header className="sticky top-0 z-50 bg-primary text-primary-foreground">
         {/* Desktop: un singur rând de 80px */}
         <div className="hidden lg:block">
-          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-4 px-6">
+          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-3 px-4 xl:gap-6 xl:px-6">
             <Link
               to="/"
               className="flex min-h-11 shrink-0 items-center"
               aria-label="Autoklass — acasă"
             >
-              <img src={logoUrl} alt="Autoklass" className="h-7 w-auto xl:h-8" />
+              <img src={logoUrl} alt="Autoklass" className="h-6 w-auto xl:h-8" />
             </Link>
 
             <nav className="flex min-w-0 flex-1 items-center" aria-label="Navigație principală">
@@ -271,7 +271,7 @@ export function SiteHeader() {
               <span className="hidden xl:flex">
                 <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
               </span>
-              <Button asChild variant="secondary" size="sm" className="ml-2 xl:hidden">
+              <Button asChild variant="secondary" size="sm" className="ml-1 px-3 xl:hidden">
                 <Link to="/service/programare">Programare</Link>
               </Button>
               <Button asChild variant="secondary" className="ml-3 hidden xl:inline-flex">
