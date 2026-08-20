@@ -26,6 +26,8 @@ export function LiteYouTube({
   className?: string;
 }) {
   const [active, setActive] = useState(false);
+  const [posterFailed, setPosterFailed] = useState(false);
+
 
   return (
     <div className={cn("overflow-hidden rounded-lg bg-primary", className)}>
