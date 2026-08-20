@@ -262,15 +262,19 @@ export function SiteHeader() {
               ))}
             </nav>
 
-            <div className="flex shrink-0 items-center gap-1">
+            <div className="flex shrink-0 items-center gap-0.5">
               <ActionIcon to="/autoturisme" label="Caută în stoc" icon={Search} />
               <ActionIcon to="/comparatie" label="Mașini salvate" icon={Heart} />
               <ActionIcon to={OUT} label="Autentificare" icon={User} />
               <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
-              <Button asChild variant="secondary" className="ml-3">
+              <Button asChild variant="secondary" size="sm" className="ml-2 xl:hidden">
+                <Link to="/service/programare">Programare</Link>
+              </Button>
+              <Button asChild variant="secondary" className="ml-3 hidden xl:inline-flex">
                 <Link to="/service/programare">Programare service</Link>
               </Button>
             </div>
+
           </div>
         </div>
 
