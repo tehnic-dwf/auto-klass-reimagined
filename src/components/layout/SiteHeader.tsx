@@ -74,7 +74,6 @@ function DesktopGroup({
         type="button"
         aria-expanded={open}
         onClick={() => (open ? onClose() : onOpen())}
-        onFocus={onOpen}
         className={cn(
           "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-2 text-sm transition-colors xl:px-4",
           open
