@@ -282,22 +282,20 @@ function HomePage() {
             <h2 className="mt-3 text-3xl md:text-4xl">Cu ce vrei să începem?</h2>
           </Reveal>
 
-          <div className="mt-8 border-t border-border md:mt-10">
-            {intents.map((intent, index) => (
-              <Reveal key={intent.title} delay={Math.min(index, 4) * 80}>
-                <Link
-                  to={intent.to}
-                  className="group grid grid-cols-1 items-baseline gap-x-8 gap-y-2 border-b border-border py-6 transition-colors hover:bg-muted/60 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] md:py-7"
-                >
-                  <h3 className="text-xl leading-snug md:text-2xl">{intent.title}</h3>
-                  <p className="text-pretty text-sm text-muted-foreground">{intent.body}</p>
-                  <span className="text-sm font-bold text-accent md:text-right">
-                    {intent.action}
-                  </span>
-                </Link>
-              </Reveal>
+          <Reveal delay={80} className="mt-8 block border-t border-border md:mt-10">
+            {intents.map((intent) => (
+              <Link
+                key={intent.title}
+                to={intent.to}
+                className="group grid grid-cols-1 items-baseline gap-x-8 gap-y-2 border-b border-border py-6 transition-colors hover:bg-muted/60 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] md:py-7"
+              >
+                <h3 className="text-xl leading-snug md:text-2xl">{intent.title}</h3>
+                <p className="text-pretty text-sm text-muted-foreground">{intent.body}</p>
+                <span className="text-sm font-bold text-accent md:text-right">{intent.action}</span>
+              </Link>
             ))}
-          </div>
+          </Reveal>
+
         </section>
 
         {/* 3. Selecție din stoc */}
