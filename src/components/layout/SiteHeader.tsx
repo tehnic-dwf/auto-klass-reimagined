@@ -250,10 +250,14 @@ export function SiteHeader() {
         {/* Desktop: un singur rând de 80px */}
         <div className="hidden lg:block">
           <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-6 px-6">
-
-            <Link to="/" className="shrink-0" aria-label="Autoklass — acasă">
+            <Link
+              to="/"
+              className="flex min-h-11 shrink-0 items-center"
+              aria-label="Autoklass — acasă"
+            >
               <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
             </Link>
+
 
             <nav className="flex flex-1 items-center" aria-label="Navigație principală">
               {navigation.map((group) => (
