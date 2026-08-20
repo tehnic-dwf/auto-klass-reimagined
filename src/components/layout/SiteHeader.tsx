@@ -315,19 +315,22 @@ export function SiteHeader() {
         aria-modal="true"
         aria-label="Meniu"
       >
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary-foreground/15 px-4">
-          <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
-          <button
-            type="button"
-            className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
-            aria-label="Închide meniul"
-            onClick={() => setOpen(false)}
-          >
-            <X className="size-6" />
-          </button>
+        <div className="pt-safe shrink-0 border-b border-primary-foreground/15">
+          <div className="flex h-16 items-center justify-between px-4">
+            <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
+            <button
+              type="button"
+              className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
+              aria-label="Închide meniul"
+              onClick={() => setOpen(false)}
+            >
+              <X className="size-6" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-8">
+        <div className="pb-safe-lg flex-1 overflow-y-auto px-5">
+
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}
