@@ -260,13 +260,16 @@
   );
 }
 
-/* Rail orizontal nativ cu scroll-snap (fără dependințe de carusel) */
+/* Rail orizontal nativ cu scroll-snap (fără dependințe de carusel).
+   scroll-padding-inline păstrează gutter-ul paginii (20px) și pentru
+   cardurile snap-uite după primul. */
 @utility snap-rail {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  scroll-padding-inline: 20px;
 }
 
 .snap-rail::-webkit-scrollbar {
@@ -275,8 +278,10 @@
 
 @utility snap-card {
   scroll-snap-align: start;
+  scroll-margin-inline: 20px;
   flex: 0 0 auto;
 }
+
 
 /* Stare apăsată discretă pentru acțiuni */
 @utility press {
@@ -323,10 +328,10 @@
   /* Dezvăluire la intrarea în viewport (IntersectionObserver) */
   .reveal {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(20px);
     transition:
-      opacity 700ms cubic-bezier(0.16, 0.84, 0.24, 1),
-      transform 700ms cubic-bezier(0.16, 0.84, 0.24, 1);
+      opacity 500ms cubic-bezier(0.16, 0.84, 0.24, 1),
+      transform 500ms cubic-bezier(0.16, 0.84, 0.24, 1);
   }
 
   .reveal[data-visible="true"] {
@@ -334,6 +339,7 @@
     transform: none;
   }
 }
+
 
 /* Tranziție pe proprietăți exacte pentru acordeoane de navigație.
    Regula de bază e mereu activă (altfel conținutul închis ar rămâne vizibil);
