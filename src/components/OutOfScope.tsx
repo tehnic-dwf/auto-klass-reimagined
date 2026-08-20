@@ -33,12 +33,16 @@ export function OutOfScope({ title, persona, notes }: OutOfScopeProps) {
 
           <p className="eyebrow mt-12">Ce ar trebui să conțină</p>
           <ul className="mt-4 divide-y divide-border border-y border-border">
-            {notes.map((note) => (
-              <li key={note} className="py-5 text-sm text-muted-foreground">
-                {note}
+            {notes.map((note, index) => (
+              <li key={note} className="flex gap-4 py-5">
+                <span className="font-display text-sm text-muted-foreground">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="text-base text-muted-foreground">{note}</span>
               </li>
             ))}
           </ul>
+
 
           <Button asChild variant="outline" className="mt-10">
             <Link to="/">
