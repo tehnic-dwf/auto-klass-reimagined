@@ -211,7 +211,7 @@ function HomePage() {
             alt="Mercedes-Benz văzut frontal, cu grila și farurile aprinse"
             width={1920}
             height={1280}
-            className="hero-media absolute inset-0 size-full object-cover object-[64%_36%] lg:object-[center_34%]"
+            className="hero-media absolute inset-0 size-full object-cover object-[50%_56%] md:object-[50%_46%] lg:object-[center_36%]"
           />
           <div className="hero-copy-scrim absolute inset-0" aria-hidden />
 
@@ -223,16 +223,19 @@ function HomePage() {
               Dealer autorizat Mercedes-Benz din 2001
             </p>
             <h1
-              className="hero-rise mt-5 text-balance font-display"
+              className="hero-rise mt-5 font-display"
               style={{
                 animationDelay: "180ms",
-                fontSize: "clamp(3.25rem, 6.6vw, 7rem)",
+                fontSize: "clamp(3rem, 6.6vw, 7rem)",
                 lineHeight: 0.96,
                 maxWidth: "16ch",
               }}
             >
-              Găsește-l. Condu-l. Apoi decide.
+              <span className="whitespace-nowrap">Găsește-l.</span>{" "}
+              <span className="whitespace-nowrap">Condu-l.</span>{" "}
+              <span className="whitespace-nowrap">Apoi decide.</span>
             </h1>
+
             <p
               className="hero-rise mt-6 text-pretty text-base text-primary-foreground/85"
               style={{ animationDelay: "270ms", maxWidth: "46ch" }}
