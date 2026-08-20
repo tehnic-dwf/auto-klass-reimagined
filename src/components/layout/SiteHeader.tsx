@@ -247,45 +247,10 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-primary text-primary-foreground">
-        {/* Desktop: două niveluri — utilitar subțire + rândul principal */}
+        {/* Desktop: un singur rând de 80px */}
         <div className="hidden lg:block">
-          <div className="border-b border-primary-foreground/10">
-            <div className="mx-auto flex h-11 w-full max-w-7xl items-center justify-between gap-8 px-6 text-xs">
-              <div className="flex items-center gap-6 text-primary-foreground/65">
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Contact
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Piese auto
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Închirieri auto
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Română
-                </Link>
-              </div>
+          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-6 px-6">
 
-              <div className="flex items-center gap-6">
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="flex items-center gap-2 text-primary-foreground/65 transition-colors hover:text-primary-foreground"
-                >
-                  <Mail className="size-4" aria-hidden />
-                  {contact.email}
-                </a>
-                <a
-                  href={contact.phoneHref}
-                  className="flex items-center gap-2 font-bold transition-colors hover:text-primary-foreground"
-                >
-                  <Phone className="size-4" aria-hidden />
-                  {contact.phone}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-8 px-6">
             <Link to="/" className="shrink-0" aria-label="Autoklass — acasă">
               <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
             </Link>
