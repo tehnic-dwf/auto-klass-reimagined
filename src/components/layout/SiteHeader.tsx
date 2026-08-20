@@ -53,7 +53,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
       <Link
         to={group.to!}
         {...(group.hash ? { hash: group.hash } : {})}
-        className="whitespace-nowrap px-4 py-3 text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
+        className="flex min-h-11 items-center whitespace-nowrap px-4 text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
         {group.label}
@@ -62,6 +62,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
   }
 
   const sections = groupSections(group.items);
+  const wide = sections.length > 1;
 
   return (
     <div
@@ -79,7 +80,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-1.5 whitespace-nowrap px-4 py-3 text-sm transition-colors",
+          "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-4 text-sm transition-colors",
           open
             ? "text-primary-foreground"
             : "text-primary-foreground/75 hover:text-primary-foreground",
@@ -94,17 +95,14 @@ function DesktopGroup({ group }: { group: NavGroup }) {
 
       <div
         className={cn(
-          "absolute left-0 top-full z-50 rounded-sm border border-border bg-card p-6 text-foreground shadow-panel",
-          sections.length > 1 ? "w-[46rem]" : "w-80",
+          "z-50 rounded-sm border border-border bg-card p-6 text-foreground shadow-panel",
+          wide
+            ? "fixed left-1/2 top-20 w-[min(46rem,calc(100vw-3rem))] -translate-x-1/2"
+            : "absolute left-0 top-full w-80 max-w-[calc(100vw-3rem)]",
           open ? "block" : "hidden",
         )}
       >
-        <div
-          className={cn(
-            "grid gap-x-8 gap-y-6",
-            sections.length > 1 ? "grid-cols-3" : "grid-cols-1",
-          )}
-        >
+        <div className={cn("grid gap-x-8 gap-y-6", wide ? "grid-cols-3" : "grid-cols-1")}>
           {sections.map(([section, items]) => (
             <div key={section}>
               {section ? (
@@ -117,7 +115,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
                       to={item.to}
                       {...(item.hash ? { hash: item.hash } : {})}
                       onClick={() => setOpen(false)}
-                      className="block rounded-sm px-3 py-2 transition-colors hover:bg-muted"
+                      className="flex min-h-11 flex-col justify-center rounded-sm px-3 py-2 transition-colors hover:bg-muted"
                     >
                       <span className="block text-sm font-bold">
                         {item.label}
@@ -139,6 +137,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
     </div>
   );
 }
+
 
 function MobileGroup({ group, onNavigate }: { group: NavGroup; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
