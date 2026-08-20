@@ -341,7 +341,7 @@ function VehicleDetailPage() {
 
       <SiteFooter />
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 p-3 backdrop-blur md:hidden">
+      <div className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 px-3 pt-3 backdrop-blur md:hidden">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-display text-xl leading-none">
