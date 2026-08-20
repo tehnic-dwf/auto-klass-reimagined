@@ -85,14 +85,13 @@ function ListingPage() {
         <p className="eyebrow">Stoc unificat</p>
         <h1 className="mt-4 text-3xl md:text-5xl">Autoturisme noi și rulate</h1>
         <p className="mt-5 max-w-2xl text-base text-muted-foreground">
-          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul
-          afișat este prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
+          Aceeași listă pentru mașini noi și rulate, ca să le compari direct. Prețul afișat este
+          prețul de vânzare, cu regimul de TVA precizat pe fiecare mașină.
         </p>
 
         <p className="mt-6 flex max-w-2xl items-start gap-3 text-sm text-muted-foreground">
           <ShieldCheck className="mt-0.5 size-5 shrink-0 text-trust" aria-hidden />
-          Mașinile rulate au kilometraj verificat și istoric de service în rețeaua
-          autorizată.
+          Mașinile rulate au kilometraj verificat și istoric de service în rețeaua autorizată.
         </p>
 
         {/* Selector principal: nou / rulat / toate — vizibil fără a deschide filtrele */}
@@ -131,14 +130,11 @@ function ListingPage() {
           ) : null}
         </div>
 
-
         {filtersOpen ? (
           <div className="mt-6 grid gap-8 rounded-sm border border-border bg-card p-6 md:grid-cols-3">
             <div>
               <Label className="text-sm font-bold">Buget maxim</Label>
-              <p className="mt-2 text-sm text-muted-foreground">
-                până la {formatPrice(budget)} €
-              </p>
+              <p className="mt-2 text-sm text-muted-foreground">până la {formatPrice(budget)} €</p>
               <Slider
                 className="mt-4"
                 min={20000}
@@ -213,8 +209,7 @@ function ListingPage() {
           <div className="mt-6 rounded-sm border border-border bg-secondary p-10 text-center">
             <p className="text-lg">Nicio mașină pentru aceste filtre</p>
             <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
-              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă
-              locație.
+              Lărgește bugetul sau alege altă sucursală. Îți putem aduce mașina din altă locație.
             </p>
             <Button className="mt-6" onClick={resetAll}>
               Șterge filtrele
@@ -227,7 +222,6 @@ function ListingPage() {
             ))}
           </div>
         )}
-
       </main>
 
       <SiteFooter />

@@ -3,7 +3,6 @@ import {
   CalendarClock,
   ChevronDown,
   Heart,
-  Mail,
   Menu,
   MessageCircle,
   Phone,
@@ -53,7 +52,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
       <Link
         to={group.to!}
         {...(group.hash ? { hash: group.hash } : {})}
-        className="whitespace-nowrap px-4 py-3 text-sm text-primary-foreground/75 transition-colors hover:text-primary-foreground"
+        className="flex min-h-11 items-center whitespace-nowrap px-2 text-sm text-primary-foreground/75 xl:px-4 transition-colors hover:text-primary-foreground"
         activeProps={{ className: "text-primary-foreground font-bold" }}
       >
         {group.label}
@@ -62,6 +61,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
   }
 
   const sections = groupSections(group.items);
+  const wide = sections.length > 1;
 
   return (
     <div
@@ -79,7 +79,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-1.5 whitespace-nowrap px-4 py-3 text-sm transition-colors",
+          "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-2 text-sm transition-colors xl:px-4",
           open
             ? "text-primary-foreground"
             : "text-primary-foreground/75 hover:text-primary-foreground",
@@ -94,17 +94,14 @@ function DesktopGroup({ group }: { group: NavGroup }) {
 
       <div
         className={cn(
-          "absolute left-0 top-full z-50 rounded-sm border border-border bg-card p-6 text-foreground shadow-panel",
-          sections.length > 1 ? "w-[46rem]" : "w-80",
+          "z-50 rounded-sm border border-border bg-card p-6 text-foreground shadow-panel",
+          wide
+            ? "fixed left-1/2 top-20 w-[min(46rem,calc(100vw-3rem))] -translate-x-1/2"
+            : "absolute left-0 top-full w-80 max-w-[calc(100vw-3rem)]",
           open ? "block" : "hidden",
         )}
       >
-        <div
-          className={cn(
-            "grid gap-x-8 gap-y-6",
-            sections.length > 1 ? "grid-cols-3" : "grid-cols-1",
-          )}
-        >
+        <div className={cn("grid gap-x-8 gap-y-6", wide ? "grid-cols-3" : "grid-cols-1")}>
           {sections.map(([section, items]) => (
             <div key={section}>
               {section ? (
@@ -117,7 +114,7 @@ function DesktopGroup({ group }: { group: NavGroup }) {
                       to={item.to}
                       {...(item.hash ? { hash: item.hash } : {})}
                       onClick={() => setOpen(false)}
-                      className="block rounded-sm px-3 py-2 transition-colors hover:bg-muted"
+                      className="flex min-h-11 flex-col justify-center rounded-sm px-3 py-2 transition-colors hover:bg-muted"
                     >
                       <span className="block text-sm font-bold">
                         {item.label}
@@ -248,61 +245,36 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-primary text-primary-foreground">
-        {/* Desktop: două niveluri — utilitar subțire + rândul principal */}
+        {/* Desktop: un singur rând de 80px */}
         <div className="hidden lg:block">
-          <div className="border-b border-primary-foreground/10">
-            <div className="mx-auto flex h-11 w-full max-w-7xl items-center justify-between gap-8 px-6 text-xs">
-              <div className="flex items-center gap-6 text-primary-foreground/65">
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Contact
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Piese auto
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Închirieri auto
-                </Link>
-                <Link to={OUT} className="transition-colors hover:text-primary-foreground">
-                  Română
-                </Link>
-              </div>
-
-              <div className="flex items-center gap-6">
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="flex items-center gap-2 text-primary-foreground/65 transition-colors hover:text-primary-foreground"
-                >
-                  <Mail className="size-4" aria-hidden />
-                  {contact.email}
-                </a>
-                <a
-                  href={contact.phoneHref}
-                  className="flex items-center gap-2 font-bold transition-colors hover:text-primary-foreground"
-                >
-                  <Phone className="size-4" aria-hidden />
-                  {contact.phone}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-8 px-6">
-            <Link to="/" className="shrink-0" aria-label="Autoklass — acasă">
-              <img src={logoUrl} alt="Autoklass" className="h-8 w-auto" />
+          <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-3 px-4 xl:gap-6 xl:px-6">
+            <Link
+              to="/"
+              className="flex min-h-11 shrink-0 items-center"
+              aria-label="Autoklass — acasă"
+            >
+              <img src={logoUrl} alt="Autoklass" className="h-6 w-auto xl:h-8" />
             </Link>
 
-            <nav className="flex flex-1 items-center" aria-label="Navigație principală">
+            <nav className="flex min-w-0 flex-1 items-center" aria-label="Navigație principală">
               {navigation.map((group) => (
                 <DesktopGroup key={group.label} group={group} />
               ))}
             </nav>
 
-            <div className="flex shrink-0 items-center gap-1">
+            <div className="flex shrink-0 items-center gap-0.5">
               <ActionIcon to="/autoturisme" label="Caută în stoc" icon={Search} />
               <ActionIcon to="/comparatie" label="Mașini salvate" icon={Heart} />
-              <ActionIcon to={OUT} label="Autentificare" icon={User} />
-              <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
-              <Button asChild variant="secondary" className="ml-3">
+              <span className="hidden xl:flex">
+                <ActionIcon to={OUT} label="Autentificare" icon={User} />
+              </span>
+              <span className="hidden xl:flex">
+                <ActionIcon to={OUT} label="Coșul meu" icon={ShoppingCart} />
+              </span>
+              <Button asChild variant="secondary" size="sm" className="ml-1 px-3 xl:hidden">
+                <Link to="/service/programare">Programare</Link>
+              </Button>
+              <Button asChild variant="secondary" className="ml-3 hidden xl:inline-flex">
                 <Link to="/service/programare">Programare service</Link>
               </Button>
             </div>
@@ -311,7 +283,7 @@ export function SiteHeader() {
 
         {/* Mobile: un singur nivel de 64px */}
         <div className="flex h-16 w-full items-center justify-between gap-3 px-4 lg:hidden">
-          <Link to="/" aria-label="Autoklass — acasă">
+          <Link to="/" className="flex min-h-11 items-center" aria-label="Autoklass — acasă">
             <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
           </Link>
 
@@ -346,19 +318,21 @@ export function SiteHeader() {
         aria-modal="true"
         aria-label="Meniu"
       >
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-primary-foreground/15 px-4">
-          <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
-          <button
-            type="button"
-            className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
-            aria-label="Închide meniul"
-            onClick={() => setOpen(false)}
-          >
-            <X className="size-6" />
-          </button>
+        <div className="pt-safe shrink-0 border-b border-primary-foreground/15">
+          <div className="flex h-16 items-center justify-between px-4">
+            <img src={logoUrl} alt="Autoklass" className="h-7 w-auto" />
+            <button
+              type="button"
+              className="flex size-12 items-center justify-center rounded-sm text-primary-foreground"
+              aria-label="Închide meniul"
+              onClick={() => setOpen(false)}
+            >
+              <X className="size-6" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-8">
+        <div className="pb-safe-lg flex-1 overflow-y-auto px-5">
           <Link
             to="/autoturisme"
             onClick={() => setOpen(false)}

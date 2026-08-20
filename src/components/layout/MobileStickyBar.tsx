@@ -49,7 +49,7 @@ export function MobileStickyBar({
         className,
       )}
     >
-      <div className="grid grid-cols-3 gap-2 p-2">
+      <div className="pb-safe grid grid-cols-3 gap-2 px-2 pt-2">
         <a
           href={contact.phoneHref}
           className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm border border-border text-xs font-bold"
