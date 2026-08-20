@@ -353,7 +353,6 @@
   opacity: 1;
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -382,4 +381,3 @@
 @utility bottom-safe {
   bottom: calc(0.75rem + env(safe-area-inset-bottom));
 }
-

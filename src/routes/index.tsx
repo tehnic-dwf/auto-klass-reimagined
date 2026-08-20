@@ -307,15 +307,18 @@ function HomePage() {
                 Mașini pe care le poți vedea și conduce.
               </h2>
               <p className="mt-4 text-base text-muted-foreground">
-                Modele noi și rulate verificate, cu prețul final, regimul TVA și sucursala afișate de
-                la început.
+                Modele noi și rulate verificate, cu prețul final, regimul TVA și sucursala afișate
+                de la început.
               </p>
             </Reveal>
 
             {/* Mobil: rail nativ cu scroll-snap. Desktop: grilă pe 3 coloane. */}
             <div className="snap-rail -mx-5 mt-8 gap-4 px-5 pb-2 md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 lg:grid-cols-3">
               {featured.map((vehicle) => (
-                <div key={vehicle.slug} className="snap-card w-[86vw] max-w-sm md:w-auto md:max-w-none">
+                <div
+                  key={vehicle.slug}
+                  className="snap-card w-[86vw] max-w-sm md:w-auto md:max-w-none"
+                >
                   <VehicleCard vehicle={vehicle} />
                 </div>
               ))}
@@ -408,9 +411,7 @@ function HomePage() {
           <div className="mx-auto w-full max-w-7xl px-5 md:px-6">
             <Reveal className="max-w-2xl">
               <p className="eyebrow text-primary-foreground/65">Rețeaua</p>
-              <h2 className="mt-3 text-3xl md:text-4xl">
-                Găsește cea mai apropiată sucursală.
-              </h2>
+              <h2 className="mt-3 text-3xl md:text-4xl">Găsește cea mai apropiată sucursală.</h2>
               <p className="mt-4 text-base text-primary-foreground/80">
                 Alegi sucursala la test drive sau la programarea de service. Toate cele{" "}
                 {stockFacts.branchCount} au service autorizat.
@@ -467,8 +468,8 @@ function HomePage() {
               <div className="rounded-lg bg-secondary p-7 md:p-10">
                 <h2 className="text-2xl md:text-3xl">Începe de la mașină sau de la o întrebare.</h2>
                 <p className="mt-4 text-base text-muted-foreground">
-                  Răspundem în maximum 2 ore lucrătoare, cu nume și număr direct. Fără obligația de a
-                  cumpăra.
+                  Răspundem în maximum 2 ore lucrătoare, cu nume și număr direct. Fără obligația de
+                  a cumpăra.
                 </p>
                 <Button asChild size="lg" className="press mt-7 w-full sm:w-auto">
                   <Link to="/autoturisme">Vezi mașinile disponibile</Link>

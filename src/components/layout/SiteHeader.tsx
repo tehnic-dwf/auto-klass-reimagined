@@ -77,7 +77,9 @@ function DesktopGroup({
         onFocus={onOpen}
         className={cn(
           "flex min-h-11 items-center gap-1.5 whitespace-nowrap px-2 text-sm transition-colors xl:px-4",
-          open ? "text-primary-foreground" : "text-primary-foreground/75 hover:text-primary-foreground",
+          open
+            ? "text-primary-foreground"
+            : "text-primary-foreground/75 hover:text-primary-foreground",
         )}
       >
         {group.label}
@@ -94,7 +96,11 @@ function DesktopGroup({
             <div
               className={cn(
                 "grid gap-x-10 gap-y-8",
-                sections.length > 2 ? "md:grid-cols-3" : sections.length === 2 ? "md:grid-cols-2" : "md:grid-cols-1",
+                sections.length > 2
+                  ? "md:grid-cols-3"
+                  : sections.length === 2
+                    ? "md:grid-cols-2"
+                    : "md:grid-cols-1",
               )}
             >
               {sections.map(([section, items]) => (
@@ -304,7 +310,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
                 group={group}
                 open={desktopGroup === group.label}
                 onOpen={() => setDesktopGroup(group.label)}
-                onClose={() => setDesktopGroup((current) => (current === group.label ? null : current))}
+                onClose={() =>
+                  setDesktopGroup((current) => (current === group.label ? null : current))
+                }
               />
             ))}
           </nav>

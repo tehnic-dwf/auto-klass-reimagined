@@ -304,7 +304,11 @@ function VehicleDetailPage() {
                   "Garanție inclusă, fără costuri ascunse",
                 ].map((item) => (
                   <li key={item} className="flex gap-3">
-                    <Check className="mt-1 size-5 shrink-0 text-trust" strokeWidth={2} aria-hidden />
+                    <Check
+                      className="mt-1 size-5 shrink-0 text-trust"
+                      strokeWidth={2}
+                      aria-hidden
+                    />
                     {item}
                   </li>
                 ))}
